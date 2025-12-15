@@ -1,0 +1,154 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { createPageUrl } from '@/utils';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { ArrowRight, Clock, Target, Award, CheckCircle } from 'lucide-react';
+
+export default function Home() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const features = [
+    { icon: Clock, text: "15 minutes", label: "Durée estimée" },
+    { icon: Target, text: "20 questions", label: "Questions adaptatives" },
+    { icon: Award, text: "Niveau CECRL", label: "De A1 à C2" },
+  ];
+
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <img 
+            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_69409edef41e4f2a833c897b/ac7782ec6_logopefpetit.png" 
+            alt="ParlerEmploi Formation" 
+            className="h-12 object-contain"
+          />
+          <div className="hidden md:flex items-center gap-2 text-sm text-gray-600">
+            <CheckCircle className="w-4 h-4 text-[#32cf8a]" />
+            Test gratuit et sans engagement
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <main className="pt-32 pb-20">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left Content */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#17c3b2]/10 text-[#00504e] text-sm font-medium mb-6">
+                <span className="w-2 h-2 rounded-full bg-[#32cf8a] animate-pulse" />
+                Évaluez votre niveau de français
+              </div>
+
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+                Test de
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#00504e] to-[#17c3b2]">
+                  Positionnement
+                </span>
+              </h1>
+
+              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                Découvrez votre niveau de français selon le Cadre Européen Commun de Référence pour les Langues (CECRL). 
+                Un test adaptatif pour une évaluation précise.
+              </p>
+
+              {/* Features */}
+              <div className="flex flex-wrap gap-6 mb-10">
+                {features.map((feature, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 + index * 0.1 }}
+                    className="flex items-center gap-3"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-[#32cf8a]/10 flex items-center justify-center">
+                      <feature.icon className="w-5 h-5 text-[#00504e]" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">{feature.text}</p>
+                      <p className="text-sm text-gray-500">{feature.label}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Right - Form Card */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <div className="bg-gradient-to-br from-gray-50 to-white rounded-3xl p-8 md:p-10 shadow-xl border border-gray-100">
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                  Commencer le test
+                </h2>
+                <p className="text-gray-600 mb-8">
+                  Renseignez vos informations pour recevoir vos résultats
+                </p>
+
+                <form className="space-y-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="name" className="text-gray-700">Votre nom</Label>
+                    <Input
+                      id="name"
+                      placeholder="Jean Dupont"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="h-12 rounded-xl border-gray-200 focus:border-[#17c3b2] focus:ring-[#17c3b2]/20"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-gray-700">Votre email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="jean.dupont@email.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="h-12 rounded-xl border-gray-200 focus:border-[#17c3b2] focus:ring-[#17c3b2]/20"
+                    />
+                  </div>
+
+                  <Link 
+                    to={createPageUrl('Test') + `?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`}
+                  >
+                    <Button 
+                      className="w-full h-14 rounded-xl text-lg font-semibold bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 transition-all shadow-lg shadow-[#17c3b2]/25"
+                      disabled={!name || !email}
+                    >
+                      Démarrer le test
+                      <ArrowRight className="ml-2 w-5 h-5" />
+                    </Button>
+                  </Link>
+
+                  <p className="text-center text-sm text-gray-500">
+                    En démarrant, vous acceptez nos conditions d'utilisation
+                  </p>
+                </form>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-gray-100 py-8">
+        <div className="max-w-6xl mx-auto px-6 text-center text-gray-500 text-sm">
+          © {new Date().getFullYear()} ParlerEmploi Formation. Tous droits réservés.
+        </div>
+      </footer>
+    </div>
+  );
+}
