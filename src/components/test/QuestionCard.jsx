@@ -53,7 +53,7 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
         </div>
 
         {/* Audio Player for Oral Comprehension */}
-        {question.audioUrl && (
+        {question.audioText && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
