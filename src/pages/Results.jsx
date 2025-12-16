@@ -161,26 +161,14 @@ export default function Results() {
                 transition={{ delay: 0.3 }}
                 className="space-y-4"
               >
-                <div className="grid grid-cols-2 gap-4">
-                  <a href="mailto:contact@parleremploi.com?subject=Demande de formation français">
-                    <Button
-                      variant="outline"
-                      className="w-full h-12 rounded-xl"
-                    >
-                      <Mail className="w-4 h-4 mr-2" />
-                      Nous contacter
-                    </Button>
-                  </a>
-                  <Link to={createPageUrl('Home')} className="block">
-                    <Button 
-                      variant="outline"
-                      className="w-full h-12 rounded-xl"
-                    >
-                      <RotateCcw className="w-4 h-4 mr-2" />
-                      Refaire le test
-                    </Button>
-                  </Link>
-                </div>
+                <a href="mailto:contact@parleremploi.com?subject=Demande de formation français" className="block">
+                  <Button
+                    className="w-full h-12 rounded-xl bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90"
+                  >
+                    <Mail className="w-4 h-4 mr-2" />
+                    Nous contacter
+                  </Button>
+                </a>
               </motion.div>
             </TabsContent>
 

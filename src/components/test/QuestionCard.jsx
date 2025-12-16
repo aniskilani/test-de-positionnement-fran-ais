@@ -9,26 +9,36 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
   const [isPlaying, setIsPlaying] = React.useState(false);
 
   const playAudio = () => {
-    // Si la question a un texte audio, utiliser la synthèse vocale
     if (question.audioText) {
       setIsPlaying(true);
       
-      // Extraire le texte à lire (enlever "Audio : " et les guillemets)
       const textToSpeak = question.audioText.replace(/^Audio\s*:\s*['"]?|['"]?$/g, '');
       
       const utterance = new SpeechSynthesisUtterance(textToSpeak);
       utterance.lang = 'fr-FR';
-      utterance.rate = 0.9; // Vitesse légèrement réduite pour meilleure compréhension
+      utterance.rate = 0.85;
+      utterance.pitch = 1.1;
+      utterance.volume = 1;
       
-      utterance.onend = () => {
-        setIsPlaying(false);
-      };
+      // Sélectionner une voix française plus naturelle
+      const voices = window.speechSynthesis.getVoices();
+      const frenchVoice = voices.find(voice => 
+        voice.lang.startsWith('fr') && (
+          voice.name.includes('Google') || 
+          voice.name.includes('Enhanced') ||
+          voice.name.includes('Premium') ||
+          voice.name.includes('Natural')
+        )
+      ) || voices.find(voice => voice.lang.startsWith('fr'));
       
-      utterance.onerror = () => {
-        setIsPlaying(false);
-      };
+      if (frenchVoice) {
+        utterance.voice = frenchVoice;
+      }
       
-      window.speechSynthesis.cancel(); // Annuler toute lecture en cours
+      utterance.onend = () => setIsPlaying(false);
+      utterance.onerror = () => setIsPlaying(false);
+      
+      window.speechSynthesis.cancel();
       window.speechSynthesis.speak(utterance);
     }
   };
