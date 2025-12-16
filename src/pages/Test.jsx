@@ -204,6 +204,21 @@ export default function Test() {
     setAnswers({ ...answers, [currentQuestion]: answer });
   };
 
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key === 'Enter' && hasAnswered && !isSubmitting) {
+        if (isLastQuestion) {
+          handleSubmit();
+        } else {
+          handleNext();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [hasAnswered, isLastQuestion, isSubmitting, currentQuestion, answers]);
+
   const handleNext = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
