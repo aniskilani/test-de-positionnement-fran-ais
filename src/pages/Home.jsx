@@ -151,7 +151,7 @@ export default function Home() {
                   </p>
 
                   <div className="mt-6 pt-6 border-t border-gray-200">
-                    <p className="text-sm text-gray-600 mb-3 text-center">Besoin d'aide ?</p>
+                    <p className="text-sm text-gray-600 mb-3 text-center">Besoins d'informations ?</p>
                     <a 
                       href="https://wa.me/33652675393?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20vos%20formations%20FLE" 
                       target="_blank" 
