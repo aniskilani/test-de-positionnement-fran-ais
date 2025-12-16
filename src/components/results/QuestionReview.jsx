@@ -3,6 +3,8 @@ import { CheckCircle2, XCircle, Volume2 } from 'lucide-react';
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function QuestionReview({ question, userAnswer, isCorrect }) {
+  const isWritten = question.type === 'written';
+
   return (
     <Card className={`border-l-4 ${isCorrect ? 'border-l-green-500 bg-green-50/30' : 'border-l-red-500 bg-red-50/30'}`}>
       <CardContent className="p-6">
@@ -30,6 +32,11 @@ export default function QuestionReview({ question, userAnswer, isCorrect }) {
                   Audio
                 </span>
               )}
+              {isWritten && (
+                <span className="text-xs font-medium px-2 py-1 rounded-full bg-purple-100 text-purple-700">
+                  Expression Écrite
+                </span>
+              )}
             </div>
 
             {/* Question Text */}
@@ -40,29 +47,48 @@ export default function QuestionReview({ question, userAnswer, isCorrect }) {
             {/* User Answer */}
             <div>
               <span className="text-sm text-gray-600">Votre réponse : </span>
-              <span className={`text-sm font-medium ${isCorrect ? 'text-green-700' : 'text-red-700'}`}>
-                {userAnswer || "Non répondu"}
-              </span>
+              {isWritten ? (
+                <div className={`mt-2 p-3 rounded-lg border ${isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+                  <p className={`text-sm whitespace-pre-wrap ${isCorrect ? 'text-green-900' : 'text-red-900'}`}>
+                    {userAnswer || "Non répondu"}
+                  </p>
+                </div>
+              ) : (
+                <span className={`text-sm font-medium ${isCorrect ? 'text-green-700' : 'text-red-700'}`}>
+                  {userAnswer || "Non répondu"}
+                </span>
+              )}
             </div>
 
-            {/* Correct Answer (if wrong) */}
+            {/* Correct Answer or Criteria */}
             {!isCorrect && (
-              <div className="bg-white rounded-lg p-3 border border-green-200">
-                <span className="text-sm text-gray-600">Bonne réponse : </span>
-                <span className="text-sm font-semibold text-green-700">
-                  {question.correct}
-                </span>
-              </div>
-            )}
-
-            {/* Explanation (if wrong) */}
-            {!isCorrect && question.explanation && (
-              <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
-                <p className="text-sm text-blue-900">
-                  <span className="font-semibold">💡 Explication : </span>
-                  {question.explanation}
-                </p>
-              </div>
+              isWritten ? (
+                <div className="bg-yellow-50 rounded-lg p-3 border border-yellow-200">
+                  <p className="text-sm font-semibold text-gray-900 mb-2">Critères d'évaluation :</p>
+                  <ul className="text-sm text-gray-700 space-y-1 list-disc ml-5">
+                    {question.criteria.map((criterion, idx) => (
+                      <li key={idx}>{criterion}</li>
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                <>
+                  <div className="bg-white rounded-lg p-3 border border-green-200">
+                    <span className="text-sm text-gray-600">Bonne réponse : </span>
+                    <span className="text-sm font-semibold text-green-700">
+                      {question.correct}
+                    </span>
+                  </div>
+                  {question.explanation && (
+                    <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
+                      <p className="text-sm text-blue-900">
+                        <span className="font-semibold">💡 Explication : </span>
+                        {question.explanation}
+                      </p>
+                    </div>
+                  )}
+                </>
+              )
             )}
           </div>
         </div>

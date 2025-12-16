@@ -446,5 +446,47 @@ export const questions = [
     options: ["Rapide", "Musicale", "Coordonnée", "Isolée"],
     correct: "Coordonnée",
     explanation: "Une action 'concertée' est une action coordonnée, menée ensemble de façon organisée."
+  },
+
+  // ==================== Expression Écrite ====================
+  {
+    id: 46,
+    level: "A1",
+    category: "Expression Écrite",
+    type: "written",
+    question: "Présentez-vous en 2-3 phrases (nom, âge, nationalité, ville).",
+    placeholder: "Exemple : Je m'appelle Marie. J'ai 25 ans. Je suis française. J'habite à Paris.",
+    minWords: 10,
+    criteria: ["Utilise 'je m'appelle' ou 'je suis'", "Mentionne l'âge avec 'j'ai ... ans'", "Phrase complète et compréhensible"]
+  },
+  {
+    id: 47,
+    level: "A2",
+    category: "Expression Écrite",
+    type: "written",
+    question: "Décrivez votre journée typique. Que faites-vous le matin, l'après-midi et le soir ? (40-50 mots)",
+    placeholder: "Exemple : Le matin, je me réveille à 7h. Je prends mon petit-déjeuner...",
+    minWords: 40,
+    criteria: ["Utilise le présent", "Structure chronologique claire", "Vocabulaire quotidien approprié", "Connecteurs temporels (le matin, puis, ensuite)"]
+  },
+  {
+    id: 48,
+    level: "B1",
+    category: "Expression Écrite",
+    type: "written",
+    question: "Racontez vos dernières vacances ou un voyage mémorable. Où êtes-vous allé(e) ? Qu'avez-vous fait ? (60-80 mots)",
+    placeholder: "Exemple : L'été dernier, je suis allé(e) en Espagne avec ma famille...",
+    minWords: 60,
+    criteria: ["Utilise le passé composé", "Décrit les activités et lieux", "Exprime des sentiments", "Texte cohérent et structuré"]
+  },
+  {
+    id: 49,
+    level: "B2",
+    category: "Expression Écrite",
+    type: "written",
+    question: "Donnez votre opinion sur le télétravail. Quels sont selon vous les avantages et les inconvénients ? (80-100 mots)",
+    placeholder: "Exemple : À mon avis, le télétravail présente plusieurs avantages. Tout d'abord...",
+    minWords: 80,
+    criteria: ["Argumentation structurée", "Utilise des connecteurs logiques", "Vocabulaire varié et précis", "Exprime clairement son opinion", "Présente avantages ET inconvénients"]
   }
 ];

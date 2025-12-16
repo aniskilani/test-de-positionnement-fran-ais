@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle2, Volume2, PlayCircle } from 'lucide-react';
+import { CheckCircle2, Volume2, PlayCircle, AlertCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function QuestionCard({ question, selectedAnswer, onSelect, questionNumber }) {
@@ -88,40 +89,61 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
           {question.question}
         </h2>
 
-        {/* Answer Options */}
-        <div className="space-y-3">
-          {question.options.map((option, index) => {
-            const isSelected = selectedAnswer === option;
-            const letters = ['A', 'B', 'C', 'D'];
+        {/* Answer Options or Text Area */}
+        {question.type === 'written' ? (
+          <div className="space-y-4">
+            <Alert className="bg-blue-50 border-blue-200">
+              <AlertCircle className="h-4 w-4 text-blue-600" />
+              <AlertDescription className="text-blue-900 text-sm">
+                Rédigez votre réponse en au moins <strong>{question.minWords} mots</strong>. 
+                Votre texte sera évalué automatiquement par IA.
+              </AlertDescription>
+            </Alert>
+            <Textarea
+              value={selectedAnswer || ''}
+              onChange={(e) => onSelect(e.target.value)}
+              placeholder={question.placeholder}
+              className="min-h-[200px] text-base leading-relaxed resize-none"
+            />
+            <div className="text-right text-sm text-gray-600">
+              {(selectedAnswer || '').split(/\s+/).filter(w => w.length > 0).length} / {question.minWords} mots
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {question.options.map((option, index) => {
+              const isSelected = selectedAnswer === option;
+              const letters = ['A', 'B', 'C', 'D'];
 
-            return (
-              <motion.button
-                key={index}
-                onClick={() => onSelect(option)}
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-                className={`w-full p-4 rounded-xl border-2 transition-all duration-300 flex items-center gap-4 text-left group ${
-                  isSelected
-                    ? 'border-[#17c3b2] bg-[#17c3b2]/5 shadow-md'
-                    : 'border-gray-200 hover:border-[#32cf8a] hover:bg-gray-50'
-                }`}
-              >
-                <span
-                  className={`w-10 h-10 rounded-lg flex items-center justify-center font-semibold text-sm transition-all ${
+              return (
+                <motion.button
+                  key={index}
+                  onClick={() => onSelect(option)}
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.99 }}
+                  className={`w-full p-4 rounded-xl border-2 transition-all duration-300 flex items-center gap-4 text-left group ${
                     isSelected
-                      ? 'bg-[#17c3b2] text-white'
-                      : 'bg-gray-100 text-gray-600 group-hover:bg-[#32cf8a]/20 group-hover:text-[#00504e]'
+                      ? 'border-[#17c3b2] bg-[#17c3b2]/5 shadow-md'
+                      : 'border-gray-200 hover:border-[#32cf8a] hover:bg-gray-50'
                   }`}
                 >
-                  {isSelected ? <CheckCircle2 className="w-5 h-5" /> : letters[index]}
-                </span>
-                <span className={`flex-1 font-medium ${isSelected ? 'text-[#00504e]' : 'text-gray-700'}`}>
-                  {option}
-                </span>
-              </motion.button>
-            );
-          })}
-        </div>
+                  <span
+                    className={`w-10 h-10 rounded-lg flex items-center justify-center font-semibold text-sm transition-all ${
+                      isSelected
+                        ? 'bg-[#17c3b2] text-white'
+                        : 'bg-gray-100 text-gray-600 group-hover:bg-[#32cf8a]/20 group-hover:text-[#00504e]'
+                    }`}
+                  >
+                    {isSelected ? <CheckCircle2 className="w-5 h-5" /> : letters[index]}
+                  </span>
+                  <span className={`flex-1 font-medium ${isSelected ? 'text-[#00504e]' : 'text-gray-700'}`}>
+                    {option}
+                  </span>
+                </motion.button>
+              );
+            })}
+          </div>
+        )}
       </motion.div>
     </AnimatePresence>
   );
