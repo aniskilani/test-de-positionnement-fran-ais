@@ -30,7 +30,7 @@ const questions = [
     correct: "suis"
   },
   {
-    id: 2,
+    id: 3,
     level: "A1",
     category: "Vocabulaire",
     question: "Comment dit-on « Hello » en français ?",
@@ -38,24 +38,26 @@ const questions = [
     correct: "Bonjour"
   },
   {
-    id: 3,
+    id: 4,
     level: "A1",
     category: "Grammaire",
     question: "Quel est le pluriel de « un livre » ?",
     options: ["des livre", "des livres", "les livre", "un livres"],
     correct: "des livres"
   },
-  {
-    id: 4,
-    level: "A1",
-    category: "Vocabulaire",
-    question: "Quel article utilise-t-on : « ___ pomme » ?",
-    options: ["Un", "Une", "Des", "Le"],
-    correct: "Une"
-  },
-  // A2 Level
+  // A2 Level - Compréhension Orale
   {
     id: 5,
+    level: "A2",
+    category: "Compréhension Orale",
+    question: "Écoutez le dialogue. Où vont les deux personnes ?",
+    audioUrl: "https://example.com/audio/question-a2-1.mp3",
+    audioText: "Audio : 'On va au restaurant ce soir ?' - 'Oui, bonne idée !'",
+    options: ["Au cinéma", "Au restaurant", "À la plage", "Au musée"],
+    correct: "Au restaurant"
+  },
+  {
+    id: 6,
     level: "A2",
     category: "Grammaire",
     question: "Complétez : « Hier, nous ___ au cinéma. »",
@@ -63,7 +65,7 @@ const questions = [
     correct: "sommes allés"
   },
   {
-    id: 6,
+    id: 7,
     level: "A2",
     category: "Vocabulaire",
     question: "Quel mot signifie l'inverse de « grand » ?",
@@ -71,24 +73,26 @@ const questions = [
     correct: "petit"
   },
   {
-    id: 7,
+    id: 8,
     level: "A2",
     category: "Compréhension",
     question: "« Il fait beau aujourd'hui. » Cette phrase parle de :",
     options: ["la nourriture", "la météo", "le travail", "la santé"],
     correct: "la météo"
   },
-  {
-    id: 8,
-    level: "A2",
-    category: "Grammaire",
-    question: "Complétez : « Elle ___ au marché tous les samedis. »",
-    options: ["va", "aller", "allé", "allait"],
-    correct: "va"
-  },
-  // B1 Level
+  // B1 Level - Compréhension Orale
   {
     id: 9,
+    level: "B1",
+    category: "Compréhension Orale",
+    question: "Écoutez l'annonce. À quelle heure part le train ?",
+    audioUrl: "https://example.com/audio/question-b1-1.mp3",
+    audioText: "Audio : 'Le train en provenance de Paris partira à 15h30 du quai numéro 3.'",
+    options: ["14h30", "15h30", "16h30", "17h30"],
+    correct: "15h30"
+  },
+  {
+    id: 10,
     level: "B1",
     category: "Grammaire",
     question: "Complétez : « Si j'avais le temps, je ___ ce livre. »",
@@ -96,7 +100,7 @@ const questions = [
     correct: "lirais"
   },
   {
-    id: 10,
+    id: 11,
     level: "B1",
     category: "Vocabulaire",
     question: "Que signifie « être débordé » ?",
@@ -104,24 +108,26 @@ const questions = [
     correct: "Avoir trop de travail"
   },
   {
-    id: 11,
+    id: 12,
     level: "B1",
     category: "Grammaire",
     question: "Choisissez la forme correcte : « C'est le livre ___ je t'ai parlé. »",
     options: ["que", "dont", "qui", "où"],
     correct: "dont"
   },
-  {
-    id: 12,
-    level: "B1",
-    category: "Compréhension",
-    question: "« Il a pris ses jambes à son cou. » signifie :",
-    options: ["Il est tombé", "Il a couru très vite", "Il a mal aux jambes", "Il s'est assis"],
-    correct: "Il a couru très vite"
-  },
-  // B2 Level
+  // B2 Level - Compréhension Orale
   {
     id: 13,
+    level: "B2",
+    category: "Compréhension Orale",
+    question: "Écoutez l'interview. Quel est le principal défi mentionné ?",
+    audioUrl: "https://example.com/audio/question-b2-1.mp3",
+    audioText: "Audio : 'Notre principal défi reste la gestion du changement climatique et ses impacts sur notre économie.'",
+    options: ["Le développement technologique", "Le changement climatique", "Les relations internationales", "La croissance démographique"],
+    correct: "Le changement climatique"
+  },
+  {
+    id: 14,
     level: "B2",
     category: "Grammaire",
     question: "Complétez : « Bien qu'il ___ fatigué, il a continué à travailler. »",
@@ -129,7 +135,7 @@ const questions = [
     correct: "soit"
   },
   {
-    id: 14,
+    id: 15,
     level: "B2",
     category: "Vocabulaire",
     question: "Quel est le synonyme de « néanmoins » ?",
@@ -137,12 +143,47 @@ const questions = [
     correct: "Cependant"
   },
   {
-    id: 15,
+    id: 16,
     level: "B2",
     category: "Grammaire",
     question: "« Il m'a demandé si je ___ venir. »",
     options: ["peux", "pouvais", "pourrai", "pourrais"],
     correct: "pouvais"
+  },
+  // B1 Level - Compréhension Orale
+  {
+    id: 17,
+    level: "B1",
+    category: "Compréhension Orale",
+    question: "Écoutez le message. Pourquoi la personne appelle-t-elle ?",
+    audioUrl: "https://example.com/audio/question-b1-2.mp3",
+    audioText: "Audio : 'Bonjour, je vous appelle pour confirmer notre rendez-vous de demain à 14h. Pourriez-vous me rappeler ?'",
+    options: ["Pour annuler un rendez-vous", "Pour confirmer un rendez-vous", "Pour prendre un rendez-vous", "Pour modifier l'heure"],
+    correct: "Pour confirmer un rendez-vous"
+  },
+  {
+    id: 18,
+    level: "B1",
+    category: "Compréhension",
+    question: "« Il a pris ses jambes à son cou. » signifie :",
+    options: ["Il est tombé", "Il a couru très vite", "Il a mal aux jambes", "Il s'est assis"],
+    correct: "Il a couru très vite"
+  },
+  {
+    id: 19,
+    level: "A2",
+    category: "Grammaire",
+    question: "Complétez : « Elle ___ au marché tous les samedis. »",
+    options: ["va", "aller", "allé", "allait"],
+    correct: "va"
+  },
+  {
+    id: 20,
+    level: "A1",
+    category: "Vocabulaire",
+    question: "Quel article utilise-t-on : « ___ pomme » ?",
+    options: ["Un", "Une", "Des", "Le"],
+    correct: "Une"
   }
 ];
 
