@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { createPageUrl } from '@/utils';
-import { base44 } from '@/api/base44Client';
+import { loadStripe } from '@stripe/stripe-js';
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, CheckCircle, X, AlertCircle } from 'lucide-react';
 import { Alert, AlertDescription } from "@/components/ui/alert";
+
+const stripePromise = loadStripe('pk_live_51SemqNALINlnrkF4canP5ifuGuIALwcLjIcaGuGmlWHo8FYYAjlu7OOjlBX04xXtkrL71TEVJMs7gSlQ9J3IqcwT00amnVsgQr');
 
 export default function Payment() {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -29,17 +31,39 @@ export default function Payment() {
     setError('');
 
     try {
-      const result = await base44.functions.createStripeCheckout({
-        name: candidateName,
-        email: candidateEmail,
-        phone: candidatePhone
+      // Créer une session Stripe Checkout
+      const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer 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',
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          'mode': 'payment',
+          'success_url': `${window.location.origin}${createPageUrl('Test')}?name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&phone=${encodeURIComponent(candidatePhone)}&payment=success`,
+          'cancel_url': `${window.location.origin}${createPageUrl('Payment')}?name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&phone=${encodeURIComponent(candidatePhone)}&cancelled=true`,
+          'customer_email': candidateEmail,
+          'line_items[0][price_data][currency]': 'eur',
+          'line_items[0][price_data][unit_amount]': '1900',
+          'line_items[0][price_data][product_data][name]': 'Test de Positionnement FLE',
+          'line_items[0][price_data][product_data][description]': 'Évaluation CECRL A1-B2',
+          'line_items[0][quantity]': '1',
+          'payment_method_types[0]': 'card',
+        }),
       });
 
-      if (result.success && result.url) {
-        // Rediriger vers Stripe Checkout
-        window.location.href = result.url;
+      const session = await response.json();
+      
+      if (session.id) {
+        const stripe = await stripePromise;
+        const { error: stripeError } = await stripe.redirectToCheckout({ sessionId: session.id });
+        
+        if (stripeError) {
+          setError(stripeError.message);
+          setIsProcessing(false);
+        }
       } else {
-        setError(result.error || 'Erreur lors de la création de la session de paiement');
+        setError('Erreur lors de la création de la session de paiement');
         setIsProcessing(false);
       }
     } catch (err) {
