@@ -219,24 +219,34 @@ export default function Test() {
   const calculateResults = () => {
     let correctCount = 0;
     const answerDetails = [];
+    const categoryScores = {};
 
     questions.forEach((q, index) => {
       const userAnswer = answers[index];
       const isCorrect = userAnswer === q.correct;
       if (isCorrect) correctCount++;
+      
       answerDetails.push({
         questionId: q.id,
         answer: userAnswer || "",
         correct: isCorrect
       });
+
+      // Calcul par catégorie
+      if (!categoryScores[q.category]) {
+        categoryScores[q.category] = { correct: 0, total: 0 };
+      }
+      categoryScores[q.category].total++;
+      if (isCorrect) categoryScores[q.category].correct++;
     });
 
     const score = Math.round((correctCount / questions.length) * 100);
     
+    // Évaluation CECRL plus précise
     let level;
-    if (score >= 75) level = "B2";
-    else if (score >= 55) level = "B1";
-    else if (score >= 35) level = "A2";
+    if (score >= 80) level = "B2";
+    else if (score >= 65) level = "B1";
+    else if (score >= 45) level = "A2";
     else level = "A1";
 
     return { score, level, answers: answerDetails };
