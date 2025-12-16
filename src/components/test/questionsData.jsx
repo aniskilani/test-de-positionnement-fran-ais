@@ -43,10 +43,10 @@ export const questions = [
     id: 5,
     level: "A1",
     category: "Vocabulaire",
-    question: "Comment dit-on « Hello » en français ?",
+    question: "Quel mot utilise-t-on pour saluer quelqu'un le matin ?",
     options: ["Au revoir", "Bonjour", "Merci", "S'il vous plaît"],
     correct: "Bonjour",
-    explanation: "'Bonjour' est la traduction française de 'Hello' et est utilisé pour saluer quelqu'un."
+    explanation: "'Bonjour' est utilisé pour saluer quelqu'un, particulièrement le matin et la journée."
   },
   {
     id: 6,
@@ -61,19 +61,19 @@ export const questions = [
     id: 7,
     level: "A1",
     category: "Vocabulaire",
-    question: "Quel mot utilise-t-on pour dire « Thank you » en français ?",
+    question: "Quel mot utilise-t-on pour remercier quelqu'un ?",
     options: ["S'il vous plaît", "Merci", "Pardon", "De rien"],
     correct: "Merci",
-    explanation: "'Merci' est la traduction française de 'Thank you'."
+    explanation: "'Merci' est utilisé pour exprimer sa gratitude et remercier quelqu'un."
   },
   {
     id: 8,
     level: "A1",
     category: "Vocabulaire",
-    question: "Comment dit-on le nombre « 5 » en français ?",
+    question: "Combien font 2 + 3 ?",
     options: ["Quatre", "Cinq", "Six", "Sept"],
     correct: "Cinq",
-    explanation: "Le nombre 5 se dit 'cinq' en français."
+    explanation: "2 + 3 = 5, qui se dit 'cinq' en français."
   },
 
   // Compréhension Orale A1
