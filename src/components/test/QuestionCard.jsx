@@ -9,8 +9,20 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
   const [isPlaying, setIsPlaying] = React.useState(false);
   const [isRecording, setIsRecording] = React.useState(false);
   const [recordingTime, setRecordingTime] = React.useState(0);
+  const [error, setError] = React.useState('');
   const recognitionRef = useRef(null);
   const timerRef = useRef(null);
+
+  React.useEffect(() => {
+    return () => {
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, []);
 
   const playAudio = () => {
     if (question.audioText) {
@@ -55,55 +67,76 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
     }
   };
 
-  const startRecording = () => {
+  const startRecording = async () => {
+    setError('');
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     
     if (!SpeechRecognition) {
-      alert("Votre navigateur ne supporte pas l'enregistrement audio. Utilisez Chrome ou Edge.");
+      setError("Votre navigateur ne supporte pas l'enregistrement audio. Utilisez Chrome ou Edge.");
       return;
     }
 
-    const recognition = new SpeechRecognition();
-    recognition.lang = 'fr-FR';
-    recognition.continuous = true;
-    recognition.interimResults = true;
+    try {
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (err) {
+      setError("Permission micro refusée. Autorisez l'accès au micro dans votre navigateur.");
+      return;
+    }
 
-    let finalTranscript = '';
+    try {
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'fr-FR';
+      recognition.continuous = true;
+      recognition.interimResults = true;
 
-    recognition.onresult = (event) => {
-      let interimTranscript = '';
-      
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        const transcript = event.results[i][0].transcript;
-        if (event.results[i].isFinal) {
-          finalTranscript += transcript + ' ';
-        } else {
-          interimTranscript += transcript;
+      let finalTranscript = '';
+
+      recognition.onresult = (event) => {
+        setError('');
+        let interimTranscript = '';
+        
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            finalTranscript += transcript + ' ';
+          } else {
+            interimTranscript += transcript;
+          }
         }
-      }
-      
-      onSelect(finalTranscript + interimTranscript);
-    };
+        
+        onSelect(finalTranscript + interimTranscript);
+      };
 
-    recognition.onerror = (event) => {
-      console.error('Erreur:', event.error);
-      setIsRecording(false);
-      clearInterval(timerRef.current);
-    };
+      recognition.onerror = (event) => {
+        console.error('Erreur reconnaissance:', event.error);
+        if (event.error === 'no-speech') {
+          setError('Aucune parole détectée. Parlez plus fort.');
+        } else if (event.error === 'network') {
+          setError('Erreur réseau. Vérifiez votre connexion.');
+        } else {
+          setError(`Erreur: ${event.error}`);
+        }
+        setIsRecording(false);
+        clearInterval(timerRef.current);
+      };
 
-    recognition.onend = () => {
-      setIsRecording(false);
-      clearInterval(timerRef.current);
-    };
+      recognition.onend = () => {
+        setIsRecording(false);
+        clearInterval(timerRef.current);
+      };
 
-    recognition.start();
-    recognitionRef.current = recognition;
-    setIsRecording(true);
-    setRecordingTime(0);
+      recognition.start();
+      recognitionRef.current = recognition;
+      setIsRecording(true);
+      setRecordingTime(0);
 
-    timerRef.current = setInterval(() => {
-      setRecordingTime(prev => prev + 1);
-    }, 1000);
+      timerRef.current = setInterval(() => {
+        setRecordingTime(prev => prev + 1);
+      }, 1000);
+    } catch (err) {
+      setError("Impossible de démarrer l'enregistrement. Réessayez.");
+      console.error(err);
+    }
   };
 
   const stopRecording = () => {
@@ -181,6 +214,15 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
                 Parlez clairement et naturellement. Votre production sera évaluée par IA.
               </AlertDescription>
             </Alert>
+
+            {error && (
+              <Alert className="bg-red-50 border-red-200">
+                <AlertCircle className="h-4 w-4 text-red-600" />
+                <AlertDescription className="text-red-900 text-sm">
+                  {error}
+                </AlertDescription>
+              </Alert>
+            )}
 
             <div className="bg-gray-50 rounded-xl p-6 text-center space-y-4">
               {!isRecording ? (
