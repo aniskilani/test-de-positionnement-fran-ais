@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowLeft, X, Loader2 } from 'lucide-react';
 import ProgressBar from '@/components/test/ProgressBar';
 import QuestionCard from '@/components/test/QuestionCard';
+import { questions } from '@/components/test/questionsData';
 
-const questions = [
+const originalQuestions = [
   // A1 Level - Compréhension Orale
   {
     id: 1,
@@ -254,9 +255,9 @@ export default function Test() {
       candidate_phone: candidatePhone
     };
 
-    await base44.entities.TestResult.create(resultData);
+    const savedResult = await base44.entities.TestResult.create(resultData);
 
-    navigate(createPageUrl('Results') + `?score=${results.score}&level=${results.level}&name=${encodeURIComponent(candidateName)}`);
+    navigate(createPageUrl('Results') + `?resultId=${savedResult.id}`);
   };
 
   const currentQ = questions[currentQuestion];
