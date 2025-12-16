@@ -135,7 +135,7 @@ export default function Home() {
                   </div>
 
                   <Link 
-                    to={createPageUrl('Test') + `?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`}
+                    to={createPageUrl('Payment') + `?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`}
                   >
                     <Button 
                       className="w-full h-14 rounded-xl text-lg font-semibold bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 transition-all shadow-lg shadow-[#17c3b2]/25"
