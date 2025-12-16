@@ -1,36 +1,52 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { createPageUrl } from '@/utils';
+import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { ArrowRight, CreditCard, Shield, CheckCircle, X } from 'lucide-react';
+import { ArrowRight, Shield, CheckCircle, X, AlertCircle } from 'lucide-react';
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function Payment() {
-  const navigate = useNavigate();
-  const [cardNumber, setCardNumber] = useState('');
-  const [expiryDate, setExpiryDate] = useState('');
-  const [cvv, setCvv] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState('');
+  const [cancelled, setCancelled] = useState(false);
 
   const urlParams = new URLSearchParams(window.location.search);
   const candidateName = urlParams.get('name') || '';
   const candidateEmail = urlParams.get('email') || '';
   const candidatePhone = urlParams.get('phone') || '';
 
+  useEffect(() => {
+    if (urlParams.get('cancelled') === 'true') {
+      setCancelled(true);
+    }
+  }, []);
+
   const handlePayment = async (e) => {
     e.preventDefault();
     setIsProcessing(true);
+    setError('');
 
-    // Simuler un traitement de paiement
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      const result = await base44.functions.createStripeCheckout({
+        name: candidateName,
+        email: candidateEmail,
+        phone: candidatePhone
+      });
 
-    // Rediriger vers le test avec les paramètres
-    navigate(createPageUrl('Test') + `?name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&phone=${encodeURIComponent(candidatePhone)}`);
+      if (result.success && result.url) {
+        // Rediriger vers Stripe Checkout
+        window.location.href = result.url;
+      } else {
+        setError(result.error || 'Erreur lors de la création de la session de paiement');
+        setIsProcessing(false);
+      }
+    } catch (err) {
+      setError('Erreur de connexion. Veuillez réessayer.');
+      setIsProcessing(false);
+    }
   };
-
-  const isFormValid = cardNumber.length >= 16 && expiryDate.length >= 5 && cvv.length >= 3;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-[#17c3b2]/5">
@@ -70,7 +86,7 @@ export default function Payment() {
               {/* Pricing Card */}
               <div className="bg-gradient-to-br from-[#00504e] to-[#17c3b2] rounded-3xl p-8 text-white mb-8">
                 <div className="flex items-baseline gap-2 mb-4">
-                  <span className="text-5xl font-bold">29€</span>
+                  <span className="text-5xl font-bold">19€</span>
                   <span className="text-lg opacity-90">TTC</span>
                 </div>
                 <p className="opacity-90 mb-6">Test de positionnement complet</p>
@@ -111,85 +127,65 @@ export default function Payment() {
               <div className="bg-white rounded-3xl p-8 md:p-10 shadow-xl border border-gray-100">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 rounded-xl bg-[#17c3b2]/10 flex items-center justify-center">
-                    <CreditCard className="w-6 h-6 text-[#00504e]" />
+                    <Shield className="w-6 h-6 text-[#00504e]" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-gray-900">Paiement sécurisé</h2>
-                    <p className="text-sm text-gray-600">Informations cryptées</p>
+                    <h2 className="text-xl font-bold text-gray-900">Paiement sécurisé Stripe</h2>
+                    <p className="text-sm text-gray-600">Protection des acheteurs</p>
                   </div>
                 </div>
 
+                {cancelled && (
+                  <Alert className="mb-6 border-yellow-200 bg-yellow-50">
+                    <AlertCircle className="h-4 w-4 text-yellow-600" />
+                    <AlertDescription className="text-yellow-800">
+                      Paiement annulé. Vous pouvez réessayer quand vous le souhaitez.
+                    </AlertDescription>
+                  </Alert>
+                )}
+
+                {error && (
+                  <Alert className="mb-6 border-red-200 bg-red-50">
+                    <AlertCircle className="h-4 w-4 text-red-600" />
+                    <AlertDescription className="text-red-800">
+                      {error}
+                    </AlertDescription>
+                  </Alert>
+                )}
+
                 <form onSubmit={handlePayment} className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="cardNumber" className="text-gray-700">Numéro de carte</Label>
-                    <Input
-                      id="cardNumber"
-                      placeholder="1234 5678 9012 3456"
-                      value={cardNumber}
-                      onChange={(e) => setCardNumber(e.target.value.replace(/\s/g, '').slice(0, 16))}
-                      className="h-12 rounded-xl border-gray-200 focus:border-[#17c3b2] focus:ring-[#17c3b2]/20"
-                      maxLength={19}
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="expiry" className="text-gray-700">Date d'expiration</Label>
-                      <Input
-                        id="expiry"
-                        placeholder="MM/AA"
-                        value={expiryDate}
-                        onChange={(e) => {
-                          let value = e.target.value.replace(/\D/g, '');
-                          if (value.length >= 2) {
-                            value = value.slice(0, 2) + '/' + value.slice(2, 4);
-                          }
-                          setExpiryDate(value);
-                        }}
-                        className="h-12 rounded-xl border-gray-200 focus:border-[#17c3b2] focus:ring-[#17c3b2]/20"
-                        maxLength={5}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="cvv" className="text-gray-700">CVV</Label>
-                      <Input
-                        id="cvv"
-                        type="password"
-                        placeholder="123"
-                        value={cvv}
-                        onChange={(e) => setCvv(e.target.value.replace(/\D/g, '').slice(0, 3))}
-                        className="h-12 rounded-xl border-gray-200 focus:border-[#17c3b2] focus:ring-[#17c3b2]/20"
-                        maxLength={3}
-                      />
-                    </div>
-                  </div>
-
                   {/* Candidate Info */}
                   <div className="bg-gray-50 rounded-xl p-4">
                     <p className="text-sm text-gray-600 mb-2">Candidat :</p>
                     <p className="font-semibold text-gray-900">{candidateName}</p>
                     <p className="text-sm text-gray-600">{candidateEmail}</p>
+                    <p className="text-sm text-gray-600">{candidatePhone}</p>
                   </div>
 
                   <Button
                     type="submit"
-                    disabled={!isFormValid || isProcessing}
+                    disabled={isProcessing}
                     className="w-full h-14 rounded-xl text-lg font-semibold bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 transition-all shadow-lg shadow-[#17c3b2]/25"
                   >
                     {isProcessing ? (
-                      'Traitement en cours...'
+                      'Redirection vers Stripe...'
                     ) : (
                       <>
-                        Payer 29€ et accéder au test
+                        Payer 19€ avec Stripe
                         <ArrowRight className="ml-2 w-5 h-5" />
                       </>
                     )}
                   </Button>
 
-                  <p className="text-center text-xs text-gray-500">
-                    Paiement sécurisé par SSL. Vos données sont protégées.
-                  </p>
+                  <div className="space-y-2">
+                    <p className="text-center text-xs text-gray-500">
+                      Paiement 100% sécurisé par Stripe
+                    </p>
+                    <div className="flex items-center justify-center gap-2 text-xs text-gray-400">
+                      <CheckCircle className="w-3 h-3" />
+                      <span>Cartes bancaires acceptées</span>
+                    </div>
+                  </div>
                 </form>
               </div>
             </motion.div>
