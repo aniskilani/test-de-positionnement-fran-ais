@@ -5,12 +5,30 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function QuestionCard({ question, selectedAnswer, onSelect, questionNumber }) {
-  const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = React.useState(false);
 
   const playAudio = () => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = 0;
-      audioRef.current.play();
+    // Si la question a un texte audio, utiliser la synthèse vocale
+    if (question.audioText) {
+      setIsPlaying(true);
+      
+      // Extraire le texte à lire (enlever "Audio : " et les guillemets)
+      const textToSpeak = question.audioText.replace(/^Audio\s*:\s*['"]?|['"]?$/g, '');
+      
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      utterance.lang = 'fr-FR';
+      utterance.rate = 0.9; // Vitesse légèrement réduite pour meilleure compréhension
+      
+      utterance.onend = () => {
+        setIsPlaying(false);
+      };
+      
+      utterance.onerror = () => {
+        setIsPlaying(false);
+      };
+      
+      window.speechSynthesis.cancel(); // Annuler toute lecture en cours
+      window.speechSynthesis.speak(utterance);
     }
   };
 
@@ -53,21 +71,15 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
                   </div>
                   <Button
                     onClick={playAudio}
-                    className="bg-[#00504e] hover:bg-[#17c3b2] flex items-center gap-2 shrink-0"
+                    disabled={isPlaying}
+                    className="bg-[#00504e] hover:bg-[#17c3b2] flex items-center gap-2 shrink-0 disabled:opacity-50"
                   >
-                    <PlayCircle className="w-4 h-4" />
-                    Écouter
+                    <PlayCircle className={`w-4 h-4 ${isPlaying ? 'animate-pulse' : ''}`} />
+                    {isPlaying ? 'En lecture...' : 'Écouter'}
                   </Button>
                 </div>
               </AlertDescription>
             </Alert>
-            <audio ref={audioRef} className="hidden">
-              <source src={question.audioUrl} type="audio/mpeg" />
-            </audio>
-            {/* Fallback text for demo */}
-            <div className="mt-2 text-xs text-gray-500 italic bg-gray-50 p-3 rounded-lg border border-gray-200">
-              📝 Transcription (pour démo) : {question.audioText}
-            </div>
           </motion.div>
         )}
 
