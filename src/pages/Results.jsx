@@ -162,7 +162,7 @@ export default function Results() {
                 className="space-y-4"
               >
                 <div className="grid grid-cols-2 gap-4">
-                  <a href="mailto:contact@parleremploi.fr?subject=Demande de formation français">
+                  <a href="mailto:contact@parleremploi.com?subject=Demande de formation français">
                     <Button
                       variant="outline"
                       className="w-full h-12 rounded-xl"
@@ -196,7 +196,7 @@ export default function Results() {
                 <p className="opacity-90 mb-6">
                   Nos formations personnalisées vous aident à améliorer vos compétences ciblées.
                 </p>
-                <a href="https://parleremploi.fr" target="_blank" rel="noopener noreferrer">
+                <a href="https://parleremploi.com" target="_blank" rel="noopener noreferrer">
                   <Button className="bg-white text-[#00504e] hover:bg-gray-100 font-semibold px-8 h-12 rounded-xl">
                     Découvrir nos formations
                   </Button>
