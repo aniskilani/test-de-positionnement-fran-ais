@@ -25,51 +25,18 @@ export default function Payment() {
     }
   }, []);
 
-  const handlePayment = async (e) => {
+  const handlePayment = (e) => {
     e.preventDefault();
-    setIsProcessing(true);
-    setError('');
-
-    try {
-      // Créer une session Stripe Checkout
-      const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer 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',
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          'mode': 'payment',
-          'success_url': `${window.location.origin}${createPageUrl('Test')}?name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&phone=${encodeURIComponent(candidatePhone)}&payment=success`,
-          'cancel_url': `${window.location.origin}${createPageUrl('Payment')}?name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&phone=${encodeURIComponent(candidatePhone)}&cancelled=true`,
-          'customer_email': candidateEmail,
-          'line_items[0][price_data][currency]': 'eur',
-          'line_items[0][price_data][unit_amount]': '1900',
-          'line_items[0][price_data][product_data][name]': 'Test de Positionnement FLE',
-          'line_items[0][price_data][product_data][description]': 'Évaluation CECRL A1-B2',
-          'line_items[0][quantity]': '1',
-          'payment_method_types[0]': 'card',
-        }),
-      });
-
-      const session = await response.json();
-      
-      if (session.id) {
-        const stripe = await stripePromise;
-        const { error: stripeError } = await stripe.redirectToCheckout({ sessionId: session.id });
-        
-        if (stripeError) {
-          setError(stripeError.message);
-          setIsProcessing(false);
-        }
-      } else {
-        setError('Erreur lors de la création de la session de paiement');
-        setIsProcessing(false);
-      }
-    } catch (err) {
-      setError('Erreur de connexion. Veuillez réessayer.');
-      setIsProcessing(false);
-    }
+    
+    // Créer l'URL du Payment Link Stripe avec les métadonnées
+    const successUrl = encodeURIComponent(`${window.location.origin}${createPageUrl('Test')}?name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&phone=${encodeURIComponent(candidatePhone)}&payment=success`);
+    
+    // TODO: Remplacer cette URL par votre Payment Link Stripe
+    // Pour créer un Payment Link : https://dashboard.stripe.com/payment-links
+    // Prix : 19€, avec redirection vers l'URL de succès ci-dessus
+    const stripePaymentLink = `https://buy.stripe.com/VOTRE_LIEN_ICI?prefilled_email=${encodeURIComponent(candidateEmail)}&success_url=${successUrl}`;
+    
+    window.location.href = stripePaymentLink;
   };
 
   return (
