@@ -204,21 +204,6 @@ export default function Test() {
     setAnswers({ ...answers, [currentQuestion]: answer });
   };
 
-  useEffect(() => {
-    const handleKeyPress = (e) => {
-      if (e.key === 'Enter' && hasAnswered && !isSubmitting) {
-        if (isLastQuestion) {
-          handleSubmit();
-        } else {
-          handleNext();
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [hasAnswered, isLastQuestion, isSubmitting, currentQuestion, answers]);
-
   const handleNext = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
@@ -335,6 +320,21 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
     (currentQ.type === 'written' ? (answers[currentQuestion] || '').split(/\s+/).filter(w => w.length > 0).length >= (currentQ.minWords || 0) :
      currentQ.type === 'oral' ? (answers[currentQuestion] || '').length > 10 :
      true);
+
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key === 'Enter' && hasAnswered && !isSubmitting) {
+        if (isLastQuestion) {
+          handleSubmit();
+        } else {
+          handleNext();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [hasAnswered, isLastQuestion, isSubmitting]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-[#17c3b2]/5">
