@@ -1,11 +1,12 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, MessageSquare, Volume2, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { BookOpen, MessageSquare, Volume2, FileText, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 
 const categoryIcons = {
   "Grammaire": BookOpen,
   "Vocabulaire": MessageSquare,
   "Compréhension Orale": Volume2,
+  "Compréhension Écrite": FileText,
   "Compréhension": MessageSquare
 };
 
