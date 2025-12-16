@@ -61,10 +61,10 @@ export const questions = [
     id: 7,
     level: "A1",
     category: "Vocabulaire",
-    question: "Que signifie « Merci beaucoup » ?",
-    options: ["Goodbye", "Thank you very much", "Please", "Excuse me"],
-    correct: "Thank you very much",
-    explanation: "'Merci beaucoup' signifie 'Thank you very much' en anglais."
+    question: "Quel mot utilise-t-on pour dire « Thank you » en français ?",
+    options: ["S'il vous plaît", "Merci", "Pardon", "De rien"],
+    correct: "Merci",
+    explanation: "'Merci' est la traduction française de 'Thank you'."
   },
   {
     id: 8,
@@ -172,8 +172,8 @@ export const questions = [
     level: "A2",
     category: "Vocabulaire",
     question: "Que signifie « être en retard » ?",
-    options: ["To be early", "To be late", "To be on time", "To be absent"],
-    correct: "To be late",
+    options: ["Arriver tôt", "Arriver après l'heure prévue", "Arriver à l'heure", "Être absent"],
+    correct: "Arriver après l'heure prévue",
     explanation: "'Être en retard' signifie arriver après l'heure prévue."
   },
   {
