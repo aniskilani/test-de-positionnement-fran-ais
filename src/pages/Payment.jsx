@@ -10,7 +10,6 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 const stripePromise = loadStripe('pk_live_51SemqNALINlnrkF4canP5ifuGuIALwcLjIcaGuGmlWHo8FYYAjlu7OOjlBX04xXtkrL71TEVJMs7gSlQ9J3IqcwT00amnVsgQr');
 
 export default function Payment() {
-  const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState('');
   const [cancelled, setCancelled] = useState(false);
 
@@ -24,20 +23,6 @@ export default function Payment() {
       setCancelled(true);
     }
   }, []);
-
-  const handlePayment = (e) => {
-    e.preventDefault();
-    
-    // Créer l'URL du Payment Link Stripe avec les métadonnées
-    const successUrl = encodeURIComponent(`${window.location.origin}${createPageUrl('Test')}?name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&phone=${encodeURIComponent(candidatePhone)}&payment=success`);
-    
-    // TODO: Remplacer cette URL par votre Payment Link Stripe
-    // Pour créer un Payment Link : https://dashboard.stripe.com/payment-links
-    // Prix : 19€, avec redirection vers l'URL de succès ci-dessus
-    const stripePaymentLink = `https://buy.stripe.com/VOTRE_LIEN_ICI?prefilled_email=${encodeURIComponent(candidateEmail)}&success_url=${successUrl}`;
-    
-    window.location.href = stripePaymentLink;
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-[#17c3b2]/5">
@@ -144,7 +129,14 @@ export default function Payment() {
                   </Alert>
                 )}
 
-                <form onSubmit={handlePayment} className="space-y-6">
+                <Alert className="mb-6 border-yellow-200 bg-yellow-50">
+                  <AlertCircle className="h-4 w-4 text-yellow-600" />
+                  <AlertDescription className="text-yellow-800">
+                    <strong>Accès temporaire gratuit</strong> - Le paiement sera activé prochainement.
+                  </AlertDescription>
+                </Alert>
+
+                <div className="space-y-6">
                   {/* Candidate Info */}
                   <div className="bg-gray-50 rounded-xl p-4">
                     <p className="text-sm text-gray-600 mb-2">Candidat :</p>
@@ -153,31 +145,23 @@ export default function Payment() {
                     <p className="text-sm text-gray-600">{candidatePhone}</p>
                   </div>
 
-                  <Button
-                    type="submit"
-                    disabled={isProcessing}
-                    className="w-full h-14 rounded-xl text-lg font-semibold bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 transition-all shadow-lg shadow-[#17c3b2]/25"
+                  <Link 
+                    to={createPageUrl('Test') + `?name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&phone=${encodeURIComponent(candidatePhone)}`}
                   >
-                    {isProcessing ? (
-                      'Redirection vers Stripe...'
-                    ) : (
-                      <>
-                        Payer 19€ avec Stripe
-                        <ArrowRight className="ml-2 w-5 h-5" />
-                      </>
-                    )}
-                  </Button>
+                    <Button
+                      className="w-full h-14 rounded-xl text-lg font-semibold bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 transition-all shadow-lg shadow-[#17c3b2]/25"
+                    >
+                      Accéder au test gratuitement
+                      <ArrowRight className="ml-2 w-5 h-5" />
+                    </Button>
+                  </Link>
 
                   <div className="space-y-2">
                     <p className="text-center text-xs text-gray-500">
-                      Paiement 100% sécurisé par Stripe
+                      Accès temporaire pendant l'activation de Stripe
                     </p>
-                    <div className="flex items-center justify-center gap-2 text-xs text-gray-400">
-                      <CheckCircle className="w-3 h-3" />
-                      <span>Cartes bancaires acceptées</span>
-                    </div>
                   </div>
-                </form>
+                </div>
               </div>
             </motion.div>
           </div>
