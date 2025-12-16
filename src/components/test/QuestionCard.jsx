@@ -12,24 +12,34 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
     if (question.audioText) {
       setIsPlaying(true);
       
-      const textToSpeak = question.audioText.replace(/^Audio\s*:\s*['"]?|['"]?$/g, '');
+      let textToSpeak = question.audioText.replace(/^Audio\s*:\s*['"]?|['"]?$/g, '');
+      
+      // Ajouter des pauses naturelles pour plus d'humanité
+      textToSpeak = textToSpeak
+        .replace(/\?/g, ' ?')
+        .replace(/!/g, ' !')
+        .replace(/,/g, ', ')
+        .replace(/\./g, '. ');
       
       const utterance = new SpeechSynthesisUtterance(textToSpeak);
       utterance.lang = 'fr-FR';
-      utterance.rate = 0.85;
-      utterance.pitch = 1.1;
+      utterance.rate = 0.8;
+      utterance.pitch = 1.15;
       utterance.volume = 1;
       
-      // Sélectionner une voix française plus naturelle
+      // Prioriser les voix les plus naturelles et expressives
       const voices = window.speechSynthesis.getVoices();
       const frenchVoice = voices.find(voice => 
         voice.lang.startsWith('fr') && (
-          voice.name.includes('Google') || 
+          voice.name.includes('Amélie') ||
+          voice.name.includes('Thomas') ||
           voice.name.includes('Enhanced') ||
           voice.name.includes('Premium') ||
-          voice.name.includes('Natural')
+          voice.name.includes('Neural') ||
+          voice.name.includes('Google')
         )
-      ) || voices.find(voice => voice.lang.startsWith('fr'));
+      ) || voices.find(voice => voice.lang.startsWith('fr-FR')) 
+        || voices.find(voice => voice.lang.startsWith('fr'));
       
       if (frenchVoice) {
         utterance.voice = frenchVoice;
