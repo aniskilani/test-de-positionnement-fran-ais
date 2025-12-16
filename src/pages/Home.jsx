@@ -10,11 +10,12 @@ import { ArrowRight, Clock, Target, Award, CheckCircle } from 'lucide-react';
 export default function Home() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
 
   const features = [
     { icon: Clock, text: "15 minutes", label: "Durée estimée" },
-    { icon: Target, text: "20 questions", label: "Questions adaptatives" },
-    { icon: Award, text: "Niveau CECRL", label: "De A1 à C2" },
+    { icon: Target, text: "15 questions", label: "Questions adaptatives" },
+    { icon: Award, text: "Niveau CECRL", label: "De A1 à B2" },
   ];
 
   return (
@@ -121,12 +122,24 @@ export default function Home() {
                     />
                   </div>
 
+                  <div className="space-y-2">
+                    <Label htmlFor="phone" className="text-gray-700">Votre téléphone</Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="06 12 34 56 78"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="h-12 rounded-xl border-gray-200 focus:border-[#17c3b2] focus:ring-[#17c3b2]/20"
+                    />
+                  </div>
+
                   <Link 
-                    to={createPageUrl('Test') + `?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`}
+                    to={createPageUrl('Test') + `?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`}
                   >
                     <Button 
                       className="w-full h-14 rounded-xl text-lg font-semibold bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 transition-all shadow-lg shadow-[#17c3b2]/25"
-                      disabled={!name || !email}
+                      disabled={!name || !email || !phone}
                     >
                       Démarrer le test
                       <ArrowRight className="ml-2 w-5 h-5" />

@@ -34,9 +34,17 @@ const questions = [
     options: ["des livre", "des livres", "les livre", "un livres"],
     correct: "des livres"
   },
-  // A2 Level
   {
     id: 4,
+    level: "A1",
+    category: "Vocabulaire",
+    question: "Quel article utilise-t-on : « ___ pomme » ?",
+    options: ["Un", "Une", "Des", "Le"],
+    correct: "Une"
+  },
+  // A2 Level
+  {
+    id: 5,
     level: "A2",
     category: "Grammaire",
     question: "Complétez : « Hier, nous ___ au cinéma. »",
@@ -44,7 +52,7 @@ const questions = [
     correct: "sommes allés"
   },
   {
-    id: 5,
+    id: 6,
     level: "A2",
     category: "Vocabulaire",
     question: "Quel mot signifie l'inverse de « grand » ?",
@@ -52,16 +60,24 @@ const questions = [
     correct: "petit"
   },
   {
-    id: 6,
+    id: 7,
     level: "A2",
     category: "Compréhension",
     question: "« Il fait beau aujourd'hui. » Cette phrase parle de :",
     options: ["la nourriture", "la météo", "le travail", "la santé"],
     correct: "la météo"
   },
+  {
+    id: 8,
+    level: "A2",
+    category: "Grammaire",
+    question: "Complétez : « Elle ___ au marché tous les samedis. »",
+    options: ["va", "aller", "allé", "allait"],
+    correct: "va"
+  },
   // B1 Level
   {
-    id: 7,
+    id: 9,
     level: "B1",
     category: "Grammaire",
     question: "Complétez : « Si j'avais le temps, je ___ ce livre. »",
@@ -69,7 +85,7 @@ const questions = [
     correct: "lirais"
   },
   {
-    id: 8,
+    id: 10,
     level: "B1",
     category: "Vocabulaire",
     question: "Que signifie « être débordé » ?",
@@ -77,7 +93,7 @@ const questions = [
     correct: "Avoir trop de travail"
   },
   {
-    id: 9,
+    id: 11,
     level: "B1",
     category: "Grammaire",
     question: "Choisissez la forme correcte : « C'est le livre ___ je t'ai parlé. »",
@@ -85,7 +101,7 @@ const questions = [
     correct: "dont"
   },
   {
-    id: 10,
+    id: 12,
     level: "B1",
     category: "Compréhension",
     question: "« Il a pris ses jambes à son cou. » signifie :",
@@ -94,7 +110,7 @@ const questions = [
   },
   // B2 Level
   {
-    id: 11,
+    id: 13,
     level: "B2",
     category: "Grammaire",
     question: "Complétez : « Bien qu'il ___ fatigué, il a continué à travailler. »",
@@ -102,7 +118,7 @@ const questions = [
     correct: "soit"
   },
   {
-    id: 12,
+    id: 14,
     level: "B2",
     category: "Vocabulaire",
     question: "Quel est le synonyme de « néanmoins » ?",
@@ -110,70 +126,12 @@ const questions = [
     correct: "Cependant"
   },
   {
-    id: 13,
+    id: 15,
     level: "B2",
     category: "Grammaire",
     question: "« Il m'a demandé si je ___ venir. »",
     options: ["peux", "pouvais", "pourrai", "pourrais"],
     correct: "pouvais"
-  },
-  {
-    id: 14,
-    level: "B2",
-    category: "Compréhension",
-    question: "« Mettre son grain de sel » signifie :",
-    options: ["Cuisiner", "S'immiscer dans une conversation", "Ajouter du sel", "Être généreux"],
-    correct: "S'immiscer dans une conversation"
-  },
-  // C1 Level
-  {
-    id: 15,
-    level: "C1",
-    category: "Grammaire",
-    question: "Complétez : « ___ les circonstances, nous reportons la réunion. »",
-    options: ["Vu", "Voyant", "Ayant vu", "En vue de"],
-    correct: "Vu"
-  },
-  {
-    id: 16,
-    level: "C1",
-    category: "Vocabulaire",
-    question: "Quel est le registre du mot « bagnole » ?",
-    options: ["Soutenu", "Familier", "Courant", "Littéraire"],
-    correct: "Familier"
-  },
-  {
-    id: 17,
-    level: "C1",
-    category: "Grammaire",
-    question: "« Il eût été préférable que vous ___. »",
-    options: ["venez", "veniez", "vinssiez", "viendriez"],
-    correct: "vinssiez"
-  },
-  // C2 Level
-  {
-    id: 18,
-    level: "C2",
-    category: "Vocabulaire",
-    question: "Que signifie « une logorrhée » ?",
-    options: ["Un raisonnement logique", "Un flux de paroles excessif", "Une maladie", "Un type de musique"],
-    correct: "Un flux de paroles excessif"
-  },
-  {
-    id: 19,
-    level: "C2",
-    category: "Grammaire",
-    question: "Identifiez la figure de style : « Cette faucheuse qu'on appelle la mort. »",
-    options: ["Métaphore", "Périphrase", "Litote", "Hyperbole"],
-    correct: "Périphrase"
-  },
-  {
-    id: 20,
-    level: "C2",
-    category: "Compréhension",
-    question: "« Avoir maille à partir avec quelqu'un » signifie :",
-    options: ["Partager quelque chose", "Avoir un différend", "Tricoter ensemble", "Être ami"],
-    correct: "Avoir un différend"
   }
 ];
 
@@ -187,6 +145,7 @@ export default function Test() {
   const urlParams = new URLSearchParams(window.location.search);
   const candidateName = urlParams.get('name') || '';
   const candidateEmail = urlParams.get('email') || '';
+  const candidatePhone = urlParams.get('phone') || '';
 
   const handleSelect = (answer) => {
     setAnswers({ ...answers, [currentQuestion]: answer });
@@ -222,10 +181,8 @@ export default function Test() {
     const score = Math.round((correctCount / questions.length) * 100);
     
     let level;
-    if (score >= 90) level = "C2";
-    else if (score >= 80) level = "C1";
-    else if (score >= 65) level = "B2";
-    else if (score >= 50) level = "B1";
+    if (score >= 75) level = "B2";
+    else if (score >= 55) level = "B1";
     else if (score >= 35) level = "A2";
     else level = "A1";
 
@@ -241,7 +198,8 @@ export default function Test() {
       ...results,
       duration_seconds: duration,
       candidate_name: candidateName,
-      candidate_email: candidateEmail
+      candidate_email: candidateEmail,
+      candidate_phone: candidatePhone
     };
 
     await base44.entities.TestResult.create(resultData);

@@ -47,28 +47,7 @@ const levelData = {
       "S'exprimer de façon claire"
     ]
   },
-  C1: {
-    title: "Autonome",
-    description: "Vous pouvez utiliser la langue de façon efficace et souple dans la vie sociale et professionnelle.",
-    icon: Star,
-    color: "#00504e",
-    skills: [
-      "Expression fluide et spontanée",
-      "Textes complexes et implicites",
-      "Usage flexible du français"
-    ]
-  },
-  C2: {
-    title: "Maîtrise",
-    description: "Vous comprenez sans effort pratiquement tout ce que vous lisez ou entendez.",
-    icon: Award,
-    color: "#00504e",
-    skills: [
-      "Maîtrise quasi-native",
-      "Nuances fines du langage",
-      "Expression précise et élaborée"
-    ]
-  }
+
 };
 
 export default function LevelResult({ level, score }) {
