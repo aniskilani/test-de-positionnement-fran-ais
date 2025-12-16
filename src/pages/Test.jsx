@@ -9,9 +9,20 @@ import ProgressBar from '@/components/test/ProgressBar';
 import QuestionCard from '@/components/test/QuestionCard';
 
 const questions = [
-  // A1 Level
+  // A1 Level - Compréhension Orale
   {
     id: 1,
+    level: "A1",
+    category: "Compréhension Orale",
+    question: "Écoutez l'audio. Quelle est la question posée ?",
+    audioUrl: "https://example.com/audio/question-a1-1.mp3",
+    audioText: "Audio : 'Comment tu t'appelles ?'",
+    options: ["Quel âge as-tu ?", "Comment tu t'appelles ?", "Où habites-tu ?", "Quelle heure est-il ?"],
+    correct: "Comment tu t'appelles ?"
+  },
+  // A1 Level - Grammaire
+  {
+    id: 2,
     level: "A1",
     category: "Grammaire",
     question: "Complétez : « Je ___ français. »",
