@@ -1,12 +1,16 @@
 import React, { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle2, Volume2, PlayCircle, AlertCircle } from 'lucide-react';
+import { CheckCircle2, Volume2, PlayCircle, AlertCircle, Mic, Square, Loader2 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function QuestionCard({ question, selectedAnswer, onSelect, questionNumber }) {
   const [isPlaying, setIsPlaying] = React.useState(false);
+  const [isRecording, setIsRecording] = React.useState(false);
+  const [recordingTime, setRecordingTime] = React.useState(0);
+  const recognitionRef = useRef(null);
+  const timerRef = useRef(null);
 
   const playAudio = () => {
     if (question.audioText) {
@@ -14,7 +18,6 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
       
       let textToSpeak = question.audioText.replace(/^Audio\s*:\s*['"]?|['"]?$/g, '');
       
-      // Ajouter des pauses naturelles pour plus d'humanité
       textToSpeak = textToSpeak
         .replace(/\?/g, ' ?')
         .replace(/!/g, ' !')
@@ -27,7 +30,6 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
       utterance.pitch = 1.15;
       utterance.volume = 1;
       
-      // Prioriser les voix les plus naturelles et expressives
       const voices = window.speechSynthesis.getVoices();
       const frenchVoice = voices.find(voice => 
         voice.lang.startsWith('fr') && (
@@ -51,6 +53,66 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(utterance);
     }
+  };
+
+  const startRecording = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    
+    if (!SpeechRecognition) {
+      alert("Votre navigateur ne supporte pas l'enregistrement audio. Utilisez Chrome ou Edge.");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'fr-FR';
+    recognition.continuous = true;
+    recognition.interimResults = true;
+
+    let finalTranscript = '';
+
+    recognition.onresult = (event) => {
+      let interimTranscript = '';
+      
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          finalTranscript += transcript + ' ';
+        } else {
+          interimTranscript += transcript;
+        }
+      }
+      
+      onSelect(finalTranscript + interimTranscript);
+    };
+
+    recognition.onerror = (event) => {
+      console.error('Erreur:', event.error);
+      setIsRecording(false);
+      clearInterval(timerRef.current);
+    };
+
+    recognition.onend = () => {
+      setIsRecording(false);
+      clearInterval(timerRef.current);
+    };
+
+    recognition.start();
+    recognitionRef.current = recognition;
+    setIsRecording(true);
+    setRecordingTime(0);
+
+    timerRef.current = setInterval(() => {
+      setRecordingTime(prev => prev + 1);
+    }, 1000);
+  };
+
+  const stopRecording = () => {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+      recognitionRef.current = null;
+    }
+    setIsRecording(false);
+    clearInterval(timerRef.current);
   };
 
   return (
@@ -109,8 +171,54 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
           {question.question}
         </h2>
 
-        {/* Answer Options or Text Area */}
-        {question.type === 'written' ? (
+        {/* Answer Options, Text Area, or Voice Recording */}
+        {question.type === 'oral' ? (
+          <div className="space-y-4">
+            <Alert className="bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
+              <Mic className="h-4 w-4 text-purple-600" />
+              <AlertDescription className="text-purple-900 text-sm">
+                Enregistrez votre réponse (minimum <strong>{question.minDuration} secondes</strong>). 
+                Parlez clairement et naturellement. Votre production sera évaluée par IA.
+              </AlertDescription>
+            </Alert>
+
+            <div className="bg-gray-50 rounded-xl p-6 text-center space-y-4">
+              {!isRecording ? (
+                <Button
+                  onClick={startRecording}
+                  className="h-16 px-8 bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90"
+                  size="lg"
+                >
+                  <Mic className="w-6 h-6 mr-2" />
+                  Commencer l'enregistrement
+                </Button>
+              ) : (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-center gap-3">
+                    <div className="w-4 h-4 rounded-full bg-red-500 animate-pulse" />
+                    <span className="text-2xl font-bold text-gray-900">
+                      {Math.floor(recordingTime / 60)}:{(recordingTime % 60).toString().padStart(2, '0')}
+                    </span>
+                  </div>
+                  <Button
+                    onClick={stopRecording}
+                    className="h-14 px-8 bg-red-600 hover:bg-red-700"
+                  >
+                    <Square className="w-5 h-5 mr-2" />
+                    Arrêter l'enregistrement
+                  </Button>
+                </div>
+              )}
+            </div>
+
+            {selectedAnswer && (
+              <div className="bg-white border border-gray-200 rounded-xl p-4">
+                <p className="text-sm text-gray-600 mb-2">Transcription :</p>
+                <p className="text-gray-900">{selectedAnswer}</p>
+              </div>
+            )}
+          </div>
+        ) : question.type === 'written' ? (
           <div className="space-y-4">
             <Alert className="bg-blue-50 border-blue-200">
               <AlertCircle className="h-4 w-4 text-blue-600" />

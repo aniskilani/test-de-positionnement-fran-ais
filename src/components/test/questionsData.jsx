@@ -448,9 +448,20 @@ export const questions = [
     explanation: "Une action 'concertée' est une action coordonnée, menée ensemble de façon organisée."
   },
 
-  // ==================== Expression Écrite ====================
+  // ==================== Production Orale ====================
   {
     id: 46,
+    level: "A1",
+    category: "Production Orale",
+    type: "oral",
+    question: "Présentez-vous oralement : dites votre nom, votre âge et où vous habitez.",
+    minDuration: 5,
+    criteria: ["Prononciation claire", "Utilise 'je m'appelle' ou 'je suis'", "Structure simple et compréhensible", "Donne au moins 2 informations personnelles"]
+  },
+
+  // ==================== Expression Écrite ====================
+  {
+    id: 47,
     level: "A1",
     category: "Expression Écrite",
     type: "written",
@@ -460,7 +471,7 @@ export const questions = [
     criteria: ["Utilise 'je m'appelle' ou 'je suis'", "Mentionne l'âge avec 'j'ai ... ans'", "Phrase complète et compréhensible"]
   },
   {
-    id: 47,
+    id: 48,
     level: "A2",
     category: "Expression Écrite",
     type: "written",
@@ -470,7 +481,7 @@ export const questions = [
     criteria: ["Utilise le présent", "Structure chronologique claire", "Vocabulaire quotidien approprié", "Connecteurs temporels (le matin, puis, ensuite)"]
   },
   {
-    id: 48,
+    id: 49,
     level: "B1",
     category: "Expression Écrite",
     type: "written",
@@ -480,7 +491,7 @@ export const questions = [
     criteria: ["Utilise le passé composé", "Décrit les activités et lieux", "Exprime des sentiments", "Texte cohérent et structuré"]
   },
   {
-    id: 49,
+    id: 50,
     level: "B2",
     category: "Expression Écrite",
     type: "written",

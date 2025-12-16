@@ -221,25 +221,26 @@ export default function Test() {
     const answerDetails = [];
     const categoryScores = {};
 
-    // Évaluer les questions avec IA pour l'expression écrite
+    // Évaluer les questions avec IA pour l'expression écrite et orale
     for (let index = 0; index < questions.length; index++) {
       const q = questions[index];
       const userAnswer = answers[index];
       let isCorrect;
 
-      if (q.type === 'written') {
-        // Évaluation par IA pour les questions d'expression écrite
+      if (q.type === 'written' || q.type === 'oral') {
+        // Évaluation par IA pour les questions d'expression écrite et orale
         if (userAnswer && userAnswer.trim()) {
           try {
             const evaluation = await base44.integrations.Core.InvokeLLM({
               prompt: `Tu es un évaluateur de français langue étrangère niveau ${q.level}. 
-Évalue cette réponse selon les critères suivants :
+Évalue cette réponse ${q.type === 'oral' ? 'orale (transcrite)' : 'écrite'} selon les critères suivants :
 ${q.criteria.map(c => `- ${c}`).join('\n')}
 
 Question: ${q.question}
 Réponse de l'étudiant: "${userAnswer}"
 
 Évalue si la réponse respecte MAJORITAIREMENT les critères pour le niveau ${q.level}.
+${q.type === 'oral' ? 'Note: Il peut y avoir des erreurs de transcription, sois indulgent sur l\'orthographe.' : ''}
 Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication (1 phrase).`,
               response_json_schema: {
                 type: "object",
@@ -251,9 +252,13 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
             });
             isCorrect = evaluation.evaluation === "correct";
           } catch (err) {
-            // En cas d'erreur, on compte comme correct si minimum de mots atteint
-            const wordCount = userAnswer.split(/\s+/).filter(w => w.length > 0).length;
-            isCorrect = wordCount >= q.minWords;
+            // En cas d'erreur, on compte comme correct si minimum atteint
+            if (q.type === 'written') {
+              const wordCount = userAnswer.split(/\s+/).filter(w => w.length > 0).length;
+              isCorrect = wordCount >= q.minWords;
+            } else {
+              isCorrect = userAnswer.length > 10;
+            }
           }
         } else {
           isCorrect = false;
@@ -312,7 +317,9 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
   const currentQ = questions[currentQuestion];
   const isLastQuestion = currentQuestion === questions.length - 1;
   const hasAnswered = answers[currentQuestion] !== undefined && 
-    (currentQ.type !== 'written' || (answers[currentQuestion] || '').split(/\s+/).filter(w => w.length > 0).length >= (currentQ.minWords || 0));
+    (currentQ.type === 'written' ? (answers[currentQuestion] || '').split(/\s+/).filter(w => w.length > 0).length >= (currentQ.minWords || 0) :
+     currentQ.type === 'oral' ? (answers[currentQuestion] || '').length > 10 :
+     true);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-[#17c3b2]/5">
