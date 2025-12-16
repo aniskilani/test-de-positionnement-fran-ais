@@ -149,6 +149,25 @@ export default function Home() {
                   <p className="text-center text-sm text-gray-500">
                     En démarrant, vous acceptez nos conditions d'utilisation
                   </p>
+
+                  <div className="mt-6 pt-6 border-t border-gray-200">
+                    <p className="text-sm text-gray-600 mb-3 text-center">Besoin d'aide ?</p>
+                    <a 
+                      href="https://wa.me/33652675393?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20vos%20formations%20FLE" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="w-full h-12 rounded-xl border-[#25D366] text-[#25D366] hover:bg-[#25D366] hover:text-white transition-all"
+                      >
+                        <MessageCircle className="w-4 h-4 mr-2" />
+                        Contactez-nous sur WhatsApp
+                      </Button>
+                    </a>
+                  </div>
                 </form>
               </div>
             </motion.div>
