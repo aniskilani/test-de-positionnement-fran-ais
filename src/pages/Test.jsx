@@ -216,14 +216,53 @@ export default function Test() {
     }
   };
 
-  const calculateResults = () => {
+  const calculateResults = async () => {
     let correctCount = 0;
     const answerDetails = [];
     const categoryScores = {};
 
-    questions.forEach((q, index) => {
+    // Évaluer les questions avec IA pour l'expression écrite
+    for (let index = 0; index < questions.length; index++) {
+      const q = questions[index];
       const userAnswer = answers[index];
-      const isCorrect = userAnswer === q.correct;
+      let isCorrect;
+
+      if (q.type === 'written') {
+        // Évaluation par IA pour les questions d'expression écrite
+        if (userAnswer && userAnswer.trim()) {
+          try {
+            const evaluation = await base44.integrations.Core.InvokeLLM({
+              prompt: `Tu es un évaluateur de français langue étrangère niveau ${q.level}. 
+Évalue cette réponse selon les critères suivants :
+${q.criteria.map(c => `- ${c}`).join('\n')}
+
+Question: ${q.question}
+Réponse de l'étudiant: "${userAnswer}"
+
+Évalue si la réponse respecte MAJORITAIREMENT les critères pour le niveau ${q.level}.
+Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication (1 phrase).`,
+              response_json_schema: {
+                type: "object",
+                properties: {
+                  evaluation: { type: "string", enum: ["correct", "incorrect"] },
+                  explanation: { type: "string" }
+                }
+              }
+            });
+            isCorrect = evaluation.evaluation === "correct";
+          } catch (err) {
+            // En cas d'erreur, on compte comme correct si minimum de mots atteint
+            const wordCount = userAnswer.split(/\s+/).filter(w => w.length > 0).length;
+            isCorrect = wordCount >= q.minWords;
+          }
+        } else {
+          isCorrect = false;
+        }
+      } else {
+        // Questions QCM classiques
+        isCorrect = userAnswer === q.correct;
+      }
+
       if (isCorrect) correctCount++;
       
       answerDetails.push({
@@ -238,7 +277,7 @@ export default function Test() {
       }
       categoryScores[q.category].total++;
       if (isCorrect) categoryScores[q.category].correct++;
-    });
+    }
 
     const score = Math.round((correctCount / questions.length) * 100);
     
@@ -255,7 +294,7 @@ export default function Test() {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     const duration = Math.round((Date.now() - startTime) / 1000);
-    const results = calculateResults();
+    const results = await calculateResults();
 
     const resultData = {
       ...results,
@@ -272,7 +311,8 @@ export default function Test() {
 
   const currentQ = questions[currentQuestion];
   const isLastQuestion = currentQuestion === questions.length - 1;
-  const hasAnswered = answers[currentQuestion] !== undefined;
+  const hasAnswered = answers[currentQuestion] !== undefined && 
+    (currentQ.type !== 'written' || (answers[currentQuestion] || '').split(/\s+/).filter(w => w.length > 0).length >= (currentQ.minWords || 0));
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-[#17c3b2]/5">
