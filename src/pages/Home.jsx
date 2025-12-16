@@ -26,7 +26,7 @@ export default function Home() {
           <img 
             src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_69409edef41e4f2a833c897b/ac7782ec6_logopefpetit.png" 
             alt="ParlerEmploi Formation" 
-            className="h-12 object-contain"
+            className="h-20 object-contain"
           />
           <div className="hidden md:flex items-center gap-2 text-sm text-gray-600">
             <CheckCircle className="w-4 h-4 text-[#32cf8a]" />

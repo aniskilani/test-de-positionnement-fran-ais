@@ -89,7 +89,7 @@ export default function Results() {
           <img 
             src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_69409edef41e4f2a833c897b/ac7782ec6_logopefpetit.png" 
             alt="ParlerEmploi Formation" 
-            className="h-12 object-contain"
+            className="h-16 object-contain"
           />
         </div>
       </header>

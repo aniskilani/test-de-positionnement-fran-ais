@@ -272,7 +272,7 @@ export default function Test() {
           <img 
             src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_69409edef41e4f2a833c897b/ac7782ec6_logopefpetit.png" 
             alt="ParlerEmploi Formation" 
-            className="h-10 object-contain"
+            className="h-16 object-contain"
           />
           <Link to={createPageUrl('Home')}>
             <Button variant="ghost" size="icon" className="text-gray-500 hover:text-gray-700">
