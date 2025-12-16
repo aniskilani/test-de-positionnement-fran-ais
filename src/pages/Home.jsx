@@ -5,7 +5,7 @@ import { createPageUrl } from '@/utils';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowRight, Clock, Target, Award, CheckCircle } from 'lucide-react';
+import { ArrowRight, Clock, Target, Award, CheckCircle, MessageCircle } from 'lucide-react';
 
 export default function Home() {
   const [name, setName] = useState('');
