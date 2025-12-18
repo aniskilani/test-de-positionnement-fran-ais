@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileSpreadsheet, Loader2, ExternalLink, CheckCircle } from 'lucide-react';
+import { FileSpreadsheet, Loader2, ExternalLink, Users, CheckCircle } from 'lucide-react';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function Admin() {
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState(null);
+  const [exporting, setExporting] = useState(false);
+  const [exportResult, setExportResult] = useState(null);
   const [error, setError] = useState('');
 
+  const { data: results = [] } = useQuery({
+    queryKey: ['testResults'],
+    queryFn: () => base44.entities.TestResult.list('-created_date')
+  });
+
   const handleExport = async () => {
-    setLoading(true);
+    setExporting(true);
     setError('');
-    setResult(null);
+    setExportResult(null);
 
     try {
       const response = await base44.functions.invoke('exportToSheets');
@@ -21,23 +27,53 @@ export default function Admin() {
       if (response.data.error) {
         setError(response.data.error);
       } else {
-        setResult(response.data);
+        setExportResult(response.data);
       }
     } catch (err) {
       setError(err.message || 'Erreur lors de l\'export');
     } finally {
-      setLoading(false);
+      setExporting(false);
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-[#17c3b2]/5 p-6">
-      <div className="max-w-2xl mx-auto pt-20">
-        <header className="mb-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Administration</h1>
-          <p className="text-gray-600">Exportez les résultats des tests vers Google Sheets</p>
-        </header>
+          <p className="text-gray-600">Gestion et export des résultats de tests</p>
+        </div>
 
+        {/* Stats */}
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium">Total des tests</CardTitle>
+              <Users className="w-4 h-4 text-gray-500" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-[#00504e]">{results.length}</div>
+              <p className="text-xs text-gray-500 mt-1">Tests complétés</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium">Score moyen</CardTitle>
+              <CheckCircle className="w-4 h-4 text-gray-500" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-[#00504e]">
+                {results.length > 0 
+                  ? Math.round(results.reduce((sum, r) => sum + (r.score || 0), 0) / results.length)
+                  : 0}%
+              </div>
+              <p className="text-xs text-gray-500 mt-1">Sur tous les tests</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Export Card */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -45,16 +81,49 @@ export default function Admin() {
               Export Google Sheets
             </CardTitle>
             <CardDescription>
-              Créer un nouveau fichier Google Sheets avec tous les résultats des tests
+              Exportez tous les résultats de tests vers une nouvelle feuille Google Sheets
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
+            {error && (
+              <Alert className="border-red-200 bg-red-50">
+                <AlertDescription className="text-red-900">
+                  {error}
+                </AlertDescription>
+              </Alert>
+            )}
+
+            {exportResult && (
+              <Alert className="border-green-200 bg-green-50">
+                <CheckCircle className="h-4 w-4 text-green-600" />
+                <AlertDescription className="text-green-900">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <strong>Export réussi !</strong>
+                      <p className="text-sm mt-1">{exportResult.recordsExported} résultats exportés</p>
+                    </div>
+                    <a 
+                      href={exportResult.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="ml-4"
+                    >
+                      <Button size="sm" className="bg-green-600 hover:bg-green-700">
+                        Ouvrir
+                        <ExternalLink className="w-4 h-4 ml-2" />
+                      </Button>
+                    </a>
+                  </div>
+                </AlertDescription>
+              </Alert>
+            )}
+
             <Button
               onClick={handleExport}
-              disabled={loading}
+              disabled={exporting || results.length === 0}
               className="w-full h-12 bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90"
             >
-              {loading ? (
+              {exporting ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                   Export en cours...
@@ -67,35 +136,35 @@ export default function Admin() {
               )}
             </Button>
 
-            {error && (
-              <Alert className="border-red-200 bg-red-50">
-                <AlertDescription className="text-red-800">
-                  {error}
-                </AlertDescription>
-              </Alert>
-            )}
+            <p className="text-xs text-center text-gray-500">
+              Une nouvelle feuille sera créée dans votre Google Drive
+            </p>
+          </CardContent>
+        </Card>
 
-            {result && (
-              <Alert className="border-green-200 bg-green-50">
-                <CheckCircle className="h-4 w-4 text-green-600" />
-                <AlertDescription className="text-green-800">
-                  <div className="space-y-2">
-                    <p className="font-medium">
-                      Export réussi ! {result.count} résultat(s) exporté(s)
-                    </p>
-                    <a
-                      href={result.spreadsheetUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-green-700 hover:text-green-900 underline"
-                    >
-                      Ouvrir le fichier Google Sheets
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
+        {/* Recent Results */}
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle>Derniers résultats</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {results.slice(0, 5).map((result) => (
+                <div key={result.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div>
+                    <p className="font-medium text-gray-900">{result.candidate_name}</p>
+                    <p className="text-sm text-gray-500">{result.candidate_email}</p>
                   </div>
-                </AlertDescription>
-              </Alert>
-            )}
+                  <div className="text-right">
+                    <p className="font-bold text-[#00504e]">{result.score}%</p>
+                    <p className="text-sm text-gray-500">Niveau {result.level}</p>
+                  </div>
+                </div>
+              ))}
+              {results.length === 0 && (
+                <p className="text-center text-gray-500 py-8">Aucun résultat pour le moment</p>
+              )}
+            </div>
           </CardContent>
         </Card>
       </div>
