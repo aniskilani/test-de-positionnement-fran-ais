@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { createPageUrl } from '@/utils';
 import { loadStripe } from '@stripe/stripe-js';
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, CheckCircle, X, AlertCircle } from 'lucide-react';
+import { ArrowRight, Shield, CheckCircle, X, AlertCircle, Loader2 } from 'lucide-react';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const stripePromise = loadStripe('pk_live_51SemqNALINlnrkF4canP5ifuGuIALwcLjIcaGuGmlWHo8FYYAjlu7OOjlBX04xXtkrL71TEVJMs7gSlQ9J3IqcwT00amnVsgQr');
@@ -12,11 +12,58 @@ const stripePromise = loadStripe('pk_live_51SemqNALINlnrkF4canP5ifuGuIALwcLjIcaG
 export default function Payment() {
   const [error, setError] = useState('');
   const [cancelled, setCancelled] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const urlParams = new URLSearchParams(window.location.search);
   const candidateName = urlParams.get('name') || '';
   const candidateEmail = urlParams.get('email') || '';
   const candidatePhone = urlParams.get('phone') || '';
+
+  const handlePayment = async () => {
+    setLoading(true);
+    setError('');
+
+    try {
+      const stripe = await stripePromise;
+      
+      const response = await fetch('https://api.base44.com/integrations/payment/checkout/create_checkout_session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          price_id: 'price_1SUJhyALINlnrkF4BZ4t7vYU',
+          success_url: `${window.location.origin}${createPageUrl('Test')}?name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&phone=${encodeURIComponent(candidatePhone)}`,
+          cancel_url: `${window.location.origin}${createPageUrl('Payment')}?name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&phone=${encodeURIComponent(candidatePhone)}&cancelled=true`,
+          customer_email: candidateEmail,
+          metadata: {
+            candidate_name: candidateName,
+            candidate_phone: candidatePhone
+          }
+        }),
+      });
+
+      const session = await response.json();
+
+      if (session.error) {
+        setError(session.error);
+        setLoading(false);
+        return;
+      }
+
+      const result = await stripe.redirectToCheckout({
+        sessionId: session.id,
+      });
+
+      if (result.error) {
+        setError(result.error.message);
+        setLoading(false);
+      }
+    } catch (err) {
+      setError('Une erreur est survenue. Veuillez réessayer.');
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (urlParams.get('cancelled') === 'true') {
@@ -129,13 +176,6 @@ export default function Payment() {
                   </Alert>
                 )}
 
-                <Alert className="mb-6 border-yellow-200 bg-yellow-50">
-                  <AlertCircle className="h-4 w-4 text-yellow-600" />
-                  <AlertDescription className="text-yellow-800">
-                    <strong>Accès temporaire gratuit</strong> - Le paiement sera activé prochainement.
-                  </AlertDescription>
-                </Alert>
-
                 <div className="space-y-6">
                   {/* Candidate Info */}
                   <div className="bg-gray-50 rounded-xl p-4">
@@ -145,20 +185,18 @@ export default function Payment() {
                     <p className="text-sm text-gray-600">{candidatePhone}</p>
                   </div>
 
-                  <Link 
-                    to={createPageUrl('Test') + `?name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&phone=${encodeURIComponent(candidatePhone)}`}
+                  <Button
+                    onClick={handlePayment}
+                    disabled={loading}
+                    className="w-full h-14 rounded-xl text-lg font-semibold bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 transition-all shadow-lg shadow-[#17c3b2]/25"
                   >
-                    <Button
-                      className="w-full h-14 rounded-xl text-lg font-semibold bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 transition-all shadow-lg shadow-[#17c3b2]/25"
-                    >
-                      Accéder au test gratuitement
-                      <ArrowRight className="ml-2 w-5 h-5" />
-                    </Button>
-                  </Link>
+                    {loading ? 'Redirection en cours...' : 'Payer 19€ et accéder au test'}
+                    {!loading && <ArrowRight className="ml-2 w-5 h-5" />}
+                  </Button>
 
                   <div className="space-y-2">
                     <p className="text-center text-xs text-gray-500">
-                      Accès temporaire pendant l'activation de Stripe
+                      Paiement sécurisé par Stripe • Remboursement garanti
                     </p>
                   </div>
                 </div>
