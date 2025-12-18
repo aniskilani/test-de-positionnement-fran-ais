@@ -19,64 +19,13 @@ export default function Payment() {
   const candidateEmail = urlParams.get('email') || '';
   const candidatePhone = urlParams.get('phone') || '';
 
-  const handlePayment = async () => {
-    setLoading(true);
-    setError('');
-
-    try {
-      const stripe = await stripePromise;
-      
-      const response = await fetch('https://api.base44.com/integrations/payment/checkout/create_checkout_session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          price_id: 'price_1SUJhyALINlnrkF4BZ4t7vYU',
-          success_url: `${window.location.origin}${createPageUrl('Test')}?name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&phone=${encodeURIComponent(candidatePhone)}`,
-          cancel_url: `${window.location.origin}${createPageUrl('Payment')}?name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&phone=${encodeURIComponent(candidatePhone)}&cancelled=true`,
-          customer_email: candidateEmail,
-          metadata: {
-            candidate_name: candidateName,
-            candidate_phone: candidatePhone
-          }
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        setError(errorData.message || 'Erreur lors de la création de la session de paiement');
-        setLoading(false);
-        return;
-      }
-
-      const session = await response.json();
-
-      if (session.error) {
-        setError(session.error);
-        setLoading(false);
-        return;
-      }
-
-      if (!session.id) {
-        setError('Session de paiement invalide');
-        setLoading(false);
-        return;
-      }
-
-      const result = await stripe.redirectToCheckout({
-        sessionId: session.id,
-      });
-
-      if (result.error) {
-        setError(result.error.message);
-        setLoading(false);
-      }
-    } catch (err) {
-      console.error('Payment error:', err);
-      setError(`Erreur: ${err.message || 'Une erreur est survenue'}`);
-      setLoading(false);
-    }
+  const handlePayment = () => {
+    const successUrl = `${window.location.origin}${createPageUrl('Test')}?name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&phone=${encodeURIComponent(candidatePhone)}`;
+    const cancelUrl = `${window.location.origin}${createPageUrl('Payment')}?name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&phone=${encodeURIComponent(candidatePhone)}&cancelled=true`;
+    
+    const stripeUrl = `https://buy.stripe.com/5kQ14m5V0br49i8gLw87K00?prefilled_email=${encodeURIComponent(candidateEmail)}&client_reference_id=${encodeURIComponent(candidateName)}`;
+    
+    window.location.href = stripeUrl;
   };
 
   useEffect(() => {
