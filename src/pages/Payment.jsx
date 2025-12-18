@@ -23,9 +23,7 @@ export default function Payment() {
     const successUrl = `${window.location.origin}${createPageUrl('Test')}?name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&phone=${encodeURIComponent(candidatePhone)}`;
     const cancelUrl = `${window.location.origin}${createPageUrl('Payment')}?name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&phone=${encodeURIComponent(candidatePhone)}&cancelled=true`;
     
-    const stripeUrl = `https://buy.stripe.com/5kQ14m5V0br49i8gLw87K00?prefilled_email=${encodeURIComponent(candidateEmail)}&client_reference_id=${encodeURIComponent(candidateName)}`;
-    
-    window.location.href = stripeUrl;
+    window.location.href = `https://buy.stripe.com/5kQ14m5V0br49i8gLw87K00?prefilled_email=${encodeURIComponent(candidateEmail)}&client_reference_id=${encodeURIComponent(candidateName)}&success_url=${encodeURIComponent(successUrl)}&cancel_url=${encodeURIComponent(cancelUrl)}`;
   };
 
   useEffect(() => {
