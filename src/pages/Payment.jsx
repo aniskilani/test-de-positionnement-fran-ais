@@ -43,10 +43,23 @@ export default function Payment() {
         }),
       });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        setError(errorData.message || 'Erreur lors de la création de la session de paiement');
+        setLoading(false);
+        return;
+      }
+
       const session = await response.json();
 
       if (session.error) {
         setError(session.error);
+        setLoading(false);
+        return;
+      }
+
+      if (!session.id) {
+        setError('Session de paiement invalide');
         setLoading(false);
         return;
       }
@@ -60,7 +73,8 @@ export default function Payment() {
         setLoading(false);
       }
     } catch (err) {
-      setError('Une erreur est survenue. Veuillez réessayer.');
+      console.error('Payment error:', err);
+      setError(`Erreur: ${err.message || 'Une erreur est survenue'}`);
       setLoading(false);
     }
   };
