@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { createPageUrl } from '@/utils';
-import { loadStripe } from '@stripe/stripe-js';
+import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, CheckCircle, X, AlertCircle, Loader2 } from 'lucide-react';
 import { Alert, AlertDescription } from "@/components/ui/alert";
-
-const stripePromise = loadStripe('pk_live_51SemqNALINlnrkF4canP5ifuGuIALwcLjIcaGuGmlWHo8FYYAjlu7OOjlBX04xXtkrL71TEVJMs7gSlQ9J3IqcwT00amnVsgQr');
 
 export default function Payment() {
   const [error, setError] = useState('');
@@ -19,11 +17,28 @@ export default function Payment() {
   const candidateEmail = urlParams.get('email') || '';
   const candidatePhone = urlParams.get('phone') || '';
 
-  const handlePayment = () => {
-    const successUrl = `${window.location.origin}${createPageUrl('Test')}?name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&phone=${encodeURIComponent(candidatePhone)}`;
-    const cancelUrl = `${window.location.origin}${createPageUrl('Payment')}?name=${encodeURIComponent(candidateName)}&email=${encodeURIComponent(candidateEmail)}&phone=${encodeURIComponent(candidatePhone)}&cancelled=true`;
+  const handlePayment = async () => {
+    setLoading(true);
+    setError('');
     
-    window.location.href = `https://buy.stripe.com/5kQ14m5V0br49i8gLw87K00?prefilled_email=${encodeURIComponent(candidateEmail)}&client_reference_id=${encodeURIComponent(candidateName)}&success_url=${encodeURIComponent(successUrl)}&cancel_url=${encodeURIComponent(cancelUrl)}`;
+    try {
+      const response = await base44.functions.invoke('createStripeCheckout', {
+        name: candidateName,
+        email: candidateEmail,
+        phone: candidatePhone
+      });
+
+      if (response.data.url) {
+        window.location.href = response.data.url;
+      } else {
+        setError('Erreur lors de la création de la session de paiement');
+        setLoading(false);
+      }
+    } catch (err) {
+      console.error('Payment error:', err);
+      setError('Impossible de démarrer le paiement. Vérifiez votre connexion.');
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -151,8 +166,17 @@ export default function Payment() {
                     disabled={loading}
                     className="w-full h-14 rounded-xl text-lg font-semibold bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 transition-all shadow-lg shadow-[#17c3b2]/25"
                   >
-                    {loading ? 'Redirection en cours...' : 'Payer 19€ et accéder au test'}
-                    {!loading && <ArrowRight className="ml-2 w-5 h-5" />}
+                    {loading ? (
+                      <>
+                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                        Redirection en cours...
+                      </>
+                    ) : (
+                      <>
+                        Payer 19€ et accéder au test
+                        <ArrowRight className="ml-2 w-5 h-5" />
+                      </>
+                    )}
                   </Button>
 
                   <div className="space-y-2">

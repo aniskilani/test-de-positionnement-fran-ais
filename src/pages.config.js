@@ -1,16 +1,16 @@
-import Home from './pages/Home';
-import Test from './pages/Test';
-import Results from './pages/Results';
-import Payment from './pages/Payment';
 import Admin from './pages/Admin';
+import Home from './pages/Home';
+import Payment from './pages/Payment';
+import Results from './pages/Results';
+import Test from './pages/Test';
 
 
 export const PAGES = {
-    "Home": Home,
-    "Test": Test,
-    "Results": Results,
-    "Payment": Payment,
     "Admin": Admin,
+    "Home": Home,
+    "Payment": Payment,
+    "Results": Results,
+    "Test": Test,
 }
 
 export const pagesConfig = {
