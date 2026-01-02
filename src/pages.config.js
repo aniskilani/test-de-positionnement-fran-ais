@@ -4,6 +4,7 @@ import Payment from './pages/Payment';
 import Results from './pages/Results';
 import Test from './pages/Test';
 import Sessions from './pages/Sessions';
+import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
@@ -18,4 +19,5 @@ export const PAGES = {
 export const pagesConfig = {
     mainPage: "Home",
     Pages: PAGES,
+    Layout: __Layout,
 };
