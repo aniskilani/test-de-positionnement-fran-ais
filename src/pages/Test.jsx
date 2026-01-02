@@ -198,9 +198,9 @@ export default function Test() {
   const [showPartialResult, setShowPartialResult] = useState(false);
 
   const urlParams = new URLSearchParams(window.location.search);
-  const candidateName = urlParams.get('name') || '';
-  const candidateEmail = urlParams.get('email') || '';
-  const candidatePhone = urlParams.get('phone') || '';
+  const candidateName = urlParams.get('name') || localStorage.getItem('test_candidate_name') || '';
+  const candidateEmail = urlParams.get('email') || localStorage.getItem('test_candidate_email') || '';
+  const candidatePhone = urlParams.get('phone') || localStorage.getItem('test_candidate_phone') || '';
   const hasPaid = urlParams.get('paid') === 'true';
 
   const FREE_QUESTIONS_COUNT = 5;

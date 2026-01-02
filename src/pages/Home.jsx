@@ -134,17 +134,23 @@ export default function Home() {
                     />
                   </div>
 
-                  <Link 
-                    to={createPageUrl('Test') + `?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`}
+                  <Button 
+                    onClick={() => {
+                      if (name && email && phone) {
+                        // Sauvegarder les infos en localStorage
+                        localStorage.setItem('test_candidate_name', name);
+                        localStorage.setItem('test_candidate_email', email);
+                        localStorage.setItem('test_candidate_phone', phone);
+                        // Rediriger vers le test
+                        window.location.href = createPageUrl('Test') + `?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`;
+                      }
+                    }}
+                    className="w-full h-14 rounded-xl text-lg font-semibold bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 transition-all shadow-lg shadow-[#17c3b2]/25"
+                    disabled={!name || !email || !phone}
                   >
-                    <Button 
-                      className="w-full h-14 rounded-xl text-lg font-semibold bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 transition-all shadow-lg shadow-[#17c3b2]/25"
-                      disabled={!name || !email || !phone}
-                    >
-                      Démarrer le test gratuit
-                      <ArrowRight className="ml-2 w-5 h-5" />
-                    </Button>
-                  </Link>
+                    Démarrer le test gratuit
+                    <ArrowRight className="ml-2 w-5 h-5" />
+                  </Button>
 
                   <p className="text-center text-sm text-gray-500">
                     En démarrant, vous acceptez nos conditions d'utilisation
