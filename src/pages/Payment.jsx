@@ -36,7 +36,8 @@ export default function Payment() {
       }
     } catch (err) {
       console.error('Payment error:', err);
-      setError('Impossible de démarrer le paiement. Vérifiez votre connexion.');
+      const errorMessage = err.response?.data?.error || err.message || 'Impossible de démarrer le paiement. Vérifiez votre connexion.';
+      setError(errorMessage);
       setLoading(false);
     }
   };
