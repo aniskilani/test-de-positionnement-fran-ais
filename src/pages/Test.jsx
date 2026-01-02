@@ -202,6 +202,8 @@ export default function Test() {
   const candidateEmail = urlParams.get('email') || localStorage.getItem('test_candidate_email') || '';
   const candidatePhone = urlParams.get('phone') || localStorage.getItem('test_candidate_phone') || '';
   const hasPaid = urlParams.get('paid') === 'true';
+  const isTrainer = urlParams.get('trainer') === 'true';
+  const trainerName = urlParams.get('trainerName') || localStorage.getItem('trainer_name') || '';
 
   const FREE_QUESTIONS_COUNT = 5;
 
@@ -210,8 +212,8 @@ export default function Test() {
   };
 
   const handleNext = async () => {
-    // Si on atteint la fin du test gratuit et que l'utilisateur n'a pas payé
-    if (currentQuestion === FREE_QUESTIONS_COUNT - 1 && !hasPaid) {
+    // Si on atteint la fin du test gratuit et que l'utilisateur n'a pas payé (et ce n'est pas un formateur)
+    if (currentQuestion === FREE_QUESTIONS_COUNT - 1 && !hasPaid && !isTrainer) {
       // Sauvegarder la session gratuite
       await saveFreeTestSession();
       setShowPartialResult(true);
@@ -359,9 +361,25 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
       candidate_phone: candidatePhone
     };
 
-    const savedResult = await base44.entities.TestResult.create(resultData);
+    let savedResult;
+    
+    if (isTrainer) {
+      // Sauvegarder comme session formateur
+      savedResult = await base44.entities.TrainerSession.create({
+        trainer_name: trainerName,
+        candidate_name: candidateName,
+        candidate_email: candidateEmail,
+        candidate_phone: candidatePhone,
+        score: results.score,
+        level: results.level,
+        duration_seconds: duration
+      });
+    } else {
+      // Sauvegarder comme test payé normal
+      savedResult = await base44.entities.TestResult.create(resultData);
+    }
 
-    navigate(createPageUrl('Results') + `?resultId=${savedResult.id}`);
+    navigate(createPageUrl('Results') + `?resultId=${savedResult.id}&trainer=${isTrainer}`);
   };
 
   const currentQ = questions[currentQuestion];

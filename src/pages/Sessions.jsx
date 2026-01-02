@@ -23,6 +23,11 @@ export default function Sessions() {
     queryFn: () => base44.entities.TestResult.list('-created_date', 100),
   });
 
+  const { data: trainerSessions = [], isLoading: loadingTrainer } = useQuery({
+    queryKey: ['trainerSessions'],
+    queryFn: () => base44.entities.TrainerSession.list('-created_date', 100),
+  });
+
   const filteredFreeSessions = freeSessions.filter(session =>
     session.candidate_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     session.candidate_email?.toLowerCase().includes(searchTerm.toLowerCase())
@@ -31,6 +36,12 @@ export default function Sessions() {
   const filteredPaidResults = paidResults.filter(result =>
     result.candidate_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     result.candidate_email?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const filteredTrainerSessions = trainerSessions.filter(session =>
+    session.candidate_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    session.trainer_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    session.candidate_email?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const notPaidSessions = filteredFreeSessions.filter(s => !s.has_paid);
@@ -112,14 +123,75 @@ export default function Sessions() {
 
         {/* Tabs */}
         <Tabs defaultValue="free" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="free">
               Tests gratuits ({notPaidSessions.length})
+            </TabsTrigger>
+            <TabsTrigger value="trainer">
+              Sessions formateurs ({filteredTrainerSessions.length})
             </TabsTrigger>
             <TabsTrigger value="paid">
               Tests payés ({filteredPaidResults.length})
             </TabsTrigger>
           </TabsList>
+
+          {/* Trainer Sessions Tab */}
+          <TabsContent value="trainer">
+            <div className="space-y-4">
+              {loadingTrainer ? (
+                <p className="text-center text-gray-500 py-8">Chargement...</p>
+              ) : filteredTrainerSessions.length === 0 ? (
+                <p className="text-center text-gray-500 py-8">Aucune session formateur trouvée</p>
+              ) : (
+                filteredTrainerSessions.map((session) => (
+                  <Card key={session.id} className="hover:shadow-md transition-shadow">
+                    <CardContent className="p-6">
+                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2">
+                            <h3 className="font-semibold text-lg text-gray-900">
+                              {session.candidate_name}
+                            </h3>
+                            <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-100">
+                              Formateur: {session.trainer_name}
+                            </Badge>
+                          </div>
+                          <div className="space-y-1 text-sm text-gray-600">
+                            <div className="flex items-center gap-2">
+                              <Mail className="w-4 h-4" />
+                              {session.candidate_email}
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Phone className="w-4 h-4" />
+                              {session.candidate_phone}
+                            </div>
+                            <div className="flex items-center gap-2 text-xs text-gray-500">
+                              <Clock className="w-4 h-4" />
+                              {format(new Date(session.created_date), 'dd MMMM yyyy à HH:mm', { locale: fr })}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-6">
+                          <div className="text-center">
+                            <p className="text-sm text-gray-600 mb-1">Score</p>
+                            <p className="text-2xl font-bold text-[#00504e]">
+                              {session.score}%
+                            </p>
+                          </div>
+                          <div className="text-center">
+                            <p className="text-sm text-gray-600 mb-1">Niveau CECRL</p>
+                            <Badge className="bg-[#17c3b2] text-white text-lg px-4 py-1">
+                              {session.level}
+                            </Badge>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
+            </div>
+          </TabsContent>
 
           {/* Free Tests Tab */}
           <TabsContent value="free">
