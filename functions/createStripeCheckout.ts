@@ -31,7 +31,7 @@ Deno.serve(async (req) => {
         candidate_email: email,
         candidate_phone: phone,
       },
-      success_url: `${appPath}/Test?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`,
+      success_url: `${appPath}/Test?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}&paid=true`,
       cancel_url: `${appPath}/Payment?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}&cancelled=true`,
     });
 

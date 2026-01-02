@@ -135,13 +135,13 @@ export default function Home() {
                   </div>
 
                   <Link 
-                    to={createPageUrl('Payment') + `?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`}
+                    to={createPageUrl('Test') + `?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`}
                   >
                     <Button 
                       className="w-full h-14 rounded-xl text-lg font-semibold bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 transition-all shadow-lg shadow-[#17c3b2]/25"
                       disabled={!name || !email || !phone}
                     >
-                      Démarrer le test
+                      Démarrer le test gratuit
                       <ArrowRight className="ml-2 w-5 h-5" />
                     </Button>
                   </Link>

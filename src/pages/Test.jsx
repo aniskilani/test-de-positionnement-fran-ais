@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowLeft, X, Loader2 } from 'lucide-react';
 import ProgressBar from '@/components/test/ProgressBar';
 import QuestionCard from '@/components/test/QuestionCard';
+import PartialResultScreen from '@/components/test/PartialResultScreen';
 import { questions } from '@/components/test/questionsData';
 
 const originalQuestions = [
@@ -194,17 +195,27 @@ export default function Test() {
   const [answers, setAnswers] = useState({});
   const [startTime] = useState(Date.now());
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPartialResult, setShowPartialResult] = useState(false);
 
   const urlParams = new URLSearchParams(window.location.search);
   const candidateName = urlParams.get('name') || '';
   const candidateEmail = urlParams.get('email') || '';
   const candidatePhone = urlParams.get('phone') || '';
+  const hasPaid = urlParams.get('paid') === 'true';
+
+  const FREE_QUESTIONS_COUNT = 5;
 
   const handleSelect = (answer) => {
     setAnswers({ ...answers, [currentQuestion]: answer });
   };
 
   const handleNext = () => {
+    // Si on atteint la fin du test gratuit et que l'utilisateur n'a pas payé
+    if (currentQuestion === FREE_QUESTIONS_COUNT - 1 && !hasPaid) {
+      setShowPartialResult(true);
+      return;
+    }
+    
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     }
@@ -336,8 +347,30 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [hasAnswered, isLastQuestion, isSubmitting]);
 
+  // Calculer le score partiel pour l'écran intermédiaire
+  const calculatePartialScore = () => {
+    let correctCount = 0;
+    for (let i = 0; i < FREE_QUESTIONS_COUNT; i++) {
+      const q = questions[i];
+      const userAnswer = answers[i];
+      if (userAnswer === q.correct) correctCount++;
+    }
+    return correctCount;
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-[#17c3b2]/5">
+      {/* Partial Result Screen */}
+      {showPartialResult && (
+        <PartialResultScreen 
+          score={calculatePartialScore()} 
+          totalQuestions={FREE_QUESTIONS_COUNT}
+          candidateName={candidateName}
+          candidateEmail={candidateEmail}
+          candidatePhone={candidatePhone}
+        />
+      )}
+
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
