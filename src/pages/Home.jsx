@@ -13,6 +13,7 @@ export default function Home() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [showTrainerDialog, setShowTrainerDialog] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -150,9 +151,15 @@ export default function Home() {
                       type="email"
                       placeholder="jean.dupont@email.com"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="h-12 rounded-xl border-gray-200 focus:border-[#17c3b2] focus:ring-[#17c3b2]/20"
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        setEmailError('');
+                      }}
+                      className={`h-12 rounded-xl border-gray-200 focus:border-[#17c3b2] focus:ring-[#17c3b2]/20 ${emailError ? 'border-red-500' : ''}`}
                     />
+                    {emailError && (
+                      <p className="text-sm text-red-600">{emailError}</p>
+                    )}
                   </div>
 
                   <div className="space-y-2">
@@ -170,18 +177,16 @@ export default function Home() {
                   <Button 
                     onClick={() => {
                       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                      if (name && email && phone) {
-                        if (!emailRegex.test(email)) {
-                          alert('Veuillez entrer une adresse email valide (exemple: nom@email.com)');
-                          return;
-                        }
-                        // Sauvegarder les infos en localStorage
-                        localStorage.setItem('test_candidate_name', name);
-                        localStorage.setItem('test_candidate_email', email);
-                        localStorage.setItem('test_candidate_phone', phone);
-                        // Rediriger vers le test
-                        window.location.href = createPageUrl('Test') + `?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`;
+                      if (!emailRegex.test(email)) {
+                        setEmailError('Veuillez entrer un email valide (ex: nom@email.com)');
+                        return;
                       }
+                      // Sauvegarder les infos en localStorage
+                      localStorage.setItem('test_candidate_name', name);
+                      localStorage.setItem('test_candidate_email', email);
+                      localStorage.setItem('test_candidate_phone', phone);
+                      // Rediriger vers le test
+                      window.location.href = createPageUrl('Test') + `?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`;
                     }}
                     className="w-full h-14 rounded-xl text-lg font-semibold bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 transition-all shadow-lg shadow-[#17c3b2]/25"
                     disabled={!name || !email || !phone}
