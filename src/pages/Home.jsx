@@ -5,18 +5,31 @@ import { createPageUrl } from '@/utils';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowRight, Clock, Target, Award, CheckCircle, MessageCircle } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { ArrowRight, Clock, Target, Award, CheckCircle, MessageCircle, Lock } from 'lucide-react';
 
 export default function Home() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [showTrainerDialog, setShowTrainerDialog] = useState(false);
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
 
   const features = [
     { icon: Clock, text: "15 minutes", label: "Durée estimée" },
     { icon: Target, text: "15 questions", label: "Questions adaptatives" },
     { icon: Award, text: "Niveau CECRL", label: "De A1 à B2" },
   ];
+
+  const handleTrainerAccess = () => {
+    if (password === 'formateur2026') {
+      window.location.href = createPageUrl('TrainerAccess');
+    } else {
+      setPasswordError(true);
+      setTimeout(() => setPasswordError(false), 2000);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -183,10 +196,54 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t border-gray-100 py-8">
-        <div className="max-w-6xl mx-auto px-6 text-center text-gray-500 text-sm">
-          © {new Date().getFullYear()} ParlerEmploi Formation. Tous droits réservés.
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <p className="text-gray-500 text-sm mb-3">
+            © {new Date().getFullYear()} ParlerEmploi Formation. Tous droits réservés.
+          </p>
+          <button
+            onClick={() => setShowTrainerDialog(true)}
+            className="text-xs text-gray-400 hover:text-[#17c3b2] transition-colors flex items-center gap-1 mx-auto"
+          >
+            <Lock className="w-3 h-3" />
+            Accès formateur
+          </button>
         </div>
       </footer>
+
+      {/* Trainer Password Dialog */}
+      <Dialog open={showTrainerDialog} onOpenChange={setShowTrainerDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-[#00504e]">
+              <Lock className="w-5 h-5" />
+              Accès Formateur
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="trainerPassword">Mot de passe</Label>
+              <Input
+                id="trainerPassword"
+                type="password"
+                placeholder="Entrez le mot de passe"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleTrainerAccess()}
+                className={`h-12 rounded-xl ${passwordError ? 'border-red-500' : ''}`}
+              />
+              {passwordError && (
+                <p className="text-sm text-red-600">Mot de passe incorrect</p>
+              )}
+            </div>
+            <Button
+              onClick={handleTrainerAccess}
+              className="w-full h-12 rounded-xl bg-gradient-to-r from-[#00504e] to-[#17c3b2]"
+            >
+              Accéder
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
