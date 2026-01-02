@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import Payment from './pages/Payment';
 import Results from './pages/Results';
 import Test from './pages/Test';
+import Sessions from './pages/Sessions';
 
 
 export const PAGES = {
@@ -11,6 +12,7 @@ export const PAGES = {
     "Payment": Payment,
     "Results": Results,
     "Test": Test,
+    "Sessions": Sessions,
 }
 
 export const pagesConfig = {

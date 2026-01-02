@@ -209,15 +209,54 @@ export default function Test() {
     setAnswers({ ...answers, [currentQuestion]: answer });
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     // Si on atteint la fin du test gratuit et que l'utilisateur n'a pas payé
     if (currentQuestion === FREE_QUESTIONS_COUNT - 1 && !hasPaid) {
+      // Sauvegarder la session gratuite
+      await saveFreeTestSession();
       setShowPartialResult(true);
       return;
     }
     
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
+    }
+  };
+
+  const saveFreeTestSession = async () => {
+    let correctCount = 0;
+    const freeAnswers = [];
+    
+    for (let i = 0; i < FREE_QUESTIONS_COUNT; i++) {
+      const q = questions[i];
+      const userAnswer = answers[i];
+      const isCorrect = userAnswer === q.correct;
+      if (isCorrect) correctCount++;
+      
+      freeAnswers.push({
+        questionId: q.id,
+        answer: userAnswer || "",
+        correct: isCorrect
+      });
+    }
+
+    const percentage = Math.round((correctCount / FREE_QUESTIONS_COUNT) * 100);
+    let estimatedLevel = "A1-A2";
+    if (percentage >= 80) estimatedLevel = "B1-B2";
+    else if (percentage >= 60) estimatedLevel = "A2-B1";
+
+    try {
+      await base44.entities.FreeTestSession.create({
+        candidate_name: candidateName,
+        candidate_email: candidateEmail,
+        candidate_phone: candidatePhone,
+        partial_score: correctCount,
+        estimated_level: estimatedLevel,
+        has_paid: false,
+        answers: freeAnswers
+      });
+    } catch (error) {
+      console.error('Error saving free test session:', error);
     }
   };
 
