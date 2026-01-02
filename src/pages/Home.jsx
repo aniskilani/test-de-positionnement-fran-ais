@@ -169,7 +169,12 @@ export default function Home() {
 
                   <Button 
                     onClick={() => {
+                      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                       if (name && email && phone) {
+                        if (!emailRegex.test(email)) {
+                          alert('Veuillez entrer une adresse email valide (exemple: nom@email.com)');
+                          return;
+                        }
                         // Sauvegarder les infos en localStorage
                         localStorage.setItem('test_candidate_name', name);
                         localStorage.setItem('test_candidate_email', email);
