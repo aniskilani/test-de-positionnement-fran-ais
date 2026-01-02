@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { createPageUrl } from '@/utils';
+import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,8 +14,10 @@ export default function Home() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [showTrainerDialog, setShowTrainerDialog] = useState(false);
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState(false);
+  const [isChecking, setIsChecking] = useState(false);
 
   const features = [
     { icon: Clock, text: "15 minutes", label: "Durée estimée" },
@@ -22,12 +25,29 @@ export default function Home() {
     { icon: Award, text: "Niveau CECRL", label: "De A1 à B2" },
   ];
 
-  const handleTrainerAccess = () => {
-    if (password === 'formateur2026') {
-      window.location.href = createPageUrl('TrainerAccess');
-    } else {
+  const handleTrainerAccess = async () => {
+    setIsChecking(true);
+    setPasswordError(false);
+    
+    try {
+      const trainers = await base44.entities.TrainerUser.filter({ 
+        username: username,
+        password: password,
+        is_active: true
+      });
+      
+      if (trainers.length > 0) {
+        localStorage.setItem('trainer_name', trainers[0].full_name);
+        window.location.href = createPageUrl('TrainerAccess');
+      } else {
+        setPasswordError(true);
+        setTimeout(() => setPasswordError(false), 2000);
+      }
+    } catch (error) {
       setPasswordError(true);
       setTimeout(() => setPasswordError(false), 2000);
+    } finally {
+      setIsChecking(false);
     }
   };
 
@@ -221,25 +241,37 @@ export default function Home() {
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
+              <Label htmlFor="trainerUsername">Nom d'utilisateur</Label>
+              <Input
+                id="trainerUsername"
+                type="text"
+                placeholder="marie.leclerc"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className={`h-12 rounded-xl ${passwordError ? 'border-red-500' : ''}`}
+              />
+            </div>
+            <div className="space-y-2">
               <Label htmlFor="trainerPassword">Mot de passe</Label>
               <Input
                 id="trainerPassword"
                 type="password"
-                placeholder="Entrez le mot de passe"
+                placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleTrainerAccess()}
                 className={`h-12 rounded-xl ${passwordError ? 'border-red-500' : ''}`}
               />
               {passwordError && (
-                <p className="text-sm text-red-600">Mot de passe incorrect</p>
+                <p className="text-sm text-red-600">Identifiants incorrects</p>
               )}
             </div>
             <Button
               onClick={handleTrainerAccess}
+              disabled={isChecking || !username || !password}
               className="w-full h-12 rounded-xl bg-gradient-to-r from-[#00504e] to-[#17c3b2]"
             >
-              Accéder
+              {isChecking ? 'Vérification...' : 'Accéder'}
             </Button>
           </div>
         </DialogContent>
