@@ -207,8 +207,8 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
             <Alert className="bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
               <Mic className="h-4 w-4 text-purple-600" />
               <AlertDescription className="text-purple-900 text-sm">
-                Enregistrez votre réponse (minimum <strong>{question.minDuration} secondes</strong>). 
-                Parlez clairement et naturellement. Votre production sera évaluée par IA.
+                Enregistrez votre réponse vocale (minimum <strong>{question.minDuration} secondes</strong>) ou saisissez-la manuellement. 
+                Votre production sera évaluée par IA.
               </AlertDescription>
             </Alert>
 
@@ -250,10 +250,25 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
               )}
             </div>
 
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-gray-300" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-white px-2 text-gray-500">Ou saisir manuellement</span>
+              </div>
+            </div>
+
+            <Textarea
+              value={selectedAnswer || ''}
+              onChange={(e) => onSelect(e.target.value)}
+              placeholder="Tapez votre réponse ici si l'enregistrement ne fonctionne pas..."
+              className="min-h-[120px] text-base leading-relaxed resize-none"
+            />
+
             {selectedAnswer && (
-              <div className="bg-white border border-gray-200 rounded-xl p-4">
-                <p className="text-sm text-gray-600 mb-2">Transcription :</p>
-                <p className="text-gray-900">{selectedAnswer}</p>
+              <div className="text-right text-sm text-gray-600">
+                {selectedAnswer.length} caractères
               </div>
             )}
           </div>
