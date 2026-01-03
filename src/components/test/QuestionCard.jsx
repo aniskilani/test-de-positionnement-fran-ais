@@ -77,13 +77,6 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
     }
 
     try {
-      await navigator.mediaDevices.getUserMedia({ audio: true });
-    } catch (err) {
-      setError("Permission micro refusée. Autorisez l'accès au micro dans votre navigateur.");
-      return;
-    }
-
-    try {
       const recognition = new SpeechRecognition();
       recognition.lang = 'fr-FR';
       recognition.continuous = true;
@@ -109,12 +102,16 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
 
       recognition.onerror = (event) => {
         console.error('Erreur reconnaissance:', event.error);
-        if (event.error === 'no-speech') {
+        if (event.error === 'not-allowed') {
+          setError("Permission micro refusée. Autorisez l'accès au micro dans votre navigateur.");
+        } else if (event.error === 'no-speech') {
           setError('Aucune parole détectée. Parlez plus fort.');
         } else if (event.error === 'network') {
           setError('Erreur réseau. Vérifiez votre connexion.');
+        } else if (event.error === 'service-not-allowed') {
+          setError("Reconnaissance vocale non disponible. Utilisez une connexion HTTPS sécurisée.");
         } else {
-          setError(`Erreur: ${event.error}`);
+          setError(`Erreur: ${event.error}. Vérifiez les permissions de votre navigateur.`);
         }
         setIsRecording(false);
         clearInterval(timerRef.current);
@@ -134,7 +131,7 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
         setRecordingTime(prev => prev + 1);
       }, 1000);
     } catch (err) {
-      setError("Impossible de démarrer l'enregistrement. Réessayez.");
+      setError("Impossible de démarrer l'enregistrement. Vérifiez les permissions du micro.");
       console.error(err);
     }
   };
