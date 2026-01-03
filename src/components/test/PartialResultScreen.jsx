@@ -37,7 +37,7 @@ export default function PartialResultScreen({ score, totalQuestions, candidateNa
         </h2>
         
         <p className="text-center text-gray-600 mb-8">
-          Vous avez terminé les 5 premières questions gratuites
+          Vous avez terminé les 10 premières questions gratuites
         </p>
 
         {/* Score Card */}
@@ -68,7 +68,7 @@ export default function PartialResultScreen({ score, totalQuestions, candidateNa
             <div>
               <h3 className="font-bold text-lg mb-2">Débloquez votre évaluation complète</h3>
               <p className="opacity-90 text-sm">
-                15 questions supplémentaires pour une certification précise et des recommandations personnalisées
+                40 questions supplémentaires incluant écoute orale et expression orale pour une certification précise et des recommandations personnalisées
               </p>
             </div>
           </div>
