@@ -205,7 +205,7 @@ export default function Test() {
   const isTrainer = urlParams.get('trainer') === 'true';
   const trainerName = urlParams.get('trainerName') || localStorage.getItem('trainer_name') || '';
 
-  const FREE_QUESTIONS_COUNT = 5;
+  const FREE_QUESTIONS_COUNT = 10;
 
   const handleSelect = (answer) => {
     setAnswers({ ...answers, [currentQuestion]: answer });

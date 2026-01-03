@@ -2,8 +2,8 @@ import Admin from './pages/Admin';
 import Home from './pages/Home';
 import Payment from './pages/Payment';
 import Results from './pages/Results';
-import Test from './pages/Test';
 import Sessions from './pages/Sessions';
+import Test from './pages/Test';
 import TrainerAccess from './pages/TrainerAccess';
 import __Layout from './Layout.jsx';
 
@@ -13,8 +13,8 @@ export const PAGES = {
     "Home": Home,
     "Payment": Payment,
     "Results": Results,
-    "Test": Test,
     "Sessions": Sessions,
+    "Test": Test,
     "TrainerAccess": TrainerAccess,
 }
 
