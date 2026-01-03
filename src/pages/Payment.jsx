@@ -17,43 +17,17 @@ export default function Payment() {
   const candidateEmail = urlParams.get('email') || '';
   const candidatePhone = urlParams.get('phone') || '';
 
-  const handlePayment = async () => {
+  const handlePayment = () => {
     if (!candidateName || !candidateEmail) {
       setError('Informations manquantes. Veuillez retourner à la page d\'accueil.');
       return;
     }
 
     setLoading(true);
-    setError('');
     
-    try {
-      console.log('Initiating payment for:', { name: candidateName, email: candidateEmail });
-      
-      const response = await base44.functions.invoke('createStripeCheckout', {
-        name: candidateName,
-        email: candidateEmail,
-        phone: candidatePhone
-      });
-
-      console.log('Payment response:', response);
-
-      if (response?.data?.url) {
-        console.log('Redirecting to Stripe:', response.data.url);
-        window.location.href = response.data.url;
-      } else {
-        console.error('No URL in response:', response);
-        setError('Erreur lors de la création de la session de paiement. Veuillez réessayer.');
-      }
-    } catch (err) {
-      console.error('Payment error:', err);
-      const errorMessage = err.response?.data?.error || err.message || 'Impossible de démarrer le paiement. Veuillez réessayer ou contacter le support.';
-      setError(errorMessage);
-    } finally {
-      // On ne met setLoading(false) que si on n'a pas redirigé
-      if (!window.location.href.includes('checkout.stripe.com')) {
-        setLoading(false);
-      }
-    }
+    // Redirection directe vers le lien de paiement Stripe
+    const stripeUrl = `https://buy.stripe.com/5kQ14m5V0br49i8gLw87K00?prefilled_email=${encodeURIComponent(candidateEmail)}&client_reference_id=${encodeURIComponent(candidateName)}`;
+    window.location.href = stripeUrl;
   };
 
   useEffect(() => {
