@@ -176,16 +176,18 @@ export default function Home() {
 
                   <Button 
                     onClick={() => {
+                      if (!name || !email || !phone) return;
+
                       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                       if (!emailRegex.test(email)) {
                         setEmailError('Veuillez entrer un email valide (ex: nom@email.com)');
                         return;
                       }
-                      // Sauvegarder les infos en localStorage
+
+                      setEmailError('');
                       localStorage.setItem('test_candidate_name', name);
                       localStorage.setItem('test_candidate_email', email);
                       localStorage.setItem('test_candidate_phone', phone);
-                      // Rediriger vers le test
                       window.location.href = createPageUrl('Test') + `?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`;
                     }}
                     className="w-full h-14 rounded-xl text-lg font-semibold bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 transition-all shadow-lg shadow-[#17c3b2]/25"
