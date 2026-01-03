@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { ArrowRight, Clock, Target, Award, CheckCircle, MessageCircle, Lock } from 'lucide-react';
 
 export default function Home() {
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -36,10 +37,10 @@ export default function Home() {
         password: password,
         is_active: true
       });
-      
+
       if (trainers.length > 0) {
         localStorage.setItem('trainer_name', trainers[0].full_name);
-        window.location.href = createPageUrl('TrainerAccess');
+        navigate(createPageUrl('TrainerAccess'));
       } else {
         setPasswordError(true);
         setTimeout(() => setPasswordError(false), 2000);
@@ -175,6 +176,7 @@ export default function Home() {
                   </div>
 
                   <Button 
+                    type="button"
                     onClick={() => {
                       if (!name || !email || !phone) return;
 
@@ -188,7 +190,7 @@ export default function Home() {
                       localStorage.setItem('test_candidate_name', name);
                       localStorage.setItem('test_candidate_email', email);
                       localStorage.setItem('test_candidate_phone', phone);
-                      window.location.href = createPageUrl('Test') + `?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`;
+                      navigate(createPageUrl('Test') + `?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`);
                     }}
                     className="w-full h-14 rounded-xl text-lg font-semibold bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 transition-all shadow-lg shadow-[#17c3b2]/25"
                     disabled={!name || !email || !phone}
