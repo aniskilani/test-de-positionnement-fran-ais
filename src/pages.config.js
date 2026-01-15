@@ -6,6 +6,11 @@ import Sessions from './pages/Sessions';
 import Test from './pages/Test';
 import TrainerAccess from './pages/TrainerAccess';
 import Privacy from './pages/Privacy';
+import LegalNotice from './pages/LegalNotice';
+import Terms from './pages/Terms';
+import Contact from './pages/Contact';
+import FAQ from './pages/FAQ';
+import MyAccount from './pages/MyAccount';
 import __Layout from './Layout.jsx';
 
 
@@ -18,6 +23,11 @@ export const PAGES = {
     "Test": Test,
     "TrainerAccess": TrainerAccess,
     "Privacy": Privacy,
+    "LegalNotice": LegalNotice,
+    "Terms": Terms,
+    "Contact": Contact,
+    "FAQ": FAQ,
+    "MyAccount": MyAccount,
 }
 
 export const pagesConfig = {

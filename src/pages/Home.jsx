@@ -33,14 +33,13 @@ export default function Home() {
     setPasswordError(false);
     
     try {
-      const trainers = await base44.entities.TrainerUser.filter({ 
+      const result = await base44.functions.invoke('verifyTrainerPassword', {
         username: username,
-        password: password,
-        is_active: true
+        password: password
       });
 
-      if (trainers.length > 0) {
-        localStorage.setItem('trainer_name', trainers[0].full_name);
+      if (result.data.success) {
+        localStorage.setItem('trainer_name', result.data.trainer.full_name);
         navigate(createPageUrl('TrainerAccess'));
       } else {
         setPasswordError(true);
@@ -255,14 +254,30 @@ export default function Home() {
             <p className="text-gray-500 text-sm">
               © {new Date().getFullYear()} ParlerEmploi Formation. Tous droits réservés.
             </p>
-            <div className="flex items-center justify-center gap-4 text-xs text-gray-400">
+            <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-gray-400">
+              <Link to={createPageUrl('LegalNotice')} className="hover:text-[#17c3b2] transition-colors">
+                Mentions légales
+              </Link>
+              <span>•</span>
               <Link to={createPageUrl('Privacy')} className="hover:text-[#17c3b2] transition-colors">
                 Politique de confidentialité
               </Link>
               <span>•</span>
-              <a href="mailto:dpo@parleremploi.com" className="hover:text-[#17c3b2] transition-colors">
-                Contact DPO
-              </a>
+              <Link to={createPageUrl('Terms')} className="hover:text-[#17c3b2] transition-colors">
+                CGU
+              </Link>
+              <span>•</span>
+              <Link to={createPageUrl('FAQ')} className="hover:text-[#17c3b2] transition-colors">
+                FAQ
+              </Link>
+              <span>•</span>
+              <Link to={createPageUrl('Contact')} className="hover:text-[#17c3b2] transition-colors">
+                Contact
+              </Link>
+              <span>•</span>
+              <Link to={createPageUrl('MyAccount')} className="hover:text-[#17c3b2] transition-colors">
+                Mes données
+              </Link>
             </div>
           </div>
           <button
