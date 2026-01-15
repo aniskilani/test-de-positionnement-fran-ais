@@ -195,6 +195,7 @@ export default function Test() {
   const [answers, setAnswers] = useState({});
   const [startTime] = useState(Date.now());
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(12);
 
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -214,6 +215,14 @@ export default function Test() {
   const handleNext = async () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
+      setTimeLeft(12);
+    }
+  };
+
+  const handleSkip = () => {
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+      setTimeLeft(12);
     }
   };
 
@@ -222,6 +231,7 @@ export default function Test() {
   const handlePrev = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion(currentQuestion - 1);
+      setTimeLeft(12);
     }
   };
 
@@ -347,6 +357,21 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
      true);
 
   useEffect(() => {
+    setTimeLeft(12);
+  }, [currentQuestion]);
+
+  useEffect(() => {
+    if (currentQ.type === 'written') return;
+
+    if (timeLeft > 0) {
+      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+      return () => clearTimeout(timer);
+    } else if (!isLastQuestion) {
+      handleNext();
+    }
+  }, [timeLeft, currentQ.type, isLastQuestion]);
+
+  useEffect(() => {
     const handleKeyPress = (e) => {
       if (e.key === 'Enter' && hasAnswered && !isSubmitting) {
         if (isLastQuestion) {
@@ -397,6 +422,7 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
               selectedAnswer={answers[currentQuestion]}
               onSelect={handleSelect}
               questionNumber={currentQuestion}
+              timeLeft={timeLeft}
             />
           </div>
         </div>
@@ -413,6 +439,16 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Précédent
+          </Button>
+
+          <Button
+            variant="ghost"
+            onClick={handleSkip}
+            disabled={isLastQuestion}
+            className="h-12 px-6 rounded-xl text-gray-600 hover:text-gray-900"
+          >
+            Passer
+            <ArrowRight className="w-4 h-4 ml-2" />
           </Button>
 
           {isLastQuestion ? (

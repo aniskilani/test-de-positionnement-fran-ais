@@ -1,11 +1,11 @@
 import React, { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle2, Volume2, PlayCircle, AlertCircle, Mic, Square, Loader2 } from 'lucide-react';
+import { CheckCircle2, Volume2, PlayCircle, AlertCircle, Mic, Square, Loader2, Clock } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-export default function QuestionCard({ question, selectedAnswer, onSelect, questionNumber }) {
+export default function QuestionCard({ question, selectedAnswer, onSelect, questionNumber, timeLeft }) {
   const [isPlaying, setIsPlaying] = React.useState(false);
   const [isRecording, setIsRecording] = React.useState(false);
   const [recordingTime, setRecordingTime] = React.useState(0);
@@ -156,13 +156,26 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
         className="w-full"
       >
         {/* Question Level Badge */}
-        <div className="flex items-center gap-2 mb-4">
-          <span className="px-3 py-1 text-xs font-semibold rounded-full bg-[#17c3b2]/10 text-[#00504e]">
-            Niveau {question.level}
-          </span>
-          <span className="px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-600">
-            {question.category}
-          </span>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 text-xs font-semibold rounded-full bg-[#17c3b2]/10 text-[#00504e]">
+              Niveau {question.level}
+            </span>
+            <span className="px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-600">
+              {question.category}
+            </span>
+          </div>
+          
+          {question.type !== 'written' && timeLeft !== undefined && (
+            <div className={`flex items-center gap-2 px-3 py-1 rounded-full ${
+              timeLeft <= 3 ? 'bg-red-100 text-red-700' : 
+              timeLeft <= 6 ? 'bg-orange-100 text-orange-700' : 
+              'bg-blue-100 text-blue-700'
+            }`}>
+              <Clock className={`w-4 h-4 ${timeLeft <= 3 ? 'animate-pulse' : ''}`} />
+              <span className="font-semibold text-sm">{timeLeft}s</span>
+            </div>
+          )}
         </div>
 
         {/* Audio Player for Oral Comprehension */}
