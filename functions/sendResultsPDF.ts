@@ -200,9 +200,14 @@ Deno.serve(async (req) => {
       </div>
       
       <div class="cta">
-        <h3>🚀 Progressez dans votre apprentissage</h3>
-        <p>Nos formations personnalisées sont adaptées à votre niveau <strong>${testResult.level}</strong> et vous permettent de progresser rapidement vers vos objectifs.</p>
-        <p style="margin: 0;">Contactez-nous pour découvrir nos programmes certifiés Qualiopi.</p>
+        <h3>🎁 Offre spéciale réservée aux participants !</h3>
+        <p style="font-size: 18px; margin: 15px 0;"><strong>Réservez votre formation dans les 7 jours et bénéficiez de 10% de réduction !</strong></p>
+        <p>Nos formations personnalisées sont adaptées à votre niveau <strong>${testResult.level}</strong> et vous permettent de progresser rapidement vers vos objectifs professionnels.</p>
+        <p style="text-align: center; margin: 20px 0;">
+          <a href="https://testflepef.app.base44.com/Formations?level=${testResult.level}&score=${testResult.score}&name=${encodeURIComponent(testResult.candidate_name)}" style="display: inline-block; background: #00504e; color: white; padding: 15px 40px; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 10px 0;">
+            Découvrir ma formation ${testResult.level}
+          </a>
+        </p>
       </div>
       
       <div class="contact">

@@ -142,25 +142,49 @@ export default function Admin() {
           </CardContent>
         </Card>
 
-        {/* Recent Results */}
+        {/* Recent Results with Prospect Tracking */}
         <Card className="mt-6">
           <CardHeader>
-            <CardTitle>Derniers résultats</CardTitle>
+            <CardTitle>Prospects récents</CardTitle>
+            <CardDescription>
+              🔥 = Test complété il y a moins de 7 jours (offre active)
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              {results.slice(0, 5).map((result) => (
-                <div key={result.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <div>
-                    <p className="font-medium text-gray-900">{result.candidate_name}</p>
-                    <p className="text-sm text-gray-500">{result.candidate_email}</p>
+              {results.slice(0, 10).map((result) => {
+                const daysSinceTest = Math.floor((new Date() - new Date(result.created_date)) / (1000 * 60 * 60 * 24));
+                const isHot = daysSinceTest <= 7;
+                
+                return (
+                  <div key={result.id} className={`flex items-center justify-between p-3 rounded-lg ${isHot ? 'bg-orange-50 border-2 border-orange-200' : 'bg-gray-50'}`}>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        {isHot && <span className="text-xl">🔥</span>}
+                        <div>
+                          <p className="font-medium text-gray-900">{result.candidate_name}</p>
+                          <p className="text-sm text-gray-500">{result.candidate_email}</p>
+                          {result.candidate_phone && (
+                            <a href={`tel:${result.candidate_phone}`} className="text-sm text-[#17c3b2] hover:underline">
+                              {result.candidate_phone}
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-bold text-[#00504e]">{result.score}%</p>
+                      <p className="text-sm text-gray-500">Niveau {result.level}</p>
+                      <p className="text-xs text-gray-400">Il y a {daysSinceTest}j</p>
+                      {isHot && (
+                        <span className="inline-block mt-1 text-xs bg-orange-500 text-white px-2 py-1 rounded">
+                          Offre -10% active
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <p className="font-bold text-[#00504e]">{result.score}%</p>
-                    <p className="text-sm text-gray-500">Niveau {result.level}</p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
               {results.length === 0 && (
                 <p className="text-center text-gray-500 py-8">Aucun résultat pour le moment</p>
               )}
