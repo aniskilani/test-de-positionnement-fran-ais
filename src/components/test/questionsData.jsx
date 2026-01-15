@@ -465,10 +465,10 @@ export const questions = [
     level: "A1",
     category: "Expression Écrite",
     type: "written",
-    question: "Présentez-vous en 2-3 phrases (nom, âge, nationalité, ville).",
-    placeholder: "Exemple : Je m'appelle Marie. J'ai 25 ans. Je suis française. J'habite à Paris.",
+    question: "Décrivez votre famille : qui habite avec vous ? Combien de personnes ? (2-3 phrases)",
+    placeholder: "Exemple : J'habite avec mes parents et mon frère. Nous sommes quatre personnes. Mon frère s'appelle Thomas.",
     minWords: 10,
-    criteria: ["Utilise 'je m'appelle' ou 'je suis'", "Mentionne l'âge avec 'j'ai ... ans'", "Phrase complète et compréhensible"]
+    criteria: ["Vocabulaire de la famille", "Utilise des nombres", "Phrases simples et claires", "Au moins 2 membres de la famille mentionnés"]
   },
   {
     id: 48,
