@@ -157,7 +157,7 @@ Deno.serve(async (req) => {
     <div class="footer">
       <p><strong>ParlerEmploi Formation</strong></p>
       <p>Organisme certifié Qualiopi • NDA : 11931070593</p>
-      <p>23 avenue Gabriel Péri, 93400 Saint-Ouen</p>
+      <p>Accueil : Médiathèque Persepolis, 4 avenue Gabriel-Péri, 93400 Saint-Ouen-sur-Seine (mardi et jeudi 14h-16h)</p>
       <p style="margin-top: 15px; font-size: 10px; color: #999;">
         Vous recevez cet email car vous avez passé notre test de positionnement FLE.<br>
         <a href="#">Se désabonner</a>
