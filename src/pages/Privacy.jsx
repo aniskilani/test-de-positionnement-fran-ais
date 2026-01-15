@@ -48,7 +48,7 @@ export default function Privacy() {
               </p>
               <p className="flex items-center gap-2 text-[#17c3b2]">
                 <Mail className="w-4 h-4" />
-                <strong>Contact DPO :</strong> dpo@parleremploi.com
+                <strong>Contact DPO :</strong> contact@parleremploi.com
               </p>
             </section>
 
@@ -116,7 +116,7 @@ export default function Privacy() {
               <div className="bg-[#17c3b2]/10 border-l-4 border-[#17c3b2] p-4 mt-4">
                 <p className="text-sm">
                   Pour exercer ces droits, contactez-nous à : 
-                  <strong className="text-[#00504e]"> dpo@parleremploi.com</strong>
+                  <strong className="text-[#00504e]"> contact@parleremploi.com</strong>
                 </p>
               </div>
             </section>
@@ -188,7 +188,7 @@ export default function Privacy() {
                 Des questions sur vos données personnelles ?
               </p>
               <p className="text-center text-gray-600">
-                Contactez notre DPO : <a href="mailto:dpo@parleremploi.com" className="text-[#17c3b2] hover:underline">dpo@parleremploi.com</a>
+                Contactez notre DPO : <a href="mailto:contact@parleremploi.com" className="text-[#17c3b2] hover:underline">contact@parleremploi.com</a>
               </p>
             </div>
           </div>
