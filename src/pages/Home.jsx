@@ -192,6 +192,12 @@ export default function Home() {
                     </label>
                   </div>
 
+                  <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-lg">
+                    <p className="text-sm text-amber-900">
+                      ⚠️ <strong>Important :</strong> Le test est à titre indicatif. Les résultats ne constituent pas une certification officielle mais une évaluation pédagogique de votre niveau.
+                    </p>
+                  </div>
+
                   <Button 
                     type="button"
                     onClick={() => {
