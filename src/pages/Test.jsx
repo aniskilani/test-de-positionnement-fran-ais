@@ -325,7 +325,9 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
       duration_seconds: duration,
       candidate_name: candidateName,
       candidate_email: candidateEmail,
-      candidate_phone: candidatePhone
+      candidate_phone: candidatePhone,
+      gdpr_consent: true,
+      gdpr_consent_date: new Date().toISOString()
     };
 
     let savedResult;

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ArrowRight, Clock, Target, Award, CheckCircle, MessageCircle, Lock } from 'lucide-react';
+import { ArrowRight, Clock, Target, Award, CheckCircle, MessageCircle, Lock, Shield } from 'lucide-react';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -15,6 +15,7 @@ export default function Home() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [gdprConsent, setGdprConsent] = useState(false);
   const [showTrainerDialog, setShowTrainerDialog] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -175,10 +176,27 @@ export default function Home() {
                     />
                   </div>
 
+                  <div className="space-y-2">
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={gdprConsent}
+                        onChange={(e) => setGdprConsent(e.target.checked)}
+                        className="mt-1 w-4 h-4 rounded border-gray-300 text-[#17c3b2] focus:ring-[#17c3b2]"
+                      />
+                      <span className="text-sm text-gray-700">
+                        J'accepte que mes données personnelles soient collectées et traitées pour recevoir mes résultats et être contacté(e) concernant les formations.{' '}
+                        <Link to={createPageUrl('Privacy')} className="text-[#17c3b2] hover:underline">
+                          Voir la politique de confidentialité
+                        </Link>
+                      </span>
+                    </label>
+                  </div>
+
                   <Button 
                     type="button"
                     onClick={() => {
-                      if (!name || !email || !phone) return;
+                      if (!name || !email || !phone || !gdprConsent) return;
 
                       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                       if (!emailRegex.test(email)) {
@@ -190,18 +208,20 @@ export default function Home() {
                       localStorage.setItem('test_candidate_name', name);
                       localStorage.setItem('test_candidate_email', email);
                       localStorage.setItem('test_candidate_phone', phone);
+                      localStorage.setItem('test_gdpr_consent', 'true');
                       navigate(createPageUrl('Test') + `?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`);
                     }}
                     className="w-full h-14 rounded-xl text-lg font-semibold bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 transition-all shadow-lg shadow-[#17c3b2]/25"
-                    disabled={!name || !email || !phone}
+                    disabled={!name || !email || !phone || !gdprConsent}
                   >
                     Démarrer le test gratuit
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
 
-                  <p className="text-center text-sm text-gray-500">
-                    En démarrant, vous acceptez nos conditions d'utilisation
-                  </p>
+                  <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
+                    <Shield className="w-3 h-3" />
+                    <span>Vos données sont protégées (RGPD)</span>
+                  </div>
 
                   <div className="mt-6 pt-6 border-t border-gray-200">
                     <p className="text-sm text-gray-600 mb-3 text-center">Besoins d'informations ?</p>
@@ -231,9 +251,20 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t border-gray-100 py-8">
         <div className="max-w-6xl mx-auto px-6 text-center">
-          <p className="text-gray-500 text-sm mb-3">
-            © {new Date().getFullYear()} ParlerEmploi Formation. Tous droits réservés.
-          </p>
+          <div className="space-y-2">
+            <p className="text-gray-500 text-sm">
+              © {new Date().getFullYear()} ParlerEmploi Formation. Tous droits réservés.
+            </p>
+            <div className="flex items-center justify-center gap-4 text-xs text-gray-400">
+              <Link to={createPageUrl('Privacy')} className="hover:text-[#17c3b2] transition-colors">
+                Politique de confidentialité
+              </Link>
+              <span>•</span>
+              <a href="mailto:dpo@parleremploi.com" className="hover:text-[#17c3b2] transition-colors">
+                Contact DPO
+              </a>
+            </div>
+          </div>
           <button
             onClick={() => setShowTrainerDialog(true)}
             className="text-xs text-gray-400 hover:text-[#17c3b2] transition-colors flex items-center gap-1 mx-auto"
