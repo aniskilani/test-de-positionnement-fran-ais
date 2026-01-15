@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ArrowLeft, X, Loader2 } from 'lucide-react';
+import { ArrowRight, ArrowLeft, X, Loader2, Clock } from 'lucide-react';
 import ProgressBar from '@/components/test/ProgressBar';
 import QuestionCard from '@/components/test/QuestionCard';
 
@@ -196,6 +196,9 @@ export default function Test() {
   const [startTime] = useState(Date.now());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [timeLeft, setTimeLeft] = useState(12);
+  const [canTakeTest, setCanTakeTest] = useState(true);
+  const [lastTestDate, setLastTestDate] = useState(null);
+  const [checkingEligibility, setCheckingEligibility] = useState(true);
 
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -205,6 +208,45 @@ export default function Test() {
   const hasPaid = urlParams.get('paid') === 'true';
   const isTrainer = urlParams.get('trainer') === 'true';
   const trainerName = urlParams.get('trainerName') || localStorage.getItem('trainer_name') || '';
+
+  // Vérifier si le candidat peut passer le test (pas plus d'une fois tous les 3 mois)
+  useEffect(() => {
+    const checkTestEligibility = async () => {
+      if (!candidateEmail || isTrainer) {
+        setCheckingEligibility(false);
+        return;
+      }
+
+      try {
+        const results = await base44.entities.TestResult.filter({ 
+          candidate_email: candidateEmail 
+        });
+
+        if (results.length > 0) {
+          // Trier par date décroissante
+          const sortedResults = results.sort((a, b) => 
+            new Date(b.created_date) - new Date(a.created_date)
+          );
+          
+          const lastTest = sortedResults[0];
+          const lastTestDate = new Date(lastTest.created_date);
+          const threeMonthsAgo = new Date();
+          threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+
+          if (lastTestDate > threeMonthsAgo) {
+            setCanTakeTest(false);
+            setLastTestDate(lastTestDate);
+          }
+        }
+      } catch (error) {
+        console.error('Erreur vérification éligibilité:', error);
+      } finally {
+        setCheckingEligibility(false);
+      }
+    };
+
+    checkTestEligibility();
+  }, [candidateEmail, isTrainer]);
 
 
 
@@ -398,6 +440,97 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
   }, [hasAnswered, isLastQuestion, isSubmitting]);
 
 
+
+  if (checkingEligibility) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-[#17c3b2]/5 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-[#17c3b2]" />
+      </div>
+    );
+  }
+
+  if (!canTakeTest) {
+    const nextAvailableDate = new Date(lastTestDate);
+    nextAvailableDate.setMonth(nextAvailableDate.getMonth() + 3);
+    
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-[#17c3b2]/5">
+        <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
+          <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+            <img 
+              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_69409edef41e4f2a833c897b/ac7782ec6_logopefpetit.png" 
+              alt="ParlerEmploi Formation" 
+              className="h-16 object-contain"
+            />
+            <Link to={createPageUrl('Home')}>
+              <Button variant="ghost" size="icon" className="text-gray-500 hover:text-gray-700">
+                <X className="w-5 h-5" />
+              </Button>
+            </Link>
+          </div>
+        </header>
+
+        <main className="pt-32 pb-20 px-6">
+          <div className="max-w-2xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8 md:p-10 text-center"
+            >
+              <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Clock className="w-8 h-8 text-amber-600" />
+              </div>
+              
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                Test déjà effectué
+              </h1>
+              
+              <p className="text-gray-600 mb-6">
+                Vous avez déjà passé le test de positionnement le{' '}
+                <strong>{new Date(lastTestDate).toLocaleDateString('fr-FR', { 
+                  day: 'numeric', 
+                  month: 'long', 
+                  year: 'numeric' 
+                })}</strong>.
+              </p>
+              
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-6">
+                <p className="text-blue-900 font-medium mb-2">
+                  📅 Prochaine disponibilité
+                </p>
+                <p className="text-blue-800">
+                  {nextAvailableDate.toLocaleDateString('fr-FR', { 
+                    day: 'numeric', 
+                    month: 'long', 
+                    year: 'numeric' 
+                  })}
+                </p>
+                <p className="text-sm text-blue-700 mt-2">
+                  Pour garantir la fiabilité de l'évaluation, le test ne peut être passé qu'une fois tous les 3 mois.
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <p className="text-gray-700 font-medium">
+                  Vous n'avez pas reçu vos résultats ?
+                </p>
+                <Link to={createPageUrl('MyAccount')}>
+                  <Button variant="outline" className="w-full h-12">
+                    Accéder à mes résultats
+                  </Button>
+                </Link>
+                <Link to={createPageUrl('Contact')}>
+                  <Button className="w-full h-12 bg-gradient-to-r from-[#00504e] to-[#17c3b2]">
+                    Nous contacter
+                  </Button>
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-[#17c3b2]/5">
