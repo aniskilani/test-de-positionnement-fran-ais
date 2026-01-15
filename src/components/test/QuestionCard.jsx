@@ -107,11 +107,11 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
         } else if (event.error === 'no-speech') {
           setError('Aucune parole détectée. Parlez plus fort.');
         } else if (event.error === 'network') {
-          setError('Erreur réseau. Vérifiez votre connexion.');
+          setError("La reconnaissance vocale nécessite une connexion internet stable. Veuillez saisir votre réponse manuellement ci-dessous.");
         } else if (event.error === 'service-not-allowed') {
-          setError("Reconnaissance vocale non disponible. Utilisez une connexion HTTPS sécurisée.");
+          setError("Reconnaissance vocale non disponible. Veuillez saisir votre réponse manuellement ci-dessous.");
         } else {
-          setError(`Erreur: ${event.error}. Vérifiez les permissions de votre navigateur.`);
+          setError(`Erreur: ${event.error}. Veuillez saisir votre réponse manuellement ci-dessous.`);
         }
         setIsRecording(false);
         clearInterval(timerRef.current);
