@@ -120,7 +120,7 @@ export default function LegalNotice() {
                 </Link>.
               </p>
               <p className="mt-2">
-                <strong>Délégué à la Protection des Données (DPO) :</strong> dpo@parleremploi.com
+                <strong>Délégué à la Protection des Données (DPO) :</strong> contact@parleremploi.com
               </p>
             </section>
 

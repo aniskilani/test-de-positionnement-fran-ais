@@ -203,7 +203,7 @@ export default function MyAccount() {
             <ul className="text-sm text-blue-800 space-y-1">
               <li>• Droit d'accès : téléchargez vos données</li>
               <li>• Droit à l'effacement : supprimez vos données</li>
-              <li>• Droit de rectification : contactez-nous à dpo@parleremploi.com</li>
+              <li>• Droit de rectification : contactez-nous à contact@parleremploi.com</li>
               <li>• Droit d'opposition : contactez-nous</li>
             </ul>
           </div>
