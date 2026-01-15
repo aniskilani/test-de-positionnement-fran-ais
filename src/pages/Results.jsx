@@ -5,7 +5,7 @@ import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { RotateCcw, Mail, ChevronDown, ChevronUp, Loader2, FileText } from 'lucide-react';
+import { RotateCcw, Mail, ChevronDown, ChevronUp, Loader2, FileText, Award } from 'lucide-react';
 import { toast } from 'sonner';
 import LevelResult from '@/components/test/LevelResult';
 import QuestionReview from '@/components/results/QuestionReview';
@@ -195,14 +195,14 @@ export default function Results() {
                   )}
                 </Button>
                 
-                <a href="mailto:contact@parleremploi.com?subject=Demande de formation français" className="block">
+                <Link to={createPageUrl('Formations') + `?level=${testResult.level}&score=${testResult.score}&name=${encodeURIComponent(testResult.candidate_name)}`}>
                   <Button
                     className="w-full h-12 rounded-xl bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90"
                   >
-                    <Mail className="w-4 h-4 mr-2" />
-                    Nous contacter
+                    <Award className="w-4 h-4 mr-2" />
+                    Voir les formations
                   </Button>
-                </a>
+                </Link>
               </motion.div>
             </TabsContent>
 
