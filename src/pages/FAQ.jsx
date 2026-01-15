@@ -50,7 +50,7 @@ export default function FAQ() {
     },
     {
       question: "Comment supprimer mes données personnelles ?",
-      answer: "Vous pouvez à tout moment demander la suppression de vos données en nous contactant à dpo@parleremploi.com ou via la page 'Mon compte'."
+      answer: "Vous pouvez à tout moment demander la suppression de vos données en nous contactant à contact@parleremploi.com ou via la page 'Mon compte'."
     },
     {
       question: "Proposez-vous des formations après le test ?",
@@ -58,7 +58,7 @@ export default function FAQ() {
     },
     {
       question: "Les formations sont-elles finançables par le CPF ?",
-      answer: "Oui, ParlerEmploi Formation est certifié Qualiopi. Nos formations peuvent être financées par le CPF, Pôle Emploi ou d'autres organismes."
+      answer: "Oui, ParlerEmploi Formation est certifié Qualiopi. Nos formations peuvent être financées par le CPF, France Travail ou d'autres organismes."
     },
     {
       question: "Qu'est-ce que la certification Qualiopi ?",
