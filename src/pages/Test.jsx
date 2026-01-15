@@ -346,6 +346,15 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
       savedResult = await base44.entities.TestResult.create(resultData);
     }
 
+    // Envoyer le PDF par email si ce n'est pas un formateur
+    if (!isTrainer) {
+      try {
+        await base44.functions.invoke('sendResultsPDF', { resultId: savedResult.id });
+      } catch (error) {
+        console.error('Erreur envoi PDF:', error);
+      }
+    }
+
     navigate(createPageUrl('Results') + `?resultId=${savedResult.id}&trainer=${isTrainer}`);
   };
 

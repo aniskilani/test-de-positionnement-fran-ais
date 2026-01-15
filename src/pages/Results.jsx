@@ -5,7 +5,8 @@ import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { RotateCcw, Mail, ChevronDown, ChevronUp, Loader2 } from 'lucide-react';
+import { RotateCcw, Mail, ChevronDown, ChevronUp, Loader2, FileText } from 'lucide-react';
+import { toast } from 'sonner';
 import LevelResult from '@/components/test/LevelResult';
 import QuestionReview from '@/components/results/QuestionReview';
 import CategoryAnalysis from '@/components/results/CategoryAnalysis';
@@ -15,6 +16,7 @@ export default function Results() {
   const [testResult, setTestResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showAllQuestions, setShowAllQuestions] = useState(false);
+  const [sendingPDF, setSendingPDF] = useState(false);
 
   const urlParams = new URLSearchParams(window.location.search);
   const resultId = urlParams.get('resultId');
@@ -80,6 +82,19 @@ export default function Results() {
 
   const incorrectQuestions = questionReviews.filter(r => !r.isCorrect);
   const displayedQuestions = showAllQuestions ? questionReviews : incorrectQuestions;
+
+  const handleResendPDF = async () => {
+    setSendingPDF(true);
+    try {
+      await base44.functions.invoke('sendResultsPDF', { resultId: testResult.id });
+      toast.success('PDF envoyé par email !');
+    } catch (error) {
+      toast.error('Erreur lors de l\'envoi du PDF');
+      console.error(error);
+    } finally {
+      setSendingPDF(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-[#17c3b2]/5">
@@ -161,6 +176,25 @@ export default function Results() {
                 transition={{ delay: 0.3 }}
                 className="space-y-4"
               >
+                <Button
+                  onClick={handleResendPDF}
+                  disabled={sendingPDF}
+                  variant="outline"
+                  className="w-full h-12 rounded-xl border-[#17c3b2] text-[#00504e] hover:bg-[#17c3b2]/10"
+                >
+                  {sendingPDF ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Envoi en cours...
+                    </>
+                  ) : (
+                    <>
+                      <FileText className="w-4 h-4 mr-2" />
+                      Recevoir le PDF par email
+                    </>
+                  )}
+                </Button>
+                
                 <a href="mailto:contact@parleremploi.com?subject=Demande de formation français" className="block">
                   <Button
                     className="w-full h-12 rounded-xl bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90"
