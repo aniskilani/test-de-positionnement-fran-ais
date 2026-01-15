@@ -176,10 +176,14 @@ Envoyé depuis parleremploi.com
                     <MapPin className="w-6 h-6 text-[#17c3b2]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Adresse</h3>
+                    <h3 className="font-semibold text-gray-900 mb-1">Accueil</h3>
                     <p className="text-gray-600">
-                      23 avenue Gabriel Péri<br />
-                      93400 Saint-Ouen
+                      Médiathèque Persepolis<br />
+                      4, avenue Gabriel-Péri<br />
+                      93400 Saint-Ouen-sur-Seine
+                    </p>
+                    <p className="text-sm text-[#17c3b2] font-medium mt-2">
+                      Mardi et jeudi : 14h - 16h
                     </p>
                   </div>
                 </div>
