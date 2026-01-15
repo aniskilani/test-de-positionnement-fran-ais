@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowLeft, X, Loader2 } from 'lucide-react';
 import ProgressBar from '@/components/test/ProgressBar';
 import QuestionCard from '@/components/test/QuestionCard';
-import PartialResultScreen from '@/components/test/PartialResultScreen';
+
 import { questions } from '@/components/test/questionsData';
 
 const originalQuestions = [
@@ -195,7 +195,7 @@ export default function Test() {
   const [answers, setAnswers] = useState({});
   const [startTime] = useState(Date.now());
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showPartialResult, setShowPartialResult] = useState(false);
+
 
   const urlParams = new URLSearchParams(window.location.search);
   const candidateName = urlParams.get('name') || localStorage.getItem('test_candidate_name') || '';
@@ -205,62 +205,19 @@ export default function Test() {
   const isTrainer = urlParams.get('trainer') === 'true';
   const trainerName = urlParams.get('trainerName') || localStorage.getItem('trainer_name') || '';
 
-  const FREE_QUESTIONS_COUNT = 10;
+
 
   const handleSelect = (answer) => {
     setAnswers({ ...answers, [currentQuestion]: answer });
   };
 
   const handleNext = async () => {
-    // Si on atteint la fin du test gratuit et que l'utilisateur n'a pas payé (et ce n'est pas un formateur)
-    if (currentQuestion === FREE_QUESTIONS_COUNT - 1 && !hasPaid && !isTrainer) {
-      // Sauvegarder la session gratuite
-      await saveFreeTestSession();
-      setShowPartialResult(true);
-      return;
-    }
-    
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     }
   };
 
-  const saveFreeTestSession = async () => {
-    let correctCount = 0;
-    const freeAnswers = [];
-    
-    for (let i = 0; i < FREE_QUESTIONS_COUNT; i++) {
-      const q = questions[i];
-      const userAnswer = answers[i];
-      const isCorrect = userAnswer === q.correct;
-      if (isCorrect) correctCount++;
-      
-      freeAnswers.push({
-        questionId: q.id,
-        answer: userAnswer || "",
-        correct: isCorrect
-      });
-    }
 
-    const percentage = Math.round((correctCount / FREE_QUESTIONS_COUNT) * 100);
-    let estimatedLevel = "A1-A2";
-    if (percentage >= 80) estimatedLevel = "B1-B2";
-    else if (percentage >= 60) estimatedLevel = "A2-B1";
-
-    try {
-      await base44.entities.FreeTestSession.create({
-        candidate_name: candidateName,
-        candidate_email: candidateEmail,
-        candidate_phone: candidatePhone,
-        partial_score: correctCount,
-        estimated_level: estimatedLevel,
-        has_paid: false,
-        answers: freeAnswers
-      });
-    } catch (error) {
-      console.error('Error saving free test session:', error);
-    }
-  };
 
   const handlePrev = () => {
     if (currentQuestion > 0) {
@@ -404,29 +361,10 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [hasAnswered, isLastQuestion, isSubmitting]);
 
-  // Calculer le score partiel pour l'écran intermédiaire
-  const calculatePartialScore = () => {
-    let correctCount = 0;
-    for (let i = 0; i < FREE_QUESTIONS_COUNT; i++) {
-      const q = questions[i];
-      const userAnswer = answers[i];
-      if (userAnswer === q.correct) correctCount++;
-    }
-    return correctCount;
-  };
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-[#17c3b2]/5">
-      {/* Partial Result Screen */}
-      {showPartialResult && (
-        <PartialResultScreen 
-          score={calculatePartialScore()} 
-          totalQuestions={FREE_QUESTIONS_COUNT}
-          candidateName={candidateName}
-          candidateEmail={candidateEmail}
-          candidatePhone={candidatePhone}
-        />
-      )}
 
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
