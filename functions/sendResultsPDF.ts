@@ -130,35 +130,101 @@ Deno.serve(async (req) => {
     
     const { file_url } = await base44.asServiceRole.integrations.Core.UploadFile({ file });
 
-    // Envoyer l'email avec le lien vers le PDF
+    // Envoyer l'email avec le lien vers le PDF (HTML formaté)
     await base44.asServiceRole.integrations.Core.SendEmail({
       from_name: 'ParlerEmploi Formation',
       to: testResult.candidate_email,
-      subject: 'Vos résultats au test de positionnement FLE',
+      subject: '🎓 Vos résultats au test de positionnement FLE',
       body: `
-Bonjour ${testResult.candidate_name},
-
-Félicitations pour avoir complété le test de positionnement en français langue étrangère !
-
-📊 Votre niveau : ${testResult.level}
-🎯 Votre score : ${testResult.score}/100
-
-Vous pouvez télécharger votre fiche de résultats détaillée en cliquant sur ce lien :
-${file_url}
-
-Cette fiche contient :
-- Votre niveau CECRL officiel
-- Votre score global
-- Vos performances par catégorie
-- Vos statistiques détaillées
-
-Pour aller plus loin et améliorer votre français, n'hésitez pas à nous contacter pour découvrir nos formations personnalisées adaptées à votre niveau.
-
-📧 Email : contact@parleremploi.com
-🌐 Site web : https://parleremploi.com
-
-Cordialement,
-L'équipe ParlerEmploi Formation
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f5f5f5; }
+    .container { max-width: 600px; margin: 0 auto; background: white; }
+    .header { background: linear-gradient(135deg, #00504e 0%, #17c3b2 100%); padding: 40px 20px; text-align: center; }
+    .header h1 { color: white; margin: 0; font-size: 24px; }
+    .header p { color: rgba(255,255,255,0.9); margin: 10px 0 0 0; font-size: 14px; }
+    .content { padding: 40px 30px; }
+    .greeting { font-size: 18px; color: #333; margin-bottom: 20px; }
+    .result-box { background: linear-gradient(135deg, #17c3b2 0%, #32cf8a 100%); border-radius: 12px; padding: 30px; text-align: center; margin: 30px 0; }
+    .result-box .level { font-size: 48px; font-weight: bold; color: white; margin: 10px 0; }
+    .result-box .score { font-size: 24px; color: rgba(255,255,255,0.95); }
+    .result-box p { color: rgba(255,255,255,0.9); margin: 5px 0; }
+    .download-btn { display: inline-block; background: #00504e; color: white; padding: 15px 40px; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 20px 0; }
+    .download-btn:hover { background: #003d3b; }
+    .features { background: #f9f9f9; border-radius: 8px; padding: 20px; margin: 20px 0; }
+    .features h3 { color: #00504e; margin-top: 0; }
+    .features ul { list-style: none; padding: 0; }
+    .features li { padding: 8px 0; padding-left: 25px; position: relative; }
+    .features li:before { content: "✓"; position: absolute; left: 0; color: #32cf8a; font-weight: bold; }
+    .cta { background: #fff4e6; border-left: 4px solid #f59e0b; padding: 20px; margin: 20px 0; border-radius: 4px; }
+    .cta h3 { color: #f59e0b; margin-top: 0; }
+    .contact { text-align: center; padding: 20px; background: #f9f9f9; border-radius: 8px; margin: 20px 0; }
+    .contact a { color: #17c3b2; text-decoration: none; font-weight: bold; }
+    .footer { background: #f5f5f5; padding: 30px; text-align: center; color: #666; font-size: 12px; }
+    .footer a { color: #17c3b2; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🎓 ParlerEmploi Formation</h1>
+      <p>Test de Positionnement FLE</p>
+    </div>
+    
+    <div class="content">
+      <p class="greeting">Bonjour <strong>${testResult.candidate_name}</strong>,</p>
+      
+      <p>Félicitations pour avoir complété le test de positionnement en français langue étrangère ! 🎉</p>
+      
+      <div class="result-box">
+        <p style="margin: 0; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Votre niveau CECRL</p>
+        <div class="level">${testResult.level}</div>
+        <div class="score">${testResult.score}/100 points</div>
+      </div>
+      
+      <p style="text-align: center;">
+        <a href="${file_url}" class="download-btn">📄 Télécharger mes résultats détaillés</a>
+      </p>
+      
+      <div class="features">
+        <h3>📊 Votre fiche de résultats contient :</h3>
+        <ul>
+          <li>Votre niveau CECRL officiel (${testResult.level})</li>
+          <li>Votre score global (${testResult.score}/100)</li>
+          <li>Vos performances détaillées par catégorie</li>
+          <li>Analyse de vos points forts et axes d'amélioration</li>
+        </ul>
+      </div>
+      
+      <div class="cta">
+        <h3>🚀 Progressez dans votre apprentissage</h3>
+        <p>Nos formations personnalisées sont adaptées à votre niveau <strong>${testResult.level}</strong> et vous permettent de progresser rapidement vers vos objectifs.</p>
+        <p style="margin: 0;">Contactez-nous pour découvrir nos programmes certifiés Qualiopi.</p>
+      </div>
+      
+      <div class="contact">
+        <p><strong>Restons en contact</strong></p>
+        <p>📧 <a href="mailto:contact@parleremploi.com">contact@parleremploi.com</a></p>
+        <p>📱 <a href="tel:+33652675393">06 52 67 53 93</a></p>
+        <p>🌐 <a href="https://parleremploi.com">parleremploi.com</a></p>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <p><strong>ParlerEmploi Formation</strong></p>
+      <p>Organisme certifié Qualiopi • NDA : 11931070593</p>
+      <p>23 avenue Gabriel Péri, 93400 Saint-Ouen</p>
+      <p style="margin-top: 15px;">
+        <a href="#">Politique de confidentialité</a> • 
+        <a href="#">Se désabonner</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>
       `
     });
 
