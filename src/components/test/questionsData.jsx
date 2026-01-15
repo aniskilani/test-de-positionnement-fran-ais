@@ -467,7 +467,7 @@ export const questions = [
     type: "written",
     question: "Décrivez votre famille : qui habite avec vous ? Combien de personnes ? (2-3 phrases)",
     placeholder: "Exemple : J'habite avec mes parents et mon frère. Nous sommes quatre personnes. Mon frère s'appelle Thomas.",
-    minWords: 10,
+    minWords: 20,
     criteria: ["Vocabulaire de la famille", "Utilise des nombres", "Phrases simples et claires", "Au moins 2 membres de la famille mentionnés"]
   },
   {
@@ -475,9 +475,9 @@ export const questions = [
     level: "A2",
     category: "Expression Écrite",
     type: "written",
-    question: "Décrivez votre journée typique. Que faites-vous le matin, l'après-midi et le soir ? (40-50 mots)",
+    question: "Décrivez votre journée typique. Que faites-vous le matin, l'après-midi et le soir ?",
     placeholder: "Exemple : Le matin, je me réveille à 7h. Je prends mon petit-déjeuner...",
-    minWords: 40,
+    minWords: 20,
     criteria: ["Utilise le présent", "Structure chronologique claire", "Vocabulaire quotidien approprié", "Connecteurs temporels (le matin, puis, ensuite)"]
   },
   {
@@ -485,9 +485,9 @@ export const questions = [
     level: "B1",
     category: "Expression Écrite",
     type: "written",
-    question: "Racontez vos dernières vacances ou un voyage mémorable. Où êtes-vous allé(e) ? Qu'avez-vous fait ? (60-80 mots)",
+    question: "Racontez vos dernières vacances ou un voyage mémorable. Où êtes-vous allé(e) ? Qu'avez-vous fait ?",
     placeholder: "Exemple : L'été dernier, je suis allé(e) en Espagne avec ma famille...",
-    minWords: 60,
+    minWords: 20,
     criteria: ["Utilise le passé composé", "Décrit les activités et lieux", "Exprime des sentiments", "Texte cohérent et structuré"]
   },
   {
@@ -495,9 +495,9 @@ export const questions = [
     level: "B2",
     category: "Expression Écrite",
     type: "written",
-    question: "Donnez votre opinion sur le télétravail. Quels sont selon vous les avantages et les inconvénients ? (80-100 mots)",
+    question: "Donnez votre opinion sur le télétravail. Quels sont selon vous les avantages et les inconvénients ?",
     placeholder: "Exemple : À mon avis, le télétravail présente plusieurs avantages. Tout d'abord...",
-    minWords: 80,
+    minWords: 20,
     criteria: ["Argumentation structurée", "Utilise des connecteurs logiques", "Vocabulaire varié et précis", "Exprime clairement son opinion", "Présente avantages ET inconvénients"]
   }
 ];
