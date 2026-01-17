@@ -47,7 +47,28 @@ const levelData = {
       "S'exprimer de façon claire"
     ]
   },
-
+  C1: {
+    title: "Autonome",
+    description: "Vous pouvez comprendre une grande gamme de textes longs et vous exprimer spontanément.",
+    icon: Star,
+    color: "#8b5cf6",
+    skills: [
+      "Maîtriser des structures complexes",
+      "Comprendre des textes exigeants",
+      "S'exprimer avec précision et fluidité"
+    ]
+  },
+  C2: {
+    title: "Maîtrise",
+    description: "Vous maîtrisez la langue avec une grande précision dans toutes les situations.",
+    icon: Award,
+    color: "#ec4899",
+    skills: [
+      "Comprendre sans effort toute forme de langue",
+      "S'exprimer avec subtilité et nuance",
+      "Utiliser la langue avec virtuosité"
+    ]
+  }
 };
 
 export default function LevelResult({ level, score }) {
