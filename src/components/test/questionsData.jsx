@@ -1,3 +1,4 @@
+
 export const questions = [
   // ==================== A1 Level ====================
   // Grammaire A1
@@ -454,37 +455,37 @@ export const questions = [
     id: 51,
     level: "C1",
     category: "Grammaire",
-    question: "Complétez : « Il eût fallu qu'il ___ plus tôt pour éviter ce malentendu. »",
-    options: ["vient", "vienne", "vînt", "venait"],
-    correct: "vînt",
-    explanation: "Le subjonctif imparfait 'vînt' est utilisé dans un registre soutenu après 'il eût fallu que'."
+    question: "Complétez : « Bien qu'il ___ déjà lu ce livre, il l'a relu avec plaisir. »",
+    options: ["a", "ait", "avait", "aurait"],
+    correct: "ait",
+    explanation: "Après 'bien que', on utilise le subjonctif : bien qu'il ait lu."
   },
   {
     id: 52,
     level: "C1",
     category: "Grammaire",
-    question: "Choisissez la forme correcte : « C'est une œuvre ___ la complexité défie l'entendement. »",
-    options: ["que", "dont", "où", "laquelle"],
+    question: "Choisissez la forme correcte : « Voici le projet ___ nous avons besoin. »",
+    options: ["que", "dont", "qui", "où"],
     correct: "dont",
-    explanation: "On utilise 'dont' car il remplace 'de laquelle' : la complexité DE laquelle."
+    explanation: "On utilise 'dont' car on dit 'avoir besoin DE quelque chose'."
   },
   {
     id: 53,
     level: "C1",
     category: "Grammaire",
-    question: "Complétez : « ___ les circonstances, nous ne saurions accepter cette proposition. »",
-    options: ["Étant donné", "Étant donnée", "Étant donnés", "Étant données"],
-    correct: "Étant donné",
-    explanation: "'Étant donné' reste invariable en début de phrase."
+    question: "Complétez : « ___ ses efforts, il n'a pas réussi l'examen. »",
+    options: ["Malgré", "Bien que", "Quoique", "Pendant"],
+    correct: "Malgré",
+    explanation: "'Malgré' est suivi d'un nom et exprime une opposition."
   },
   {
     id: 54,
     level: "C1",
     category: "Grammaire",
-    question: "« Il convient que vous ___ au plus vite les mesures qui s'imposent. »",
+    question: "« Il faut que vous ___ cette décision rapidement. »",
     options: ["prenez", "preniez", "prendrez", "prendriez"],
     correct: "preniez",
-    explanation: "Après 'il convient que', on utilise le subjonctif présent : que vous preniez."
+    explanation: "Après 'il faut que', on utilise le subjonctif : que vous preniez."
   },
 
   // Vocabulaire C1
@@ -492,28 +493,28 @@ export const questions = [
     id: 55,
     level: "C1",
     category: "Vocabulaire",
-    question: "Quel mot signifie « qui manque de clarté, ambigu » ?",
-    options: ["Équivoque", "Explicite", "Évident", "Limpide"],
+    question: "Quel mot signifie « qui peut avoir plusieurs interprétations » ?",
+    options: ["Équivoque", "Explicite", "Évident", "Clair"],
     correct: "Équivoque",
-    explanation: "'Équivoque' désigne ce qui peut être interprété de plusieurs façons, manque de clarté."
+    explanation: "'Équivoque' désigne ce qui peut être compris de différentes manières."
   },
   {
     id: 56,
     level: "C1",
     category: "Vocabulaire",
-    question: "Que signifie l'expression « jeter l'opprobre sur quelqu'un » ?",
-    options: ["Le féliciter", "Le déshonorer publiquement", "Le promouvoir", "L'ignorer"],
-    correct: "Le déshonorer publiquement",
-    explanation: "'Jeter l'opprobre' signifie couvrir quelqu'un de honte, le déshonorer publiquement."
+    question: "Que signifie « être réticent » ?",
+    options: ["Être enthousiaste", "Hésiter, montrer de la résistance", "Être rapide", "Être d'accord"],
+    correct: "Hésiter, montrer de la résistance",
+    explanation: "'Être réticent' signifie montrer de l'hésitation ou de la résistance face à quelque chose."
   },
   {
     id: 57,
     level: "C1",
     category: "Vocabulaire",
-    question: "Quel terme désigne un raisonnement qui semble logique mais contient une erreur subtile ?",
-    options: ["Sophisme", "Syllogisme", "Axiome", "Postulat"],
-    correct: "Sophisme",
-    explanation: "Un sophisme est un argument fallacieux qui paraît valide mais contient une erreur logique."
+    question: "Quel est le synonyme de « préconiser » ?",
+    options: ["Déconseiller", "Recommander", "Interdire", "Ignorer"],
+    correct: "Recommander",
+    explanation: "'Préconiser' signifie recommander vivement quelque chose."
   },
 
   // Compréhension Orale C1
@@ -521,11 +522,11 @@ export const questions = [
     id: 58,
     level: "C1",
     category: "Compréhension Orale",
-    question: "Écoutez l'extrait. Quelle est la thèse défendue par l'orateur ?",
-    audioText: "Force est de constater que l'évolution des paradigmes sociétaux contemporains requiert une refonte substantielle de nos infrastructures éducatives, faute de quoi nous risquons de voir se creuser davantage le fossé entre les compétences requises et celles effectivement détenues par nos concitoyens.",
-    options: ["Le système éducatif est parfait", "Il faut réformer l'éducation pour l'adapter aux besoins actuels", "Les citoyens manquent de motivation", "L'infrastructure est suffisante"],
-    correct: "Il faut réformer l'éducation pour l'adapter aux besoins actuels",
-    explanation: "L'orateur plaide pour une refonte du système éducatif face aux changements sociétaux."
+    question: "Écoutez l'extrait. Que propose l'orateur ?",
+    audioText: "Il est nécessaire de repenser notre système éducatif pour qu'il corresponde mieux aux besoins de la société moderne et aux compétences recherchées sur le marché du travail.",
+    options: ["Garder le système actuel", "Réformer l'éducation", "Supprimer les écoles", "Augmenter les vacances"],
+    correct: "Réformer l'éducation",
+    explanation: "L'orateur propose de moderniser le système éducatif."
   },
 
   // Compréhension Écrite C1
@@ -533,19 +534,19 @@ export const questions = [
     id: 59,
     level: "C1",
     category: "Compréhension Écrite",
-    question: "Lisez : « L'ambiguïté intrinsèque de cette directive rend son application pour le moins problématique. » Quel est le ton de cette phrase ?",
-    options: ["Enthousiaste", "Critique", "Neutre", "Admiratif"],
-    correct: "Critique",
-    explanation: "Le ton est critique, soulignant les difficultés d'application dues au manque de clarté."
+    question: "Lisez : « Cette mesure, bien qu'utile, reste insuffisante pour résoudre le problème. » Quel est le ton ?",
+    options: ["Enthousiaste", "Critique mais nuancé", "Très négatif", "Indifférent"],
+    correct: "Critique mais nuancé",
+    explanation: "Le ton reconnaît un aspect positif ('utile') tout en pointant les limites ('insuffisante')."
   },
   {
     id: 60,
     level: "C1",
     category: "Compréhension Écrite",
-    question: "Que signifie « pour le moins » dans le contexte suivant : « Son comportement était pour le moins surprenant » ?",
-    options: ["Au minimum", "Au maximum", "Exactement", "Rarement"],
+    question: "Dans : « Son attitude était pour le moins étrange », que signifie « pour le moins » ?",
+    options: ["Au minimum", "Exactement", "Jamais", "Toujours"],
     correct: "Au minimum",
-    explanation: "'Pour le moins' signifie 'au minimum', 'c'est le moins qu'on puisse dire'."
+    explanation: "'Pour le moins' signifie 'au minimum', c'est une litote."
   },
 
   // ==================== C2 Level ====================
@@ -554,33 +555,33 @@ export const questions = [
     id: 61,
     level: "C2",
     category: "Grammaire",
-    question: "Identifiez la concordance correcte : « Si j'eusse su, je ___ autrement. »",
-    options: ["aurais agi", "eusse agi", "agirais", "agirai"],
-    correct: "eusse agi",
-    explanation: "Dans un registre très soutenu, après 'si + plus-que-parfait du subjonctif', on utilise le conditionnel passé 2ème forme 'eusse agi'."
+    question: "Complétez : « Quoi qu'il ___, nous le soutiendrons. »",
+    options: ["fait", "fasse", "fera", "ferait"],
+    correct: "fasse",
+    explanation: "Après 'quoi que', on utilise le subjonctif : quoi qu'il fasse."
   },
   {
     id: 62,
     level: "C2",
     category: "Grammaire",
-    question: "Laquelle de ces phrases utilise correctement le subjonctif plus-que-parfait ?",
+    question: "Quelle phrase est correcte ?",
     options: [
-      "Il aurait fallu qu'il eût terminé avant midi",
-      "Il aurait fallu qu'il avait terminé avant midi",
-      "Il aurait fallu qu'il ait terminé avant midi",
-      "Il aurait fallu qu'il a terminé avant midi"
+      "Il aurait fallu qu'il ait terminé plus tôt",
+      "Il aurait fallu qu'il avait terminé plus tôt",
+      "Il aurait fallu qu'il termine plus tôt",
+      "Il aurait fallu qu'il a terminé plus tôt"
     ],
-    correct: "Il aurait fallu qu'il eût terminé avant midi",
-    explanation: "Le subjonctif plus-que-parfait 'eût terminé' exprime l'antériorité dans un registre très soutenu."
+    correct: "Il aurait fallu qu'il ait terminé plus tôt",
+    explanation: "Après 'il aurait fallu que', on utilise le subjonctif passé pour exprimer l'antériorité."
   },
   {
     id: 63,
     level: "C2",
     category: "Grammaire",
-    question: "Complétez : « Quelque compétent qu'il ___, il ne saurait mener à bien un tel projet seul. »",
-    options: ["est", "soit", "serait", "fût"],
+    question: "Complétez : « Pour compétent qu'il ___, il ne peut pas tout faire seul. »",
+    options: ["est", "soit", "serait", "sera"],
     correct: "soit",
-    explanation: "Après 'quelque... que' exprimant la concession, on utilise le subjonctif."
+    explanation: "Après 'pour... que' exprimant la concession, on utilise le subjonctif."
   },
 
   // Vocabulaire C2
@@ -588,28 +589,28 @@ export const questions = [
     id: 64,
     level: "C2",
     category: "Vocabulaire",
-    question: "Quel adjectif qualifie un discours volontairement obscur et ampoulé ?",
-    options: ["Laconique", "Amphigourique", "Lapidaire", "Concis"],
+    question: "Quel mot désigne un discours confus et prétentieux ?",
+    options: ["Bref", "Amphigourique", "Simple", "Direct"],
     correct: "Amphigourique",
-    explanation: "'Amphigourique' désigne un discours confus, prétentieux et difficilement compréhensible."
+    explanation: "'Amphigourique' désigne un discours obscur et emphatique."
   },
   {
     id: 65,
     level: "C2",
     category: "Vocabulaire",
-    question: "Que signifie le verbe « vitupérer » ?",
-    options: ["Louer avec emphase", "Critiquer violemment", "Hésiter longuement", "Analyser minutieusement"],
-    correct: "Critiquer violemment",
-    explanation: "'Vitupérer' signifie critiquer avec violence et véhémence, invectiver."
+    question: "Que signifie « vitupérer » ?",
+    options: ["Féliciter", "Critiquer vivement", "Hésiter", "Encourager"],
+    correct: "Critiquer vivement",
+    explanation: "'Vitupérer' signifie critiquer avec véhémence."
   },
   {
     id: 66,
     level: "C2",
     category: "Vocabulaire",
-    question: "Quel terme désigne l'art de bien manger et la connaissance gastronomique ?",
-    options: ["Œnologie", "Gastronomie", "Gastrologie", "Épicurisme"],
-    correct: "Gastrologie",
-    explanation: "'Gastrologie' est le terme savant désignant l'art culinaire et la science de la bonne chère."
+    question: "Quel mot désigne l'art culinaire raffiné ?",
+    options: ["Œnologie", "Gastronomie", "Diététique", "Nutrition"],
+    correct: "Gastronomie",
+    explanation: "'Gastronomie' désigne l'art de la bonne cuisine et de la bonne chère."
   },
 
   // Compréhension Orale C2
@@ -617,11 +618,11 @@ export const questions = [
     id: 67,
     level: "C2",
     category: "Compréhension Orale",
-    question: "Écoutez l'analyse. Quelle figure de style l'orateur utilise-t-il principalement ?",
-    audioText: "La dialectique hégélienne, loin de constituer un simple artifice rhétorique, s'avère être le substrat même de toute épistémologie digne de ce nom, transcendant par là même les antinomies kantiennes qui, bien qu'éclairantes, demeurent prisonnières d'un dualisme réducteur.",
-    options: ["La métaphore", "L'hyperbole", "La litote", "La périphrase"],
-    correct: "La périphrase",
-    explanation: "L'orateur utilise des formulations indirectes et complexes (périphrases) pour exprimer des concepts philosophiques."
+    question: "Écoutez. Quelle est l'idée principale ?",
+    audioText: "L'évolution de la pensée philosophique moderne montre une rupture progressive avec les traditions anciennes, tout en conservant certains éléments fondamentaux qui constituent le socle de notre réflexion contemporaine.",
+    options: ["La philosophie n'a pas changé", "La philosophie moderne rompt avec le passé tout en gardant des bases", "La philosophie ancienne est meilleure", "Il n'y a plus de philosophie"],
+    correct: "La philosophie moderne rompt avec le passé tout en gardant des bases",
+    explanation: "Le texte explique qu'il y a une rupture mais aussi une continuité avec certains fondements."
   },
 
   // Compréhension Écrite C2
@@ -629,19 +630,19 @@ export const questions = [
     id: 68,
     level: "C2",
     category: "Compréhension Écrite",
-    question: "Lisez : « Cette aporie conceptuelle invalide de facto l'ensemble de l'argumentation. » Que signifie 'aporie' ?",
-    options: ["Une brillante démonstration", "Une difficulté logique insurmontable", "Un accord unanime", "Une hypothèse vérifiée"],
-    correct: "Une difficulté logique insurmontable",
-    explanation: "Une aporie est une contradiction insoluble dans un raisonnement, un problème sans issue logique."
+    question: "Lisez : « Ce paradoxe logique remet en question toute l'argumentation. » Que signifie 'paradoxe' ?",
+    options: ["Une évidence", "Une contradiction apparente", "Un accord", "Une preuve"],
+    correct: "Une contradiction apparente",
+    explanation: "Un paradoxe est une affirmation qui semble contradictoire mais peut être vraie."
   },
   {
     id: 69,
     level: "C2",
     category: "Compréhension Écrite",
-    question: "Dans : « Son herméneutique du texte révèle des strates sémantiques insoupçonnées », que désigne 'herméneutique' ?",
-    options: ["Une traduction", "Une interprétation méthodique", "Une critique sévère", "Une réécriture"],
-    correct: "Une interprétation méthodique",
-    explanation: "L'herméneutique est l'art d'interpréter et de comprendre les textes selon une méthode rigoureuse."
+    question: "Que signifie « interpréter un texte de manière approfondie » ?",
+    options: ["Le traduire", "L'analyser en profondeur", "Le critiquer", "Le réécrire"],
+    correct: "L'analyser en profondeur",
+    explanation: "Interpréter de manière approfondie signifie analyser et comprendre tous les niveaux de sens."
   },
 
   // Expression Écrite C1
