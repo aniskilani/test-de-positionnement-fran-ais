@@ -24,8 +24,8 @@ export default function Home() {
 
   const features = [
     { icon: Clock, text: "30-45 minutes", label: "Durée estimée" },
-    { icon: Target, text: "50 questions", label: "Questions adaptatives" },
-    { icon: Award, text: "Niveau CECRL", label: "De A1 à B2" },
+    { icon: Target, text: "71 questions", label: "Questions adaptatives" },
+    { icon: Award, text: "Niveau CECRL", label: "De A1 à C2" },
   ];
 
   const handleTrainerAccess = async () => {
