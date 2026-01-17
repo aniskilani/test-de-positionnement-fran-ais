@@ -448,6 +448,226 @@ export const questions = [
     explanation: "Une action 'concertée' est une action coordonnée, menée ensemble de façon organisée."
   },
 
+  // ==================== C1 Level ====================
+  // Grammaire C1
+  {
+    id: 51,
+    level: "C1",
+    category: "Grammaire",
+    question: "Complétez : « Il eût fallu qu'il ___ plus tôt pour éviter ce malentendu. »",
+    options: ["vient", "vienne", "vînt", "venait"],
+    correct: "vînt",
+    explanation: "Le subjonctif imparfait 'vînt' est utilisé dans un registre soutenu après 'il eût fallu que'."
+  },
+  {
+    id: 52,
+    level: "C1",
+    category: "Grammaire",
+    question: "Choisissez la forme correcte : « C'est une œuvre ___ la complexité défie l'entendement. »",
+    options: ["que", "dont", "où", "laquelle"],
+    correct: "dont",
+    explanation: "On utilise 'dont' car il remplace 'de laquelle' : la complexité DE laquelle."
+  },
+  {
+    id: 53,
+    level: "C1",
+    category: "Grammaire",
+    question: "Complétez : « ___ les circonstances, nous ne saurions accepter cette proposition. »",
+    options: ["Étant donné", "Étant donnée", "Étant donnés", "Étant données"],
+    correct: "Étant donné",
+    explanation: "'Étant donné' reste invariable en début de phrase."
+  },
+  {
+    id: 54,
+    level: "C1",
+    category: "Grammaire",
+    question: "« Il convient que vous ___ au plus vite les mesures qui s'imposent. »",
+    options: ["prenez", "preniez", "prendrez", "prendriez"],
+    correct: "preniez",
+    explanation: "Après 'il convient que', on utilise le subjonctif présent : que vous preniez."
+  },
+
+  // Vocabulaire C1
+  {
+    id: 55,
+    level: "C1",
+    category: "Vocabulaire",
+    question: "Quel mot signifie « qui manque de clarté, ambigu » ?",
+    options: ["Équivoque", "Explicite", "Évident", "Limpide"],
+    correct: "Équivoque",
+    explanation: "'Équivoque' désigne ce qui peut être interprété de plusieurs façons, manque de clarté."
+  },
+  {
+    id: 56,
+    level: "C1",
+    category: "Vocabulaire",
+    question: "Que signifie l'expression « jeter l'opprobre sur quelqu'un » ?",
+    options: ["Le féliciter", "Le déshonorer publiquement", "Le promouvoir", "L'ignorer"],
+    correct: "Le déshonorer publiquement",
+    explanation: "'Jeter l'opprobre' signifie couvrir quelqu'un de honte, le déshonorer publiquement."
+  },
+  {
+    id: 57,
+    level: "C1",
+    category: "Vocabulaire",
+    question: "Quel terme désigne un raisonnement qui semble logique mais contient une erreur subtile ?",
+    options: ["Sophisme", "Syllogisme", "Axiome", "Postulat"],
+    correct: "Sophisme",
+    explanation: "Un sophisme est un argument fallacieux qui paraît valide mais contient une erreur logique."
+  },
+
+  // Compréhension Orale C1
+  {
+    id: 58,
+    level: "C1",
+    category: "Compréhension Orale",
+    question: "Écoutez l'extrait. Quelle est la thèse défendue par l'orateur ?",
+    audioText: "Force est de constater que l'évolution des paradigmes sociétaux contemporains requiert une refonte substantielle de nos infrastructures éducatives, faute de quoi nous risquons de voir se creuser davantage le fossé entre les compétences requises et celles effectivement détenues par nos concitoyens.",
+    options: ["Le système éducatif est parfait", "Il faut réformer l'éducation pour l'adapter aux besoins actuels", "Les citoyens manquent de motivation", "L'infrastructure est suffisante"],
+    correct: "Il faut réformer l'éducation pour l'adapter aux besoins actuels",
+    explanation: "L'orateur plaide pour une refonte du système éducatif face aux changements sociétaux."
+  },
+
+  // Compréhension Écrite C1
+  {
+    id: 59,
+    level: "C1",
+    category: "Compréhension Écrite",
+    question: "Lisez : « L'ambiguïté intrinsèque de cette directive rend son application pour le moins problématique. » Quel est le ton de cette phrase ?",
+    options: ["Enthousiaste", "Critique", "Neutre", "Admiratif"],
+    correct: "Critique",
+    explanation: "Le ton est critique, soulignant les difficultés d'application dues au manque de clarté."
+  },
+  {
+    id: 60,
+    level: "C1",
+    category: "Compréhension Écrite",
+    question: "Que signifie « pour le moins » dans le contexte suivant : « Son comportement était pour le moins surprenant » ?",
+    options: ["Au minimum", "Au maximum", "Exactement", "Rarement"],
+    correct: "Au minimum",
+    explanation: "'Pour le moins' signifie 'au minimum', 'c'est le moins qu'on puisse dire'."
+  },
+
+  // ==================== C2 Level ====================
+  // Grammaire C2
+  {
+    id: 61,
+    level: "C2",
+    category: "Grammaire",
+    question: "Identifiez la concordance correcte : « Si j'eusse su, je ___ autrement. »",
+    options: ["aurais agi", "eusse agi", "agirais", "agirai"],
+    correct: "eusse agi",
+    explanation: "Dans un registre très soutenu, après 'si + plus-que-parfait du subjonctif', on utilise le conditionnel passé 2ème forme 'eusse agi'."
+  },
+  {
+    id: 62,
+    level: "C2",
+    category: "Grammaire",
+    question: "Laquelle de ces phrases utilise correctement le subjonctif plus-que-parfait ?",
+    options: [
+      "Il aurait fallu qu'il eût terminé avant midi",
+      "Il aurait fallu qu'il avait terminé avant midi",
+      "Il aurait fallu qu'il ait terminé avant midi",
+      "Il aurait fallu qu'il a terminé avant midi"
+    ],
+    correct: "Il aurait fallu qu'il eût terminé avant midi",
+    explanation: "Le subjonctif plus-que-parfait 'eût terminé' exprime l'antériorité dans un registre très soutenu."
+  },
+  {
+    id: 63,
+    level: "C2",
+    category: "Grammaire",
+    question: "Complétez : « Quelque compétent qu'il ___, il ne saurait mener à bien un tel projet seul. »",
+    options: ["est", "soit", "serait", "fût"],
+    correct: "soit",
+    explanation: "Après 'quelque... que' exprimant la concession, on utilise le subjonctif."
+  },
+
+  // Vocabulaire C2
+  {
+    id: 64,
+    level: "C2",
+    category: "Vocabulaire",
+    question: "Quel adjectif qualifie un discours volontairement obscur et ampoulé ?",
+    options: ["Laconique", "Amphigourique", "Lapidaire", "Concis"],
+    correct: "Amphigourique",
+    explanation: "'Amphigourique' désigne un discours confus, prétentieux et difficilement compréhensible."
+  },
+  {
+    id: 65,
+    level: "C2",
+    category: "Vocabulaire",
+    question: "Que signifie le verbe « vitupérer » ?",
+    options: ["Louer avec emphase", "Critiquer violemment", "Hésiter longuement", "Analyser minutieusement"],
+    correct: "Critiquer violemment",
+    explanation: "'Vitupérer' signifie critiquer avec violence et véhémence, invectiver."
+  },
+  {
+    id: 66,
+    level: "C2",
+    category: "Vocabulaire",
+    question: "Quel terme désigne l'art de bien manger et la connaissance gastronomique ?",
+    options: ["Œnologie", "Gastronomie", "Gastrologie", "Épicurisme"],
+    correct: "Gastrologie",
+    explanation: "'Gastrologie' est le terme savant désignant l'art culinaire et la science de la bonne chère."
+  },
+
+  // Compréhension Orale C2
+  {
+    id: 67,
+    level: "C2",
+    category: "Compréhension Orale",
+    question: "Écoutez l'analyse. Quelle figure de style l'orateur utilise-t-il principalement ?",
+    audioText: "La dialectique hégélienne, loin de constituer un simple artifice rhétorique, s'avère être le substrat même de toute épistémologie digne de ce nom, transcendant par là même les antinomies kantiennes qui, bien qu'éclairantes, demeurent prisonnières d'un dualisme réducteur.",
+    options: ["La métaphore", "L'hyperbole", "La litote", "La périphrase"],
+    correct: "La périphrase",
+    explanation: "L'orateur utilise des formulations indirectes et complexes (périphrases) pour exprimer des concepts philosophiques."
+  },
+
+  // Compréhension Écrite C2
+  {
+    id: 68,
+    level: "C2",
+    category: "Compréhension Écrite",
+    question: "Lisez : « Cette aporie conceptuelle invalide de facto l'ensemble de l'argumentation. » Que signifie 'aporie' ?",
+    options: ["Une brillante démonstration", "Une difficulté logique insurmontable", "Un accord unanime", "Une hypothèse vérifiée"],
+    correct: "Une difficulté logique insurmontable",
+    explanation: "Une aporie est une contradiction insoluble dans un raisonnement, un problème sans issue logique."
+  },
+  {
+    id: 69,
+    level: "C2",
+    category: "Compréhension Écrite",
+    question: "Dans : « Son herméneutique du texte révèle des strates sémantiques insoupçonnées », que désigne 'herméneutique' ?",
+    options: ["Une traduction", "Une interprétation méthodique", "Une critique sévère", "Une réécriture"],
+    correct: "Une interprétation méthodique",
+    explanation: "L'herméneutique est l'art d'interpréter et de comprendre les textes selon une méthode rigoureuse."
+  },
+
+  // Expression Écrite C1
+  {
+    id: 70,
+    level: "C1",
+    category: "Expression Écrite",
+    type: "written",
+    question: "Rédigez une analyse critique sur l'impact des réseaux sociaux sur le débat démocratique contemporain. Développez au moins deux arguments nuancés.",
+    placeholder: "Exemple : L'avènement des réseaux sociaux a profondément reconfiguré l'espace public démocratique. D'une part...",
+    minWords: 30,
+    criteria: ["Vocabulaire sophistiqué", "Argumentation nuancée et structurée", "Connecteurs logiques variés", "Registre soutenu", "Analyse critique approfondie"]
+  },
+
+  // Expression Écrite C2
+  {
+    id: 71,
+    level: "C2",
+    category: "Expression Écrite",
+    type: "written",
+    question: "Élaborez une réflexion philosophique sur la notion d'authenticité à l'ère du numérique. Intégrez des références implicites à des courants de pensée.",
+    placeholder: "Exemple : La question de l'authenticité, loin d'être un simple avatar des préoccupations existentialistes...",
+    minWords: 40,
+    criteria: ["Maîtrise parfaite de la langue", "Profondeur conceptuelle", "Style élégant et recherché", "Références culturelles implicites", "Cohérence argumentative exemplaire"]
+  },
+
   // ==================== Production Orale ====================
   {
     id: 46,
