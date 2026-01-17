@@ -257,14 +257,16 @@ export default function Test() {
   const handleNext = async () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
-      setTimeLeft(12);
+      const nextQ = questions[currentQuestion + 1];
+      setTimeLeft(nextQ.level === 'C1' || nextQ.level === 'C2' ? 40 : 12);
     }
   };
 
   const handleSkip = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
-      setTimeLeft(12);
+      const nextQ = questions[currentQuestion + 1];
+      setTimeLeft(nextQ.level === 'C1' || nextQ.level === 'C2' ? 40 : 12);
     }
   };
 
@@ -273,7 +275,8 @@ export default function Test() {
   const handlePrev = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion(currentQuestion - 1);
-      setTimeLeft(12);
+      const prevQ = questions[currentQuestion - 1];
+      setTimeLeft(prevQ.level === 'C1' || prevQ.level === 'C2' ? 40 : 12);
     }
   };
 
@@ -410,7 +413,8 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
      true);
 
   useEffect(() => {
-    setTimeLeft(12);
+    const currentQ = questions[currentQuestion];
+    setTimeLeft(currentQ.level === 'C1' || currentQ.level === 'C2' ? 40 : 12);
   }, [currentQuestion]);
 
   useEffect(() => {
