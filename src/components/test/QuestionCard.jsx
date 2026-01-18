@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-export default function QuestionCard({ question, selectedAnswer, onSelect, questionNumber, timeLeft }) {
+export default function QuestionCard({ question, selectedAnswer, onSelect, questionNumber, timeLeft, onStartTimer }) {
   const [isPlaying, setIsPlaying] = React.useState(false);
   const [isRecording, setIsRecording] = React.useState(false);
   const [recordingTime, setRecordingTime] = React.useState(0);
@@ -59,7 +59,13 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
         utterance.voice = frenchVoice;
       }
       
-      utterance.onend = () => setIsPlaying(false);
+      utterance.onend = () => {
+        setIsPlaying(false);
+        // Démarrer le timer après la lecture audio pour les questions orales
+        if (question.type === 'oral' && onStartTimer) {
+          onStartTimer();
+        }
+      };
       utterance.onerror = () => setIsPlaying(false);
       
       window.speechSynthesis.cancel();
