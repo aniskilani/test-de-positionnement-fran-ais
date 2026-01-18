@@ -196,6 +196,7 @@ export default function Test() {
   const [startTime] = useState(Date.now());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [timeLeft, setTimeLeft] = useState(12);
+  const [timerPaused, setTimerPaused] = useState(false);
   const [canTakeTest, setCanTakeTest] = useState(true);
   const [lastTestDate, setLastTestDate] = useState(null);
   const [checkingEligibility, setCheckingEligibility] = useState(true);
@@ -258,7 +259,7 @@ export default function Test() {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
       const nextQ = questions[currentQuestion + 1];
-      setTimeLeft(nextQ.level === 'C1' || nextQ.level === 'C2' ? 40 : 12);
+      setTimeLeft(nextQ.level === 'C1' || nextQ.level === 'C2' ? 30 : 12);
     }
   };
 
@@ -266,7 +267,7 @@ export default function Test() {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
       const nextQ = questions[currentQuestion + 1];
-      setTimeLeft(nextQ.level === 'C1' || nextQ.level === 'C2' ? 40 : 12);
+      setTimeLeft(nextQ.level === 'C1' || nextQ.level === 'C2' ? 30 : 12);
     }
   };
 
@@ -276,7 +277,7 @@ export default function Test() {
     if (currentQuestion > 0) {
       setCurrentQuestion(currentQuestion - 1);
       const prevQ = questions[currentQuestion - 1];
-      setTimeLeft(prevQ.level === 'C1' || prevQ.level === 'C2' ? 40 : 12);
+      setTimeLeft(prevQ.level === 'C1' || prevQ.level === 'C2' ? 30 : 12);
     }
   };
 
@@ -414,11 +415,20 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
 
   useEffect(() => {
     const currentQ = questions[currentQuestion];
-    setTimeLeft(currentQ.level === 'C1' || currentQ.level === 'C2' ? 40 : 12);
+    const initialTime = currentQ.level === 'C1' || currentQ.level === 'C2' ? 30 : 12;
+    setTimeLeft(initialTime);
+    
+    // Mettre le timer en pause pour les questions orales
+    if (currentQ.type === 'oral') {
+      setTimerPaused(true);
+    } else {
+      setTimerPaused(false);
+    }
   }, [currentQuestion]);
 
   useEffect(() => {
     if (currentQ.type === 'written') return;
+    if (timerPaused) return;
 
     if (timeLeft > 0) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
@@ -426,7 +436,7 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
     } else if (!isLastQuestion) {
       handleNext();
     }
-  }, [timeLeft, currentQ.type, isLastQuestion]);
+  }, [timeLeft, currentQ.type, isLastQuestion, timerPaused]);
 
   useEffect(() => {
     const handleKeyPress = (e) => {
@@ -571,6 +581,7 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
               onSelect={handleSelect}
               questionNumber={currentQuestion}
               timeLeft={timeLeft}
+              onStartTimer={() => setTimerPaused(false)}
             />
           </div>
         </div>
