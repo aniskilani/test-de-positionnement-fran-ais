@@ -169,18 +169,53 @@ export default function Results() {
                 </div>
               </div>
 
-              {/* Action Buttons */}
+              {/* CTA Principal - Formations */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="space-y-4"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3, duration: 0.4 }}
+                className="relative"
+              >
+                {/* Effet de halo animé */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#00504e] to-[#17c3b2] rounded-2xl blur-xl opacity-30 animate-pulse" />
+                
+                <div className="relative bg-gradient-to-br from-[#00504e] via-[#17c3b2] to-[#32cf8a] rounded-2xl p-8 shadow-2xl">
+                  <div className="text-center text-white space-y-4">
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full mb-2">
+                      <Award className="w-8 h-8" />
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-bold">
+                      Passez à l'action !
+                    </h3>
+                    <p className="text-lg opacity-90 max-w-2xl mx-auto">
+                      Découvrez nos formations personnalisées pour atteindre le niveau supérieur et réussir vos objectifs professionnels
+                    </p>
+                    <Link to={createPageUrl('Formations') + `?level=${testResult.level}&score=${testResult.score}&name=${encodeURIComponent(testResult.candidate_name)}`}>
+                      <Button
+                        size="lg"
+                        className="h-16 px-10 text-lg font-bold bg-white text-[#00504e] hover:bg-gray-50 rounded-xl shadow-lg hover:scale-105 transition-all duration-300 mt-4"
+                      >
+                        🎯 Découvrir mes formations adaptées
+                      </Button>
+                    </Link>
+                    <p className="text-sm opacity-75 pt-2">
+                      ✨ Offre spéciale candidat • Conseiller disponible immédiatement
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Bouton secondaire PDF */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
               >
                 <Button
                   onClick={handleResendPDF}
                   disabled={sendingPDF}
                   variant="outline"
-                  className="w-full h-12 rounded-xl border-[#17c3b2] text-[#00504e] hover:bg-[#17c3b2]/10"
+                  className="w-full h-12 rounded-xl border-gray-300 text-gray-700 hover:bg-gray-50"
                 >
                   {sendingPDF ? (
                     <>
@@ -194,15 +229,6 @@ export default function Results() {
                     </>
                   )}
                 </Button>
-                
-                <Link to={createPageUrl('Formations') + `?level=${testResult.level}&score=${testResult.score}&name=${encodeURIComponent(testResult.candidate_name)}`}>
-                  <Button
-                    className="w-full h-12 rounded-xl bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90"
-                  >
-                    <Award className="w-4 h-4 mr-2" />
-                    Voir les formations
-                  </Button>
-                </Link>
               </motion.div>
             </TabsContent>
 
