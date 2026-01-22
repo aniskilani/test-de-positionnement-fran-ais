@@ -613,7 +613,7 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
           {isLastQuestion ? (
             <Button
               onClick={handleSubmit}
-              disabled={!hasAnswered || isSubmitting}
+              disabled={isSubmitting}
               className="h-12 px-8 rounded-xl bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 shadow-lg"
             >
               {isSubmitting ? (
