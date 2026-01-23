@@ -5,7 +5,7 @@ import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { RotateCcw, Mail, ChevronDown, ChevronUp, Loader2, FileText, Award } from 'lucide-react';
+import { RotateCcw, Mail, ChevronDown, ChevronUp, Loader2, FileText, Award, MessageCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import LevelResult from '@/components/test/LevelResult';
 import QuestionReview from '@/components/results/QuestionReview';
@@ -198,9 +198,25 @@ export default function Results() {
                         🎯 Découvrir mes formations adaptées
                       </Button>
                     </Link>
-                    <p className="text-sm opacity-75 pt-2">
-                      ✨ Offre spéciale candidat • Conseiller disponible immédiatement
-                    </p>
+                    <div className="flex items-center justify-center gap-3 pt-4">
+                      <p className="text-sm opacity-75">
+                        ✨ Offre spéciale candidat • Conseiller disponible immédiatement
+                      </p>
+                      <a 
+                        href="https://wa.me/33652675393?text=Bonjour%2C%20je%20viens%20de%20terminer%20mon%20test%20de%20positionnement" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex"
+                      >
+                        <Button
+                          size="sm"
+                          className="h-9 px-4 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-lg shadow-lg hover:scale-105 transition-all"
+                        >
+                          <MessageCircle className="w-4 h-4 mr-2" />
+                          WhatsApp
+                        </Button>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </motion.div>
