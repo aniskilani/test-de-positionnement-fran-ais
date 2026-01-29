@@ -5,7 +5,7 @@ import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { RotateCcw, Mail, ChevronDown, ChevronUp, Loader2, FileText, Award, MessageCircle } from 'lucide-react';
+import { RotateCcw, Mail, ChevronDown, ChevronUp, Loader2, FileText, Award, MessageCircle, ExternalLink } from 'lucide-react';
 import { toast } from 'sonner';
 import LevelResult from '@/components/test/LevelResult';
 import QuestionReview from '@/components/results/QuestionReview';
@@ -221,12 +221,26 @@ export default function Results() {
                 </div>
               </motion.div>
 
-              {/* Bouton secondaire PDF */}
+              {/* Boutons secondaires */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
+                className="space-y-3"
               >
+                <a 
+                  href="https://parleremploiformation.pro" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  <Button
+                    className="w-full h-12 rounded-xl bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90"
+                  >
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    Découvrir ParlerEmploi Formation
+                  </Button>
+                </a>
                 <Button
                   onClick={handleResendPDF}
                   disabled={sendingPDF}

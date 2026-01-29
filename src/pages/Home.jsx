@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ArrowRight, Clock, Target, Award, CheckCircle, MessageCircle, Lock, Shield } from 'lucide-react';
+import { ArrowRight, Clock, Target, Award, CheckCircle, MessageCircle, Lock, Shield, ExternalLink } from 'lucide-react';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -228,8 +228,22 @@ export default function Home() {
                     <span>Vos données sont protégées (RGPD)</span>
                   </div>
 
-                  <div className="mt-6 pt-6 border-t border-gray-200">
-                    <p className="text-sm text-gray-600 mb-3 text-center">Besoins d'informations ?</p>
+                  <div className="mt-6 pt-6 border-t border-gray-200 space-y-3">
+                    <a 
+                      href="https://parleremploiformation.pro" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      <Button
+                        type="button"
+                        className="w-full h-12 rounded-xl bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 transition-all"
+                      >
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Visiter notre site web
+                      </Button>
+                    </a>
+                    <p className="text-sm text-gray-600 text-center">Besoins d'informations ?</p>
                     <a 
                       href="https://wa.me/33652675393?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20vos%20formations%20FLE" 
                       target="_blank" 
