@@ -80,7 +80,7 @@ export default function Home() {
               className="w-full h-12 px-6 rounded-xl border-[#17c3b2] text-[#00504e] hover:bg-[#17c3b2] hover:text-white transition-all font-semibold"
             >
               <ExternalLink className="w-5 h-5 mr-2" />
-              Visiter ParlerEmploi Formation
+              Visiter notre site ParlerEmploi
             </Button>
           </a>
         </div>
