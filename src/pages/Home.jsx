@@ -58,11 +58,26 @@ export default function Home() {
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <img 
-            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_69409edef41e4f2a833c897b/ac7782ec6_logopefpetit.png" 
-            alt="ParlerEmploi Formation" 
-            className="h-20 object-contain"
-          />
+          <div className="flex items-center gap-4">
+            <a 
+              href="https://parleremploiformation.pro" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <Button
+                variant="outline"
+                className="h-10 px-4 rounded-xl border-[#17c3b2] text-[#00504e] hover:bg-[#17c3b2] hover:text-white transition-all"
+              >
+                <ExternalLink className="w-4 h-4 mr-2" />
+                <span className="hidden sm:inline">Notre site</span>
+              </Button>
+            </a>
+            <img 
+              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_69409edef41e4f2a833c897b/ac7782ec6_logopefpetit.png" 
+              alt="ParlerEmploi Formation" 
+              className="h-20 object-contain"
+            />
+          </div>
           <div className="hidden md:flex items-center gap-2 text-sm text-gray-600">
             <CheckCircle className="w-4 h-4 text-[#32cf8a]" />
             Test gratuit et sans engagement
@@ -229,20 +244,6 @@ export default function Home() {
                   </div>
 
                   <div className="mt-6 pt-6 border-t border-gray-200 space-y-3">
-                    <a 
-                      href="https://parleremploiformation.pro" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="block"
-                    >
-                      <Button
-                        type="button"
-                        className="w-full h-12 rounded-xl bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 transition-all"
-                      >
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        Visiter notre site web
-                      </Button>
-                    </a>
                     <p className="text-sm text-gray-600 text-center">Besoins d'informations ?</p>
                     <a 
                       href="https://wa.me/33652675393?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20vos%20formations%20FLE" 
