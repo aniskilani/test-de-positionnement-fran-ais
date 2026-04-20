@@ -590,15 +590,7 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
       {/* Navigation Footer */}
       <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 py-4">
         <div className="max-w-2xl mx-auto px-6 flex items-center justify-between">
-          <Button
-            variant="outline"
-            onClick={handlePrev}
-            disabled={currentQuestion === 0}
-            className="h-12 px-6 rounded-xl"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Précédent
-          </Button>
+          <div className="w-24" />
 
           <Button
             variant="ghost"
