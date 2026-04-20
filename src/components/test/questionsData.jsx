@@ -1,4 +1,3 @@
-
 export const questions = [
   // ==================== A1 Level ====================
   // Grammaire A1
@@ -667,6 +666,171 @@ export const questions = [
     placeholder: "Exemple : La question de l'authenticité, loin d'être un simple avatar des préoccupations existentialistes...",
     minWords: 40,
     criteria: ["Maîtrise parfaite de la langue", "Profondeur conceptuelle", "Style élégant et recherché", "Références culturelles implicites", "Cohérence argumentative exemplaire"]
+  },
+
+  // ==================== Contexte Professionnel A1 ====================
+  {
+    id: 72,
+    level: "A1",
+    category: "Vocabulaire Professionnel",
+    question: "Que dit-on pour répondre au téléphone au travail ?",
+    options: ["Allô, c'est moi", "Bonjour, société X, j'écoute", "Quoi ?", "Oui, parlez"],
+    correct: "Bonjour, société X, j'écoute",
+    explanation: "La formule professionnelle standard est de dire bonjour, le nom de la société, et signaler qu'on écoute."
+  },
+  {
+    id: 73,
+    level: "A1",
+    category: "Situations Professionnelles",
+    question: "Votre collègue vous dit : « Peux-tu m'aider à porter ces cartons ? » Que répondez-vous ?",
+    options: ["Je suis occupé.", "Bien sûr, j'arrive.", "C'est ton problème.", "Je ne sais pas."],
+    correct: "Bien sûr, j'arrive.",
+    explanation: "Au travail, on répond poliment et positivement aux demandes d'aide des collègues."
+  },
+  {
+    id: 74,
+    level: "A1",
+    category: "Vocabulaire Professionnel",
+    question: "Quel mot désigne l'endroit où on travaille ?",
+    options: ["La maison", "Le bureau", "La cuisine", "Le jardin"],
+    correct: "Le bureau",
+    explanation: "'Le bureau' est le lieu de travail dans un environnement professionnel."
+  },
+
+  // ==================== Contexte Professionnel A2 ====================
+  {
+    id: 75,
+    level: "A2",
+    category: "Situations Professionnelles",
+    question: "Vous arrivez en retard à une réunion. Que dites-vous ?",
+    options: ["Rien, vous vous asseyez.", "Excusez-moi pour le retard.", "C'est de votre faute.", "Je suis fatigué."],
+    correct: "Excusez-moi pour le retard.",
+    explanation: "Il est important de s'excuser lorsqu'on arrive en retard à une réunion professionnelle."
+  },
+  {
+    id: 76,
+    level: "A2",
+    category: "Vocabulaire Professionnel",
+    question: "Comment s'appelle le document qui résume votre parcours professionnel ?",
+    options: ["Une lettre", "Un contrat", "Un CV", "Une facture"],
+    correct: "Un CV",
+    explanation: "Le CV (Curriculum Vitae) résume vos expériences, formations et compétences professionnelles."
+  },
+  {
+    id: 77,
+    level: "A2",
+    category: "Compréhension Orale",
+    question: "Écoutez. Que demande le responsable ?",
+    audioText: "Pouvez-vous envoyer ce document avant seize heures s'il vous plaît ?",
+    options: ["D'imprimer un document", "D'envoyer un document avant 16h", "De rester après 16h", "D'appeler un client"],
+    correct: "D'envoyer un document avant 16h",
+    explanation: "Le responsable demande d'envoyer le document avant 16h."
+  },
+  {
+    id: 78,
+    level: "A2",
+    category: "Situations Professionnelles",
+    question: "Un client vous demande de parler plus lentement. Que faites-vous ?",
+    options: ["Vous parlez encore plus vite", "Vous raccrochez", "Vous ralentissez et reformulez", "Vous ignorez sa demande"],
+    correct: "Vous ralentissez et reformulez",
+    explanation: "S'adapter au besoin du client est une compétence professionnelle fondamentale."
+  },
+
+  // ==================== Contexte Professionnel B1 ====================
+  {
+    id: 79,
+    level: "B1",
+    category: "Vocabulaire Professionnel",
+    question: "Que signifie « être en CDI » ?",
+    options: ["Travailler à temps partiel", "Avoir un contrat à durée indéterminée", "Être en stage", "Être intérimaire"],
+    correct: "Avoir un contrat à durée indéterminée",
+    explanation: "Un CDI (Contrat à Durée Indéterminée) est un contrat de travail sans date de fin fixée."
+  },
+  {
+    id: 80,
+    level: "B1",
+    category: "Situations Professionnelles",
+    question: "Vous recevez un email professionnel. Comment commencez-vous votre réponse ?",
+    options: ["Salut !", "Coucou,", "Madame, Monsieur,", "Hé,"],
+    correct: "Madame, Monsieur,",
+    explanation: "Dans un email professionnel formel, on commence par 'Madame, Monsieur,' ou le nom si on le connaît."
+  },
+  {
+    id: 81,
+    level: "B1",
+    category: "Vocabulaire Professionnel",
+    question: "Que signifie « prendre en charge » un dossier ?",
+    options: ["L'ignorer", "Le transmettre à quelqu'un d'autre", "S'en occuper soi-même", "Le classer sans le traiter"],
+    correct: "S'en occuper soi-même",
+    explanation: "'Prendre en charge' signifie assumer la responsabilité de quelque chose."
+  },
+  {
+    id: 82,
+    level: "B1",
+    category: "Compréhension Orale",
+    question: "Écoutez. Quel est l'objet de la réunion ?",
+    audioText: "La réunion de ce matin portera sur l'organisation des congés d'été et la répartition des tâches pendant cette période.",
+    options: ["Les recrutements", "Les congés d'été et la répartition des tâches", "Le bilan financier", "Les formations"],
+    correct: "Les congés d'été et la répartition des tâches",
+    explanation: "L'annonce précise clairement que la réunion porte sur les congés d'été et la répartition des tâches."
+  },
+
+  // ==================== Contexte Professionnel B2 ====================
+  {
+    id: 83,
+    level: "B2",
+    category: "Vocabulaire Professionnel",
+    question: "Que signifie « mettre en œuvre une procédure » ?",
+    options: ["Critiquer une procédure", "Appliquer et exécuter une procédure", "Rédiger une procédure", "Supprimer une procédure"],
+    correct: "Appliquer et exécuter une procédure",
+    explanation: "'Mettre en œuvre' signifie concrètement appliquer et faire fonctionner quelque chose."
+  },
+  {
+    id: 84,
+    level: "B2",
+    category: "Situations Professionnelles",
+    question: "Lors d'une réunion, un collègue exprime un désaccord. Quelle est la meilleure réponse ?",
+    options: ["Couper la parole et insister", "Écouter, puis exposer calmement votre point de vue", "Ignorer son intervention", "Quitter la salle"],
+    correct: "Écouter, puis exposer calmement votre point de vue",
+    explanation: "La communication professionnelle efficace repose sur l'écoute active et le dialogue constructif."
+  },
+  {
+    id: 85,
+    level: "B2",
+    category: "Vocabulaire Professionnel",
+    question: "Que désigne le terme « fiche de poste » ?",
+    options: ["Un bulletin de salaire", "Un document décrivant les missions et responsabilités d'un emploi", "Un formulaire de congé", "Un contrat de travail"],
+    correct: "Un document décrivant les missions et responsabilités d'un emploi",
+    explanation: "La fiche de poste décrit précisément les missions, responsabilités et compétences requises pour un poste."
+  },
+  {
+    id: 86,
+    level: "B2",
+    category: "Situations Professionnelles",
+    question: "Vous devez refuser poliment une demande de votre responsable car vous êtes surchargé. Que dites-vous ?",
+    options: ["Non, c'est impossible.", "Je suis actuellement sur plusieurs dossiers urgents, pouvons-nous en discuter ?", "Débrouillez-vous.", "Je ferai ça quand j'aurai le temps."],
+    correct: "Je suis actuellement sur plusieurs dossiers urgents, pouvons-nous en discuter ?",
+    explanation: "Refuser avec diplomatie en expliquant la situation et en proposant une discussion est la bonne pratique professionnelle."
+  },
+
+  // ==================== Contexte Professionnel C1 ====================
+  {
+    id: 87,
+    level: "C1",
+    category: "Vocabulaire Professionnel",
+    question: "Que signifie « déléguer » dans un contexte managérial ?",
+    options: ["Faire le travail soi-même", "Confier une tâche à un collaborateur en lui donnant les moyens de la réaliser", "Refuser une responsabilité", "Critiquer un collaborateur"],
+    correct: "Confier une tâche à un collaborateur en lui donnant les moyens de la réaliser",
+    explanation: "Déléguer, c'est confier une mission à quelqu'un tout en lui donnant l'autorité et les ressources nécessaires."
+  },
+  {
+    id: 88,
+    level: "C1",
+    category: "Situations Professionnelles",
+    question: "Lors d'un entretien annuel, comment valorisez-vous une erreur passée ?",
+    options: ["Vous la cachez", "Vous blâmez vos collègues", "Vous l'évoquez comme une expérience d'apprentissage avec les actions correctives prises", "Vous changez de sujet"],
+    correct: "Vous l'évoquez comme une expérience d'apprentissage avec les actions correctives prises",
+    explanation: "Reconnaître une erreur en montrant ce qu'elle vous a appris est très valorisé dans un contexte professionnel."
   },
 
   // ==================== Production Orale ====================
