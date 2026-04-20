@@ -62,6 +62,7 @@ import Terms from './pages/Terms';
 import Test from './pages/Test';
 import TestEmail from './pages/TestEmail';
 import TrainerAccess from './pages/TrainerAccess';
+import PrintTest from './pages/PrintTest';
 import __Layout from './Layout.jsx';
 
 
@@ -81,6 +82,7 @@ export const PAGES = {
     "Test": Test,
     "TestEmail": TestEmail,
     "TrainerAccess": TrainerAccess,
+    "PrintTest": PrintTest,
 }
 
 export const pagesConfig = {
