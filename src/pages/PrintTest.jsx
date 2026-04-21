@@ -14,6 +14,7 @@ const SECTIONS_CANDIDAT = [
     title: 'PARTIE 1 — Compréhension Orale',
     subtitle: 'Le formateur lit chaque texte à voix haute, une seule fois.',
     icon: '🔊',
+    illustration: 'https://media.base44.com/images/public/6940a01cdb0d5c582a8e789a/79b164113_generated_image.png',
     filter: q => q.category === 'Compréhension Orale',
   },
   {
@@ -21,6 +22,7 @@ const SECTIONS_CANDIDAT = [
     title: 'PARTIE 2 — Compréhension Écrite',
     subtitle: 'Lisez les textes et répondez aux questions.',
     icon: '📖',
+    illustration: 'https://media.base44.com/images/public/6940a01cdb0d5c582a8e789a/c07796924_generated_image.png',
     filter: q => q.category === 'Compréhension Écrite',
   },
   {
@@ -28,13 +30,15 @@ const SECTIONS_CANDIDAT = [
     title: 'PARTIE 3 — Grammaire',
     subtitle: 'Choisissez la bonne réponse.',
     icon: '📝',
+    illustration: 'https://media.base44.com/images/public/6940a01cdb0d5c582a8e789a/e3aa81291_generated_image.png',
     filter: q => q.category === 'Grammaire',
   },
   {
     key: 'vocabulaire',
-    title: 'PARTIE 4 — Vocabulaire',
+    title: 'PARTIE 4 — Vocabulaire & Situations Professionnelles',
     subtitle: 'Choisissez la bonne réponse.',
     icon: '🗣️',
+    illustration: 'https://media.base44.com/images/public/6940a01cdb0d5c582a8e789a/92c82a9c8_generated_image.png',
     filter: q => (q.category === 'Vocabulaire' || q.category === 'Vocabulaire Professionnel' || q.category === 'Situations Professionnelles') && !q.type,
   },
   {
@@ -42,6 +46,7 @@ const SECTIONS_CANDIDAT = [
     title: 'PARTIE 5 — Production Écrite',
     subtitle: 'Rédigez votre réponse dans l\'espace prévu. Écrivez le plus complètement possible.',
     icon: '✍️',
+    illustration: 'https://media.base44.com/images/public/6940a01cdb0d5c582a8e789a/52205a40b_generated_image.png',
     filter: q => q.type === 'written',
   },
 ];
@@ -200,12 +205,22 @@ export default function PrintTest() {
           {/* Sections */}
           {candidatSections.map((section) => (
             <div key={section.key} className="mb-10">
-              {/* Titre de section */}
-              <div className="bg-gray-800 text-white px-4 py-3 rounded mb-4 flex items-center gap-2">
-                <span>{section.icon}</span>
-                <div>
-                  <div className="font-bold text-base">{section.title}</div>
-                  <div className="text-xs text-gray-300 mt-0.5">{section.subtitle}</div>
+              {/* Titre de section avec illustration */}
+              <div className="rounded mb-4 overflow-hidden" style={{ backgroundColor: '#f1f5f9', border: '1px solid #e2e8f0' }}>
+                <div className="flex items-stretch">
+                  <div className="flex-1 px-5 py-4">
+                    <div className="font-bold text-xl text-gray-900 mb-1">{section.title}</div>
+                    <div className="text-sm text-gray-600">{section.subtitle}</div>
+                  </div>
+                  {section.illustration && (
+                    <div className="shrink-0" style={{ width: '140px' }}>
+                      <img
+                        src={section.illustration}
+                        alt={section.title}
+                        style={{ width: '140px', height: '110px', objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
 
