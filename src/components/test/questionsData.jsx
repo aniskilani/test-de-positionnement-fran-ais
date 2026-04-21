@@ -890,6 +890,208 @@ export const questions = [
     explanation: "Interpréter de manière approfondie signifie analyser et comprendre tous les niveaux de sens."
   },
 
+  // ==================== Compétences de Base Professionnelles ====================
+  // A1 — Compétences de base
+  {
+    id: 101,
+    level: "A1",
+    category: "Situations Professionnelles",
+    question: "Votre responsable vous donne une consigne que vous n'avez pas comprise. Que faites-vous ?",
+    options: ["Vous faites semblant de comprendre", "Vous demandez poliment de répéter", "Vous ignorez la consigne", "Vous rentrez chez vous"],
+    correct: "Vous demandez poliment de répéter",
+    explanation: "Il est toujours préférable de demander des clarifications plutôt que de mal exécuter une tâche."
+  },
+  {
+    id: 102,
+    level: "A1",
+    category: "Vocabulaire Professionnel",
+    question: "Que signifie « pointer » à l'entrée du travail ?",
+    options: ["Montrer quelque chose du doigt", "Enregistrer son heure d'arrivée", "Partir plus tôt", "Appeler un collègue"],
+    correct: "Enregistrer son heure d'arrivée",
+    explanation: "Pointer signifie enregistrer son heure d'arrivée (et de départ) au travail."
+  },
+  {
+    id: 103,
+    level: "A1",
+    category: "Situations Professionnelles",
+    question: "Vous ne pouvez pas venir travailler car vous êtes malade. Que devez-vous faire ?",
+    options: ["Ne rien dire", "Envoyer un message à votre responsable le plus tôt possible", "Venir quand même", "Demander à un collègue de travailler à votre place"],
+    correct: "Envoyer un message à votre responsable le plus tôt possible",
+    explanation: "Il faut toujours prévenir son employeur en cas d'absence, de préférence avant le début du travail."
+  },
+  {
+    id: 104,
+    level: "A1",
+    category: "Vocabulaire Professionnel",
+    question: "Qu'est-ce qu'une « tenue de travail » ?",
+    options: ["Des vêtements portés pour faire du sport", "Des vêtements appropriés et propres pour travailler", "La décoration du bureau", "L'heure d'arrivée"],
+    correct: "Des vêtements appropriés et propres pour travailler",
+    explanation: "La tenue de travail désigne les vêtements adaptés au poste : uniforme, vêtements propres et soignés."
+  },
+  {
+    id: 105,
+    level: "A1",
+    category: "Compréhension Orale",
+    question: "Écoutez. Quelle est la consigne ?",
+    audioText: "Rangez votre poste de travail avant de partir, s'il vous plaît.",
+    options: ["Vérifier l'heure de départ", "Ranger son poste de travail avant de partir", "Appeler quelqu'un", "Fermer la porte"],
+    correct: "Ranger son poste de travail avant de partir",
+    explanation: "La consigne est clairement de ranger son poste de travail avant de partir."
+  },
+
+  // A2 — Compétences de base
+  {
+    id: 106,
+    level: "A2",
+    category: "Situations Professionnelles",
+    question: "Votre collègue vous parle de manière irrespectueuse. Que faites-vous ?",
+    options: ["Vous répondez avec les mêmes mots", "Vous lui dites calmement que ce n'est pas acceptable et en parlez à votre responsable si nécessaire", "Vous pleurez", "Vous partez sans rien dire"],
+    correct: "Vous lui dites calmement que ce n'est pas acceptable et en parlez à votre responsable si nécessaire",
+    explanation: "Face à un manque de respect, il faut réagir avec calme et signaler la situation si elle persiste."
+  },
+  {
+    id: 107,
+    level: "A2",
+    category: "Vocabulaire Professionnel",
+    question: "Qu'est-ce qu'une « pause » au travail ?",
+    options: ["Un moment de repos prévu pendant la journée de travail", "Une journée de congé", "Une réunion", "Un bonus de salaire"],
+    correct: "Un moment de repos prévu pendant la journée de travail",
+    explanation: "La pause est un temps de repos légalement prévu, généralement 20 minutes pour 6h de travail."
+  },
+  {
+    id: 108,
+    level: "A2",
+    category: "Situations Professionnelles",
+    question: "Vous avez terminé votre tâche en avance. Que faites-vous ?",
+    options: ["Vous regardez votre téléphone", "Vous informez votre responsable et demandez s'il y a autre chose à faire", "Vous rentrez chez vous", "Vous aidez les autres sans demander"],
+    correct: "Vous informez votre responsable et demandez s'il y a autre chose à faire",
+    explanation: "Il est professionnel de signaler la fin d'une tâche et de proposer son aide plutôt que d'attendre."
+  },
+  {
+    id: 109,
+    level: "A2",
+    category: "Compréhension Écrite",
+    question: "Lisez : « Interdiction de fumer dans les locaux. » Que signifie cette pancarte ?",
+    options: ["Fumer est autorisé partout", "Il est interdit de fumer à l'intérieur", "Fumer est obligatoire", "Fumer est possible dans certaines pièces"],
+    correct: "Il est interdit de fumer à l'intérieur",
+    explanation: "'Interdiction de' signifie que quelque chose n'est pas permis. Il est interdit de fumer dans les locaux."
+  },
+  {
+    id: 110,
+    level: "A2",
+    category: "Vocabulaire Professionnel",
+    question: "Qu'est-ce que le « bulletin de salaire » (fiche de paie) ?",
+    options: ["Un formulaire de congé", "Un document qui détaille votre salaire et les cotisations", "Un contrat de travail", "Une facture client"],
+    correct: "Un document qui détaille votre salaire et les cotisations",
+    explanation: "Le bulletin de salaire est le document mensuel qui détaille la rémunération brute, les cotisations et le salaire net."
+  },
+
+  // B1 — Compétences de base
+  {
+    id: 111,
+    level: "B1",
+    category: "Situations Professionnelles",
+    question: "Vous constatez une erreur dans votre fiche de paie. Que faites-vous ?",
+    options: ["Vous ne dites rien pour ne pas créer de problèmes", "Vous contactez le service des ressources humaines pour signaler l'erreur", "Vous refusez de travailler", "Vous publiez sur les réseaux sociaux"],
+    correct: "Vous contactez le service des ressources humaines pour signaler l'erreur",
+    explanation: "En cas d'erreur sur la fiche de paie, il faut contacter le service RH ou la comptabilité."
+  },
+  {
+    id: 112,
+    level: "B1",
+    category: "Vocabulaire Professionnel",
+    question: "Que signifie « être polyvalent » au travail ?",
+    options: ["Être spécialisé dans un seul domaine", "Savoir effectuer plusieurs types de tâches différentes", "Travailler à temps partiel", "Refuser certaines missions"],
+    correct: "Savoir effectuer plusieurs types de tâches différentes",
+    explanation: "La polyvalence est une qualité très appréciée : elle permet d'intervenir sur des postes variés."
+  },
+  {
+    id: 113,
+    level: "B1",
+    category: "Situations Professionnelles",
+    question: "Votre responsable vous demande de réaliser une tâche que vous ne savez pas faire. Que dites-vous ?",
+    options: ["Vous dites que vous la ferez sans demander d'aide", "Vous expliquez honnêtement que vous ne maîtrisez pas encore cette compétence et demandez une formation ou un accompagnement", "Vous refusez catégoriquement", "Vous demandez à un collègue de le faire à votre place en secret"],
+    correct: "Vous expliquez honnêtement que vous ne maîtrisez pas encore cette compétence et demandez une formation ou un accompagnement",
+    explanation: "L'honnêteté et la demande de soutien sont des signes de professionnalisme et de volonté d'apprendre."
+  },
+  {
+    id: 114,
+    level: "B1",
+    category: "Compréhension Orale",
+    question: "Écoutez. Que doit faire l'employé ?",
+    audioText: "Merci de remplir le formulaire de demande de congé au moins deux semaines à l'avance et de le remettre à votre responsable.",
+    options: ["Partir en congé sans prévenir", "Remplir un formulaire de congé deux semaines à l'avance", "Envoyer un email à la direction", "Appeler le service RH le jour même"],
+    correct: "Remplir un formulaire de congé deux semaines à l'avance",
+    explanation: "La consigne précise clairement : formulaire à remplir et à remettre deux semaines avant le départ."
+  },
+  {
+    id: 115,
+    level: "B1",
+    category: "Vocabulaire Professionnel",
+    question: "Qu'est-ce qu'un « planning » de travail ?",
+    options: ["Un plan de la salle de réunion", "Un document qui organise les horaires et les tâches sur une période", "Un bulletin de salaire", "Un contrat à durée déterminée"],
+    correct: "Un document qui organise les horaires et les tâches sur une période",
+    explanation: "Le planning organise le travail dans le temps : qui fait quoi, quand et comment."
+  },
+
+  // B2 — Compétences de base
+  {
+    id: 116,
+    level: "B2",
+    category: "Situations Professionnelles",
+    question: "Un client se plaint d'un service rendu par votre entreprise. Comment gérez-vous la situation ?",
+    options: ["Vous niez les faits", "Vous écoutez activement, reformulez sa plainte, vous excusez et proposez une solution concrète", "Vous renvoyez le client vers un autre service sans explication", "Vous raccrochez"],
+    correct: "Vous écoutez activement, reformulez sa plainte, vous excusez et proposez une solution concrète",
+    explanation: "La gestion d'une réclamation client repose sur l'écoute, la reformulation, les excuses et la proposition de solution."
+  },
+  {
+    id: 117,
+    level: "B2",
+    category: "Vocabulaire Professionnel",
+    question: "Que désigne la notion de « confidentialité professionnelle » ?",
+    options: ["Le droit de partager toutes les informations de l'entreprise", "L'obligation de ne pas divulguer des informations sensibles liées à l'activité professionnelle", "Un type de contrat de travail", "Une réunion à huis clos"],
+    correct: "L'obligation de ne pas divulguer des informations sensibles liées à l'activité professionnelle",
+    explanation: "La confidentialité professionnelle protège les données de l'entreprise, des clients et des salariés."
+  },
+  {
+    id: 118,
+    level: "B2",
+    category: "Compréhension Écrite",
+    question: "Lisez : « Tout accident du travail doit être déclaré dans les 24 heures suivant sa survenance. » Que signifie cette règle ?",
+    options: ["On peut attendre plusieurs jours pour déclarer un accident", "L'accident doit être signalé au plus tard le lendemain", "L'accident n'a pas besoin d'être déclaré", "La déclaration est facultative"],
+    correct: "L'accident doit être signalé au plus tard le lendemain",
+    explanation: "'Dans les 24 heures suivant sa survenance' signifie au plus tard le lendemain de l'accident."
+  },
+  {
+    id: 119,
+    level: "B2",
+    category: "Situations Professionnelles",
+    question: "Vous repérez une pratique non conforme à la réglementation dans votre entreprise. Quelle est la démarche appropriée ?",
+    options: ["Ignorer car ce n'est pas votre problème", "En parler à votre responsable, ou utiliser les voies de signalement internes (représentants du personnel, alerte éthique)", "En parler directement aux médias", "Quitter immédiatement l'entreprise"],
+    correct: "En parler à votre responsable, ou utiliser les voies de signalement internes (représentants du personnel, alerte éthique)",
+    explanation: "Face à une irrégularité, les voies internes de signalement sont la démarche appropriée et protégée par la loi."
+  },
+
+  // C1 — Compétences de base
+  {
+    id: 120,
+    level: "C1",
+    category: "Situations Professionnelles",
+    question: "Vous êtes en désaccord avec une décision stratégique de votre direction. Comment exprimez-vous votre point de vue ?",
+    options: ["Vous obéissez sans rien dire", "Vous demandez un entretien, exposez vos arguments de façon structurée et proposez des alternatives", "Vous organisez une pétition immédiatement", "Vous démissionnez sans prévenir"],
+    correct: "Vous demandez un entretien, exposez vos arguments de façon structurée et proposez des alternatives",
+    explanation: "Exprimer un désaccord de façon constructive, avec des arguments et des propositions, est une marque de maturité professionnelle."
+  },
+  {
+    id: 121,
+    level: "C1",
+    category: "Vocabulaire Professionnel",
+    question: "Que signifie « management participatif » ?",
+    options: ["Un style de gestion où le manager décide seul de tout", "Un mode de management qui associe les collaborateurs aux décisions et valorise leur contribution", "Une réunion hebdomadaire obligatoire", "Un système de primes"],
+    correct: "Un mode de management qui associe les collaborateurs aux décisions et valorise leur contribution",
+    explanation: "Le management participatif repose sur l'implication des équipes dans la prise de décision pour favoriser motivation et performance."
+  },
+
   // Expression Écrite C2
   {
     id: 71,
