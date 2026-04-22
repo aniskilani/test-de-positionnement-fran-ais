@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { questions } from '@/components/test/questionsData';
 import { Button } from '@/components/ui/button';
-import { Printer, ArrowLeft, BookOpen, ClipboardList } from 'lucide-react';
+import { Printer, ArrowLeft, BookOpen, ClipboardList, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
@@ -95,7 +95,7 @@ const levelBadgeStyle = {
 };
 
 export default function PrintTest() {
-  const [view, setView] = useState('candidat'); // 'candidat' | 'formateur'
+  const [view, setView] = useState('candidat'); // 'candidat' | 'formateur' | 'individuel'
 
   const handlePrint = () => window.print();
 
@@ -147,7 +147,15 @@ export default function PrintTest() {
             onClick={() => setView('formateur')}
           >
             <ClipboardList className="w-4 h-4 mr-2" />
-            Fiche formateur
+            Guide formateur
+          </Button>
+          <Button
+            variant={view === 'individuel' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setView('individuel')}
+          >
+            <User className="w-4 h-4 mr-2" />
+            Fiche candidat individuelle
           </Button>
           <Button
             onClick={handlePrint}
@@ -517,171 +525,6 @@ export default function PrintTest() {
             </div>
           </div>
 
-          {/* ── TEST ORAL ONE-TO-ONE — RÉFÉRENTIEL CECRL ── */}
-          <div className="border-2 border-purple-600 rounded-lg mb-6 overflow-hidden">
-            <div className="bg-purple-700 text-white px-5 py-3 flex items-center gap-3">
-              <span className="text-xl">🗣️</span>
-              <div>
-                <div className="font-bold text-base">Entretien Oral Individuel — Référentiel CECRL</div>
-                <div className="text-xs text-purple-200 mt-0.5">À conduire en one-to-one pendant le test écrit des autres candidats · Durée estimée : 10 à 15 minutes par candidat</div>
-              </div>
-            </div>
-            <div className="bg-amber-50 border-b border-amber-200 px-5 py-3 text-xs text-amber-900">
-              <span className="font-semibold">⚙️ Organisation :</span> Pendant que les autres apprenants réalisent le test écrit en autonomie, appelez chaque candidat individuellement dans un espace à l'écart. Menez l'entretien oral, puis raccompagnez le candidat à sa place avant d'appeler le suivant.
-            </div>
-            <div className="bg-purple-50 px-5 py-3 border-b border-purple-200 text-xs text-purple-900">
-              <span className="font-semibold">Mode opératoire :</span> Posez les questions dans l'ordre. Adaptez le niveau en fonction des réponses. Arrêtez-vous quand le candidat ne peut plus répondre ou montre des signes de blocage répétés. Notez vos observations en temps réel dans les encadrés prévus.
-            </div>
-
-            <div className="px-5 py-4 space-y-6">
-
-              {/* NIVEAU A1 */}
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ backgroundColor: '#32cf8a' }}>A1 — Découverte</span>
-                  <span className="text-xs text-gray-500 italic">Compétences visées : se présenter, comprendre des mots familiers, interagir simplement</span>
-                </div>
-                <div className="space-y-3">
-                  {[
-                    { num: 1, q: 'Comment vous appelez-vous ? Quel est votre prénom, votre nom ?', hint: 'Accepter toute forme de présentation. Observer la compréhension de la question.' },
-                    { num: 2, q: "D\u2019o\u00f9 venez-vous ? Quel est votre pays d'origine ?", hint: 'Accepter une réponse courte (pays, ville). Observer la prononciation.' },
-                    { num: 3, q: "Quel est votre m\u00e9tier ? Qu'est-ce que vous faites dans la vie ?", hint: "Accepter une r\u00e9ponse simple. S'il ne comprend pas, reformuler : \u00ab Vous travaillez ? \u00bb" },
-                  ].map(({ num, q, hint }) => (
-                    <div key={num} className="border border-gray-200 rounded p-3 bg-white">
-                      <div className="flex items-start gap-2 mb-1">
-                        <span className="text-xs font-bold text-gray-400 shrink-0 w-5">{num}.</span>
-                        <p className="text-sm font-semibold text-gray-900">« {q} »</p>
-                      </div>
-                      <p className="text-xs text-gray-500 italic ml-5 mb-2">💡 {hint}</p>
-                      <div className="ml-5 border border-gray-200 rounded" style={{ minHeight: '40px' }}>
-                        {[...Array(2)].map((_, i) => <div key={i} className="border-b border-gray-100 h-6" />)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* NIVEAU A2 */}
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ backgroundColor: '#17c3b2' }}>A2 — Élémentaire</span>
-                  <span className="text-xs text-gray-500 italic">Compétences visées : décrire son environnement, exprimer des besoins simples, raconter des faits quotidiens</span>
-                </div>
-                <div className="space-y-3">
-                  {[
-                    { num: 4, q: 'Pouvez-vous me décrire votre journée habituelle ? Que faites-vous le matin, l\'après-midi ?', hint: 'Observer l\'utilisation des temps (présent), le vocabulaire du quotidien, les connecteurs.' },
-                    { num: 5, q: 'Pourquoi voulez-vous apprendre ou améliorer votre français ?', hint: 'Observer la capacité à exprimer une intention, un but. Accepter des phrases simples.' },
-                    { num: 6, q: 'Vous avez déjà travaillé en France ? Racontez un peu.', hint: 'Si non : « Quel type de travail souhaiteriez-vous faire ? ». Observer le vocabulaire professionnel.' },
-                  ].map(({ num, q, hint }) => (
-                    <div key={num} className="border border-gray-200 rounded p-3 bg-white">
-                      <div className="flex items-start gap-2 mb-1">
-                        <span className="text-xs font-bold text-gray-400 shrink-0 w-5">{num}.</span>
-                        <p className="text-sm font-semibold text-gray-900">« {q} »</p>
-                      </div>
-                      <p className="text-xs text-gray-500 italic ml-5 mb-2">💡 {hint}</p>
-                      <div className="ml-5 border border-gray-200 rounded" style={{ minHeight: '40px' }}>
-                        {[...Array(2)].map((_, i) => <div key={i} className="border-b border-gray-100 h-6" />)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* NIVEAU B1 */}
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ backgroundColor: '#00b4d8' }}>B1 — Intermédiaire</span>
-                  <span className="text-xs text-gray-500 italic">{"Comp\u00e9tences vis\u00e9es : s'exprimer sur des sujets familiers, donner son opinion, faire face \u00e0 des situations impr\u00e9vues"}</span>
-                </div>
-                <div className="space-y-3">
-                  {[
-                    { num: 7, q: 'Décrivez-moi une expérience professionnelle que vous avez vécue. Qu\'avez-vous appris ?', hint: 'Observer l\'utilisation du passé composé/imparfait, la structuration du récit, le vocabulaire.' },
-                    { num: 8, q: 'Si vous deviez choisir entre travailler en équipe ou seul(e), que préféreriez-vous et pourquoi ?', hint: 'Observer la capacité à argumenter, à utiliser le conditionnel, les connecteurs logiques.' },
-                    { num: 9, q: 'Qu\'est-ce qui vous semble le plus difficile dans la vie professionnelle en France ?', hint: 'Observer la complexité des structures, la richesse lexicale, la fluidité.' },
-                  ].map(({ num, q, hint }) => (
-                    <div key={num} className="border border-gray-200 rounded p-3 bg-white">
-                      <div className="flex items-start gap-2 mb-1">
-                        <span className="text-xs font-bold text-gray-400 shrink-0 w-5">{num}.</span>
-                        <p className="text-sm font-semibold text-gray-900">« {q} »</p>
-                      </div>
-                      <p className="text-xs text-gray-500 italic ml-5 mb-2">💡 {hint}</p>
-                      <div className="ml-5 border border-gray-200 rounded" style={{ minHeight: '40px' }}>
-                        {[...Array(2)].map((_, i) => <div key={i} className="border-b border-gray-100 h-6" />)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* NIVEAU B2 */}
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ backgroundColor: '#0077b6' }}>B2 — Intermédiaire avancé</span>
-                  <span className="text-xs text-gray-500 italic">{"Comp\u00e9tences vis\u00e9es : s'exprimer spontan\u00e9ment et couramment, d\u00e9fendre un point de vue, comprendre des textes complexes"}</span>
-                </div>
-                <div className="space-y-3">
-                  {[
-                    { num: 10, q: 'Comment définiriez-vous l\'intégration professionnelle réussie pour une personne étrangère en France ?', hint: 'Observer la nuance, les marqueurs d\'opinion (selon moi, il me semble…), l\'aisance discursive.' },
-                    { num: 11, q: 'Quelle compétence professionnelle souhaiteriez-vous développer en priorité, et comment comptez-vous y parvenir ?', hint: 'Observer la structuration de l\'argumentation, l\'utilisation du futur et du conditionnel, la richesse lexicale.' },
-                  ].map(({ num, q, hint }) => (
-                    <div key={num} className="border border-gray-200 rounded p-3 bg-white">
-                      <div className="flex items-start gap-2 mb-1">
-                        <span className="text-xs font-bold text-gray-400 shrink-0 w-5">{num}.</span>
-                        <p className="text-sm font-semibold text-gray-900">« {q} »</p>
-                      </div>
-                      <p className="text-xs text-gray-500 italic ml-5 mb-2">💡 {hint}</p>
-                      <div className="ml-5 border border-gray-200 rounded" style={{ minHeight: '40px' }}>
-                        {[...Array(2)].map((_, i) => <div key={i} className="border-b border-gray-100 h-6" />)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Grille d'évaluation orale globale */}
-              <div className="border-2 border-purple-300 rounded-lg p-4 bg-purple-50">
-                <p className="text-sm font-bold text-purple-900 mb-3">📊 Grille d'évaluation orale — Synthèse</p>
-                <div className="grid grid-cols-1 gap-2 text-xs">
-                  {[
-                    { critere: 'Étendue (richesse du vocabulaire)', desc: 'Varié et précis / Limité mais adéquat / Très restreint' },
-                    { critere: 'Correction grammaticale', desc: 'Peu d\'erreurs / Erreurs non gênantes / Erreurs fréquentes' },
-                    { critere: 'Fluidité / aisance', desc: 'S\'exprime sans hésitation / Quelques pauses / Blocages fréquents' },
-                    { critere: 'Interaction', desc: 'Prend l\'initiative / Réactif / Passif / Ne comprend pas' },
-                    { critere: 'Cohérence & cohésion', desc: 'Discours structuré / Quelques ruptures / Discours fragmenté' },
-                    { critere: 'Prononciation', desc: 'Claire et compréhensible / Quelques problèmes / Très difficile à comprendre' },
-                  ].map(({ critere, desc }) => (
-                    <div key={critere} className="flex items-center gap-3 bg-white rounded px-3 py-2 border border-purple-200">
-                      <span className="font-semibold text-purple-900 w-44 shrink-0">{critere}</span>
-                      <span className="text-gray-500 italic flex-1">{desc}</span>
-                      <div className="flex gap-1 shrink-0">
-                        {['1', '2', '3', '4', '5'].map(n => (
-                          <span key={n} className="w-6 h-6 border border-purple-400 rounded text-center text-xs flex items-center justify-center text-purple-700 font-semibold">{n}</span>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-3 grid grid-cols-2 gap-3 text-xs">
-                  <div>
-                    <p className="font-semibold text-gray-700 mb-1">Niveau oral estimé :</p>
-                    <div className="flex gap-2 flex-wrap">
-                      {['A1', 'A2', 'B1', 'B2', 'C1'].map(l => (
-                        <span key={l} className="border border-gray-400 rounded px-3 py-1 text-xs font-bold text-gray-600">{l}</span>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-700 mb-1">Commentaire oral global :</p>
-                    <div className="border border-gray-200 rounded" style={{ minHeight: '40px' }}>
-                      {[...Array(2)].map((_, i) => <div key={i} className="border-b border-gray-100 h-6" />)}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
           {/* Guide d'utilisation */}
           <div className="border border-[#17c3b2] rounded p-4 mb-6 bg-teal-50">
             <p className="text-sm font-bold text-gray-800 mb-2">📌 Guide d'utilisation de ce test</p>
@@ -916,65 +759,269 @@ export default function PrintTest() {
             </div>
           ))}
 
-          {/* Grille d'observations globales */}
-          <div className="border-2 border-gray-800 rounded p-4 mb-6 mt-8">
-            <div className="font-bold text-gray-800 mb-4 text-sm uppercase tracking-wide">🗒️ Observations globales du formateur</div>
-            <div className="grid grid-cols-2 gap-4 text-xs text-gray-700 mb-4">
-              {[
-                ['Communication Orale', ['Exprime des besoins simples', 'Compris sans effort', 'Interagit spontanément', 'Argumente et nuance', 'Maîtrise de registres variés']],
-                ['Communication Écrite', ['Compréhension de textes simples', 'Repère les informations clés', 'Comprend des textes complexes', 'Analyse les implicites', 'Lecture critique et littéraire']],
-                ['Production Orale', ['Phrases simples et courtes', 'Enchaîne les idées', 'S\'exprime avec aisance', 'Discours structuré', 'Maîtrise stylistique']],
-                ['Production Écrite', ['Phrases simples correctes', 'Texte cohérent court', 'Rédaction structurée', 'Argumentation développée', 'Style soutenu et précis']],
-              ].map(([domaine, items]) => (
-                <div key={domaine} className="border border-gray-200 rounded p-3">
-                  <p className="font-bold text-gray-800 mb-2">{domaine}</p>
-                  {items.map((item, i) => (
-                    <div key={i} className="flex items-center gap-2 mb-1">
-                      <span className="w-4 h-4 border border-gray-400 rounded shrink-0" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
+          {/* Pied de page */}
+          <div className="mt-4 pt-4 border-t border-gray-200 text-center text-xs text-gray-400">
+            ParlerEmploi Formation — Guide formateur confidentiel — © {new Date().getFullYear()} —
+            Médiathèque Persepolis, 4 av. Gabriel-Péri, 93400 Saint-Ouen-sur-Seine — contact@parleremploi.com
+          </div>
+        </div>
+      )}
+
+      {/* ===================== FICHE INDIVIDUELLE CANDIDAT ===================== */}
+      {view === 'individuel' && (
+        <div className="print-area bg-white max-w-4xl mx-auto px-10 py-8">
+
+          {/* En-tête */}
+          <div className="flex items-center justify-between mb-4 border-b-2 border-purple-800 pb-4">
+            <img
+              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_69409edef41e4f2a833c897b/ac7782ec6_logopefpetit.png"
+              alt="ParlerEmploi Formation"
+              style={{ height: '48px', objectFit: 'contain' }}
+            />
+            <div className="text-right">
+              <div className="text-sm font-bold text-gray-900">FICHE D'ÉVALUATION INDIVIDUELLE — TEST DE POSITIONNEMENT</div>
+              <div className="text-xs text-red-600 font-semibold mt-1">⚠️ DOCUMENT CONFIDENTIEL — NE PAS DISTRIBUER AUX CANDIDATS</div>
+            </div>
+          </div>
+
+          {/* Identité candidat */}
+          <div className="border-2 border-purple-600 rounded-lg p-4 mb-6 bg-purple-50">
+            <div className="font-semibold text-purple-900 mb-3 text-sm uppercase tracking-wide">Informations du candidat</div>
+            <div className="grid grid-cols-2 gap-x-8 gap-y-3">
+              {[['Nom et prénom du candidat', ''], ['Date', ''], ['Formateur', ''], ['Lieu', '']].map(([label]) => (
+                <div key={label}>
+                  <span className="text-sm text-gray-600">{label} :</span>
+                  <div className="border-b border-purple-400 mt-1 h-6" />
                 </div>
               ))}
             </div>
+          </div>
 
-            <div className="mb-3">
-              <p className="text-xs font-semibold text-gray-700 mb-1">Points forts identifiés :</p>
-              <div className="border border-gray-200 rounded" style={{ minHeight: '48px' }}>
-                {[...Array(3)].map((_, i) => <div key={i} className="border-b border-gray-100 h-7" />)}
+          {/* ── ENTRETIEN ORAL INDIVIDUEL ── */}
+          <div className="border-2 border-purple-600 rounded-lg mb-6 overflow-hidden">
+            <div className="bg-purple-700 text-white px-5 py-3 flex items-center gap-3">
+              <span className="text-xl">🗣️</span>
+              <div>
+                <div className="font-bold text-base">Entretien Oral Individuel — Référentiel CECRL</div>
+                <div className="text-xs text-purple-200 mt-0.5">Conduit en one-to-one pendant le test écrit · Durée : 10 à 15 minutes</div>
               </div>
             </div>
-            <div className="mb-3">
-              <p className="text-xs font-semibold text-gray-700 mb-1">Axes de progression prioritaires :</p>
-              <div className="border border-gray-200 rounded" style={{ minHeight: '48px' }}>
-                {[...Array(3)].map((_, i) => <div key={i} className="border-b border-gray-100 h-7" />)}
-              </div>
-            </div>
-            <div className="mb-3">
-              <p className="text-xs font-semibold text-gray-700 mb-1">Contexte / langue(s) d'origine / parcours migratoire :</p>
-              <div className="border border-gray-200 rounded" style={{ minHeight: '36px' }}>
-                {[...Array(2)].map((_, i) => <div key={i} className="border-b border-gray-100 h-7" />)}
-              </div>
+            <div className="bg-purple-50 px-5 py-3 border-b border-purple-200 text-xs text-purple-900">
+              <span className="font-semibold">Mode opératoire :</span> Posez les questions dans l'ordre. Adaptez le niveau en fonction des réponses. Arrêtez-vous quand le candidat ne peut plus répondre ou montre des signes de blocage répétés.
             </div>
 
-            <div className="grid grid-cols-3 gap-3 mt-3 pt-3 border-t border-gray-200 text-sm">
-              <div>Score QCM : <span className="border-b border-gray-500 inline-block w-12" /> / {totalQCM}</div>
-              <div>Score oral : <span className="border-b border-gray-500 inline-block w-12" /> / {totalOral * 5}</div>
-              <div>Score écrit : <span className="border-b border-gray-500 inline-block w-12" /> / {totalEcrit * 5}</div>
+            <div className="px-5 py-4 space-y-6">
+              {/* A1 */}
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ backgroundColor: '#32cf8a' }}>A1 — Découverte</span>
+                  <span className="text-xs text-gray-500 italic">se présenter, comprendre des mots familiers, interagir simplement</span>
+                </div>
+                <div className="space-y-3">
+                  {[
+                    { num: 1, q: 'Comment vous appelez-vous ? Quel est votre prénom, votre nom ?', hint: 'Accepter toute forme de présentation. Observer la compréhension de la question.' },
+                    { num: 2, q: "D\u2019o\u00f9 venez-vous ? Quel est votre pays d'origine ?", hint: 'Accepter une réponse courte (pays, ville). Observer la prononciation.' },
+                    { num: 3, q: "Quel est votre m\u00e9tier ? Qu'est-ce que vous faites dans la vie ?", hint: "Accepter une r\u00e9ponse simple. S'il ne comprend pas, reformuler : \u00ab Vous travaillez ? \u00bb" },
+                  ].map(({ num, q, hint }) => (
+                    <div key={num} className="border border-gray-200 rounded p-3 bg-white">
+                      <div className="flex items-start gap-2 mb-1">
+                        <span className="text-xs font-bold text-gray-400 shrink-0 w-5">{num}.</span>
+                        <p className="text-sm font-semibold text-gray-900">« {q} »</p>
+                      </div>
+                      <p className="text-xs text-gray-500 italic ml-5 mb-2">💡 {hint}</p>
+                      <div className="ml-5 border border-gray-200 rounded" style={{ minHeight: '36px' }}>
+                        {[...Array(2)].map((_, i) => <div key={i} className="border-b border-gray-100 h-6" />)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* A2 */}
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ backgroundColor: '#17c3b2' }}>A2 — Élémentaire</span>
+                  <span className="text-xs text-gray-500 italic">décrire son environnement, exprimer des besoins simples, raconter des faits quotidiens</span>
+                </div>
+                <div className="space-y-3">
+                  {[
+                    { num: 4, q: 'Pouvez-vous me décrire votre journée habituelle ? Que faites-vous le matin, l\'après-midi ?', hint: 'Observer l\'utilisation des temps (présent), le vocabulaire du quotidien, les connecteurs.' },
+                    { num: 5, q: 'Pourquoi voulez-vous apprendre ou améliorer votre français ?', hint: 'Observer la capacité à exprimer une intention, un but. Accepter des phrases simples.' },
+                    { num: 6, q: 'Vous avez déjà travaillé en France ? Racontez un peu.', hint: 'Si non : « Quel type de travail souhaiteriez-vous faire ? ». Observer le vocabulaire professionnel.' },
+                  ].map(({ num, q, hint }) => (
+                    <div key={num} className="border border-gray-200 rounded p-3 bg-white">
+                      <div className="flex items-start gap-2 mb-1">
+                        <span className="text-xs font-bold text-gray-400 shrink-0 w-5">{num}.</span>
+                        <p className="text-sm font-semibold text-gray-900">« {q} »</p>
+                      </div>
+                      <p className="text-xs text-gray-500 italic ml-5 mb-2">💡 {hint}</p>
+                      <div className="ml-5 border border-gray-200 rounded" style={{ minHeight: '36px' }}>
+                        {[...Array(2)].map((_, i) => <div key={i} className="border-b border-gray-100 h-6" />)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* B1 */}
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ backgroundColor: '#00b4d8' }}>B1 — Intermédiaire</span>
+                  <span className="text-xs text-gray-500 italic">{"s'exprimer sur des sujets familiers, donner son opinion, faire face \u00e0 des situations impr\u00e9vues"}</span>
+                </div>
+                <div className="space-y-3">
+                  {[
+                    { num: 7, q: 'Décrivez-moi une expérience professionnelle que vous avez vécue. Qu\'avez-vous appris ?', hint: 'Observer l\'utilisation du passé composé/imparfait, la structuration du récit, le vocabulaire.' },
+                    { num: 8, q: 'Si vous deviez choisir entre travailler en équipe ou seul(e), que préféreriez-vous et pourquoi ?', hint: 'Observer la capacité à argumenter, à utiliser le conditionnel, les connecteurs logiques.' },
+                    { num: 9, q: 'Qu\'est-ce qui vous semble le plus difficile dans la vie professionnelle en France ?', hint: 'Observer la complexité des structures, la richesse lexicale, la fluidité.' },
+                  ].map(({ num, q, hint }) => (
+                    <div key={num} className="border border-gray-200 rounded p-3 bg-white">
+                      <div className="flex items-start gap-2 mb-1">
+                        <span className="text-xs font-bold text-gray-400 shrink-0 w-5">{num}.</span>
+                        <p className="text-sm font-semibold text-gray-900">« {q} »</p>
+                      </div>
+                      <p className="text-xs text-gray-500 italic ml-5 mb-2">💡 {hint}</p>
+                      <div className="ml-5 border border-gray-200 rounded" style={{ minHeight: '36px' }}>
+                        {[...Array(2)].map((_, i) => <div key={i} className="border-b border-gray-100 h-6" />)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* B2 */}
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ backgroundColor: '#0077b6' }}>B2 — Intermédiaire avancé</span>
+                  <span className="text-xs text-gray-500 italic">{"s'exprimer spontan\u00e9ment et couramment, d\u00e9fendre un point de vue, comprendre des textes complexes"}</span>
+                </div>
+                <div className="space-y-3">
+                  {[
+                    { num: 10, q: 'Comment définiriez-vous l\'intégration professionnelle réussie pour une personne étrangère en France ?', hint: 'Observer la nuance, les marqueurs d\'opinion (selon moi, il me semble…), l\'aisance discursive.' },
+                    { num: 11, q: 'Quelle compétence professionnelle souhaiteriez-vous développer en priorité, et comment comptez-vous y parvenir ?', hint: 'Observer la structuration de l\'argumentation, l\'utilisation du futur et du conditionnel, la richesse lexicale.' },
+                  ].map(({ num, q, hint }) => (
+                    <div key={num} className="border border-gray-200 rounded p-3 bg-white">
+                      <div className="flex items-start gap-2 mb-1">
+                        <span className="text-xs font-bold text-gray-400 shrink-0 w-5">{num}.</span>
+                        <p className="text-sm font-semibold text-gray-900">« {q} »</p>
+                      </div>
+                      <p className="text-xs text-gray-500 italic ml-5 mb-2">💡 {hint}</p>
+                      <div className="ml-5 border border-gray-200 rounded" style={{ minHeight: '36px' }}>
+                        {[...Array(2)].map((_, i) => <div key={i} className="border-b border-gray-100 h-6" />)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Grille évaluation orale */}
+              <div className="border-2 border-purple-300 rounded-lg p-4 bg-purple-50">
+                <p className="text-sm font-bold text-purple-900 mb-3">📊 Grille d'évaluation orale</p>
+                <div className="grid grid-cols-1 gap-2 text-xs">
+                  {[
+                    { critere: 'Étendue (vocabulaire)', desc: 'Varié et précis / Limité mais adéquat / Très restreint' },
+                    { critere: 'Correction grammaticale', desc: 'Peu d\'erreurs / Erreurs non gênantes / Erreurs fréquentes' },
+                    { critere: 'Fluidité / aisance', desc: 'Sans hésitation / Quelques pauses / Blocages fréquents' },
+                    { critere: 'Interaction', desc: 'Prend l\'initiative / Réactif / Passif / Ne comprend pas' },
+                    { critere: 'Cohérence & cohésion', desc: 'Discours structuré / Quelques ruptures / Discours fragmenté' },
+                    { critere: 'Prononciation', desc: 'Claire et compréhensible / Quelques problèmes / Très difficile' },
+                  ].map(({ critere, desc }) => (
+                    <div key={critere} className="flex items-center gap-3 bg-white rounded px-3 py-2 border border-purple-200">
+                      <span className="font-semibold text-purple-900 w-40 shrink-0">{critere}</span>
+                      <span className="text-gray-500 italic flex-1 text-xs">{desc}</span>
+                      <div className="flex gap-1 shrink-0">
+                        {['1', '2', '3', '4', '5'].map(n => (
+                          <span key={n} className="w-6 h-6 border border-purple-400 rounded text-center text-xs flex items-center justify-center text-purple-700 font-semibold">{n}</span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-3 flex items-center gap-4 text-xs">
+                  <span className="font-semibold text-purple-900">Score oral (/30) :</span>
+                  <span className="border-b border-purple-500 inline-block w-12" />
+                  <span className="font-semibold text-purple-900 ml-4">Niveau oral estimé :</span>
+                  <div className="flex gap-1">
+                    {['A1', 'A2', 'B1', 'B2', 'C1'].map(l => (
+                      <span key={l} className="border border-gray-400 rounded px-2 py-0.5 text-xs font-bold text-gray-600">{l}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="grid grid-cols-2 gap-3 mt-2 text-sm font-semibold">
-              <div>Niveau CECRL estimé : <span className="border-b border-gray-500 inline-block w-16" /></div>
-              <div>Formation recommandée : <span className="border-b border-gray-500 inline-block w-24" /></div>
+          </div>
+
+          {/* Grille de scores par partie */}
+          <div className="border border-gray-300 rounded p-4 mb-6">
+            <p className="text-sm font-bold text-gray-800 mb-3">Grille de scores — Ce candidat</p>
+            <table className="w-full border-collapse text-xs mb-3">
+              <thead>
+                <tr className="bg-gray-100">
+                  <th className="border border-gray-300 px-3 py-2 text-left font-semibold text-gray-700">Partie</th>
+                  <th className="border border-gray-300 px-3 py-2 text-center font-semibold text-gray-700">Score obtenu</th>
+                  <th className="border border-gray-300 px-3 py-2 text-center font-semibold text-gray-700">/ Max</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { partie: '1 — Compréhension Orale', max: `${questions.filter(q => q.category === 'Compréhension Orale').length} pts` },
+                  { partie: '2 — Compréhension Écrite', max: `${questions.filter(q => q.category === 'Compréhension Écrite').length + 12} pts` },
+                  { partie: '3 — Grammaire', max: `${questions.filter(q => q.category === 'Grammaire' && q.options).length} pts` },
+                  { partie: '4 — Vocabulaire & Situations', max: `${questions.filter(q => (q.category === 'Vocabulaire Professionnel' || q.category === 'Situations Professionnelles') && q.options).length} pts` },
+                  { partie: '5 — Production Écrite & Reformulation', max: `${questions.filter(q => q.type === 'written' || q.type === 'reformulate').length * 5} pts` },
+                  { partie: '🗣️ Production Orale', max: '30 pts', purple: true },
+                ].map(({ partie, max, purple }) => (
+                  <tr key={partie} className={purple ? 'bg-purple-50' : ''}>
+                    <td className="border border-gray-300 px-3 py-2 font-medium text-gray-800">{partie}</td>
+                    <td className="border border-gray-300 px-3 py-2 text-center">
+                      <span className="border-b border-gray-500 inline-block w-12" />
+                    </td>
+                    <td className="border border-gray-300 px-3 py-2 text-center font-semibold text-gray-700">{max}</td>
+                  </tr>
+                ))}
+                <tr className="bg-gray-800 text-white">
+                  <td className="border border-gray-600 px-3 py-2 font-bold">SCORE TOTAL CUMULÉ</td>
+                  <td className="border border-gray-600 px-3 py-2 text-center font-bold">
+                    <span className="border-b border-white inline-block w-12" />
+                  </td>
+                  <td className="border border-gray-600 px-3 py-2 text-center font-bold">/ 100</td>
+                </tr>
+              </tbody>
+            </table>
+            <div className="flex items-center gap-3 flex-wrap text-sm font-semibold text-gray-800 border-t border-gray-200 pt-3">
+              <span>Niveau CECRL global :</span>
+              {['A1', 'A2', 'B1', 'B2', 'C1', 'C2'].map(l => (
+                <span key={l} className="border-2 border-gray-400 rounded px-3 py-1 text-sm font-bold text-gray-600">{l}</span>
+              ))}
             </div>
-            <div className="mt-3 flex items-center gap-4 text-xs text-gray-600">
-              <span>Signature formateur :</span>
-              <div className="border-b border-gray-400 flex-1" style={{ height: '24px' }} />
+          </div>
+
+          {/* Observations */}
+          <div className="border border-gray-300 rounded p-4 mb-6 space-y-3">
+            <p className="text-sm font-bold text-gray-800">🗒️ Observations du formateur</p>
+            {[
+              'Points forts identifiés :',
+              'Axes de progression prioritaires :',
+              'Contexte / langue(s) d\'origine / parcours migratoire :',
+            ].map((label) => (
+              <div key={label}>
+                <p className="text-xs font-semibold text-gray-700 mb-1">{label}</p>
+                <div className="border border-gray-200 rounded" style={{ minHeight: '44px' }}>
+                  {[...Array(2)].map((_, i) => <div key={i} className="border-b border-gray-100 h-7" />)}
+                </div>
+              </div>
+            ))}
+            <div className="flex items-center gap-4 text-xs text-gray-600 pt-2 border-t border-gray-200">
+              <span>Formation recommandée :</span>
+              <div className="border-b border-gray-400 flex-1" style={{ height: '20px' }} />
+              <span>Signature :</span>
+              <div className="border-b border-gray-400 w-32" style={{ height: '20px' }} />
             </div>
           </div>
 
           {/* Pied de page */}
           <div className="mt-4 pt-4 border-t border-gray-200 text-center text-xs text-gray-400">
-            ParlerEmploi Formation — Fiche formateur confidentielle — © {new Date().getFullYear()} —
+            ParlerEmploi Formation — Fiche individuelle confidentielle — © {new Date().getFullYear()} —
             Médiathèque Persepolis, 4 av. Gabriel-Péri, 93400 Saint-Ouen-sur-Seine — contact@parleremploi.com
           </div>
         </div>
