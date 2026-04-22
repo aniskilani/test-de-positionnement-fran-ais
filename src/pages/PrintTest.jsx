@@ -522,9 +522,12 @@ export default function PrintTest() {
             <div className="bg-purple-700 text-white px-5 py-3 flex items-center gap-3">
               <span className="text-xl">🗣️</span>
               <div>
-                <div className="font-bold text-base">Entretien Oral One-to-One — Référentiel CECRL</div>
-                <div className="text-xs text-purple-200 mt-0.5">À conduire avant la remise du cahier candidat · Durée estimée : 10 à 15 minutes</div>
+                <div className="font-bold text-base">Entretien Oral Individuel — Référentiel CECRL</div>
+                <div className="text-xs text-purple-200 mt-0.5">À conduire en one-to-one pendant le test écrit des autres candidats · Durée estimée : 10 à 15 minutes par candidat</div>
               </div>
+            </div>
+            <div className="bg-amber-50 border-b border-amber-200 px-5 py-3 text-xs text-amber-900">
+              <span className="font-semibold">⚙️ Organisation :</span> Pendant que les autres apprenants réalisent le test écrit en autonomie, appelez chaque candidat individuellement dans un espace à l'écart. Menez l'entretien oral, puis raccompagnez le candidat à sa place avant d'appeler le suivant.
             </div>
             <div className="bg-purple-50 px-5 py-3 border-b border-purple-200 text-xs text-purple-900">
               <span className="font-semibold">Mode opératoire :</span> Posez les questions dans l'ordre. Adaptez le niveau en fonction des réponses. Arrêtez-vous quand le candidat ne peut plus répondre ou montre des signes de blocage répétés. Notez vos observations en temps réel dans les encadrés prévus.
