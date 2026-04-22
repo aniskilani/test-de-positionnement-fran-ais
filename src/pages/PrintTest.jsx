@@ -752,8 +752,51 @@ export default function PrintTest() {
 
           {/* Barème */}
           <div className="border border-gray-300 rounded p-4 mb-6">
-            <p className="text-sm font-bold text-gray-800 mb-3">Barème et correspondance CECRL</p>
-            <div className="grid grid-cols-6 gap-2 text-xs text-center">
+            <p className="text-sm font-bold text-gray-800 mb-3">Grille de scores par partie & niveau global</p>
+
+            {/* Tableau scores par partie */}
+            <div className="mb-4 text-xs">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="bg-gray-100">
+                    <th className="border border-gray-300 px-3 py-2 text-left font-semibold text-gray-700">Partie</th>
+                    <th className="border border-gray-300 px-3 py-2 text-center font-semibold text-gray-700">Barème</th>
+                    <th className="border border-gray-300 px-3 py-2 text-center font-semibold text-gray-700">Score obtenu</th>
+                    <th className="border border-gray-300 px-3 py-2 text-center font-semibold text-gray-700">/ Max</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { partie: '1 — Compréhension Orale', bareme: '1 pt / bonne réponse', max: `${questions.filter(q => q.category === 'Compréhension Orale').length} pts` },
+                    { partie: '2 — Compréhension Écrite', bareme: '1 pt / bonne réponse', max: `${questions.filter(q => q.category === 'Compréhension Écrite').length + 12} pts` },
+                    { partie: '3 — Grammaire', bareme: '1 pt / bonne réponse', max: `${questions.filter(q => q.category === 'Grammaire' && q.options).length} pts` },
+                    { partie: '4 — Vocabulaire & Situations', bareme: '1 pt / bonne réponse', max: `${questions.filter(q => (q.category === 'Vocabulaire Professionnel' || q.category === 'Situations Professionnelles') && q.options).length} pts` },
+                    { partie: '5 — Production Écrite & Reformulation', bareme: '0–5 pts / exercice', max: `${questions.filter(q => q.type === 'written' || q.type === 'reformulate').length * 5} pts` },
+                    { partie: '🗣️ Production Orale (entretien individuel)', bareme: '0–5 pts / critère × 6', max: '30 pts' },
+                  ].map(({ partie, bareme, max }) => (
+                    <tr key={partie} className={partie.startsWith('🗣️') ? 'bg-purple-50' : ''}>
+                      <td className="border border-gray-300 px-3 py-2 font-medium text-gray-800">{partie}</td>
+                      <td className="border border-gray-300 px-3 py-2 text-center text-gray-600 italic">{bareme}</td>
+                      <td className="border border-gray-300 px-3 py-2 text-center">
+                        <span className="border-b border-gray-500 inline-block w-10" />
+                      </td>
+                      <td className="border border-gray-300 px-3 py-2 text-center font-semibold text-gray-700">{max}</td>
+                    </tr>
+                  ))}
+                  <tr className="bg-gray-800 text-white">
+                    <td className="border border-gray-600 px-3 py-2 font-bold" colSpan={2}>SCORE TOTAL CUMULÉ</td>
+                    <td className="border border-gray-600 px-3 py-2 text-center font-bold">
+                      <span className="border-b border-white inline-block w-10" />
+                    </td>
+                    <td className="border border-gray-600 px-3 py-2 text-center font-bold">/ 100</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p className="text-xs text-gray-500 italic mt-1">* Le score total est ramené sur 100 pour déterminer le niveau CECRL.</p>
+            </div>
+
+            {/* Correspondance CECRL */}
+            <div className="grid grid-cols-6 gap-2 text-xs text-center mb-3">
               {[
                 { level: 'A1', range: '< 30%', bg: '#e6faf4', border: '#32cf8a', desc: 'Débutant' },
                 { level: 'A2', range: '30–44%', bg: '#e0f7f5', border: '#17c3b2', desc: 'Élémentaire' },
@@ -769,14 +812,13 @@ export default function PrintTest() {
                 </div>
               ))}
             </div>
-            <div className="mt-3 grid grid-cols-3 gap-3 text-sm text-gray-700 border-t border-gray-200 pt-3">
-              <div>Score QCM : <span className="border-b border-gray-500 inline-block w-12" /> / {totalQCM}</div>
-              <div>Score écrit : <span className="border-b border-gray-500 inline-block w-12" /> / {totalEcrit}</div>
-              <div>Score oral : <span className="border-b border-gray-500 inline-block w-12" /> / {totalOral}</div>
-            </div>
-            <div className="mt-2 grid grid-cols-2 gap-3 text-sm text-gray-700">
-              <div>Score total pondéré : <span className="border-b border-gray-500 inline-block w-16" /> / 100</div>
-              <div>Niveau CECRL estimé : <span className="border-b border-gray-500 inline-block w-16" /></div>
+            <div className="mt-2 flex items-center gap-4 text-sm font-semibold text-gray-800 border-t border-gray-200 pt-3">
+              <span>Niveau CECRL global estimé :</span>
+              <div className="flex gap-2">
+                {['A1', 'A2', 'B1', 'B2', 'C1', 'C2'].map(l => (
+                  <span key={l} className="border-2 border-gray-400 rounded px-3 py-1 text-sm font-bold text-gray-600">{l}</span>
+                ))}
+              </div>
             </div>
           </div>
 
