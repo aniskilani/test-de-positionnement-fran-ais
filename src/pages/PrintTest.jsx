@@ -256,6 +256,68 @@ export default function PrintTest() {
                 </div>
               )}
 
+              {/* Exercice compréhension email professionnel — Partie 2 uniquement */}
+              {section.key === 'ecrite_comp' && (
+                <div className="mb-8 border border-gray-300 rounded-lg overflow-hidden">
+                  <div className="bg-gray-100 border-b border-gray-300 px-4 py-2 flex items-center gap-2">
+                    <span className="text-base">✉️</span>
+                    <p className="text-sm font-bold text-gray-800">Exercice — Lire et comprendre un email professionnel</p>
+                  </div>
+                  <div className="px-4 pt-4 pb-2">
+                    {/* Email simulé */}
+                    <div className="border border-gray-300 rounded bg-white mb-4 text-sm">
+                      <div className="bg-gray-50 border-b border-gray-200 px-4 py-2 space-y-1 text-xs text-gray-600">
+                        <div><span className="font-semibold text-gray-700 w-14 inline-block">De :</span> marie.dupont@entreprise.fr</div>
+                        <div><span className="font-semibold text-gray-700 w-14 inline-block">À :</span> paul.martin@entreprise.fr</div>
+                        <div><span className="font-semibold text-gray-700 w-14 inline-block">Objet :</span> Réunion d'équipe — Vendredi 25 avril à 10h</div>
+                        <div><span className="font-semibold text-gray-700 w-14 inline-block">Date :</span> Lundi 22 avril 2026</div>
+                      </div>
+                      <div className="px-4 py-3 text-sm text-gray-800 leading-relaxed space-y-2">
+                        <p>Bonjour Paul,</p>
+                        <p>
+                          J'espère que vous allez bien. Je vous contacte pour vous informer qu'une réunion d'équipe
+                          aura lieu <strong>vendredi 25 avril à 10h00</strong>, dans la salle de réunion B (2ème étage).
+                        </p>
+                        <p>
+                          L'ordre du jour sera le suivant :
+                        </p>
+                        <ol className="list-decimal ml-5 space-y-0.5">
+                          <li>Bilan des projets en cours</li>
+                          <li>Planning du mois de mai</li>
+                          <li>Questions diverses</li>
+                        </ol>
+                        <p>
+                          Merci de confirmer votre présence avant <strong>jeudi 24 avril à 17h</strong> en répondant à cet email.
+                          Si vous avez des points à ajouter à l'ordre du jour, n'hésitez pas à me les communiquer.
+                        </p>
+                        <p>Cordialement,</p>
+                        <p className="font-semibold">Marie Dupont<br /><span className="font-normal text-gray-600">Responsable d'équipe — Département RH</span></p>
+                      </div>
+                    </div>
+
+                    {/* Questions de compréhension */}
+                    <div className="space-y-4 pb-3">
+                      {[
+                        { num: 1, q: 'Qui envoie cet email ?' },
+                        { num: 2, q: 'Quel est le sujet de cet email ?' },
+                        { num: 3, q: 'Quand aura lieu la réunion ? (jour, date et heure)' },
+                        { num: 4, q: 'Où se passera la réunion ?' },
+                        { num: 5, q: 'Que doit faire Paul avant jeudi 17h ?' },
+                        { num: 6, q: 'Citez un point à l\'ordre du jour.' },
+                      ].map(({ num, q }) => (
+                        <div key={num}>
+                          <div className="flex items-start gap-2 mb-1">
+                            <span className="font-bold text-gray-700 text-sm shrink-0 w-5">{num}.</span>
+                            <p className="text-sm text-gray-900">{q}</p>
+                          </div>
+                          <div className="ml-6 border-b-2 border-gray-400 w-full mt-2" style={{ height: '22px' }} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {section.questions.map((q) => {
                 const isOral = q.category === 'Compréhension Orale';
                 const isWritten = q.type === 'written';
