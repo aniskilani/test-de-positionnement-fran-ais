@@ -780,62 +780,6 @@ export default function PrintTest() {
             </div>
           </div>
 
-          {/* ---- SECTION PRODUCTION ORALE ---- */}
-          <div className="mb-8">
-            <div className="bg-purple-700 text-white px-4 py-3 rounded mb-4">
-              <div className="font-bold text-base">🎙️ Production Orale</div>
-              <div className="text-xs text-purple-200 mt-0.5">À conduire en entretien direct avec le candidat, avant les épreuves écrites</div>
-            </div>
-
-            {questions.filter(q => q.type === 'oral').map((q, idx) => {
-              const style = levelBadgeStyle[q.level] || levelBadgeStyle['A1'];
-              return (
-                <div key={q.id} className="mb-6 border border-gray-200 rounded p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ backgroundColor: style.bg, color: style.color, border: `1px solid ${style.border}` }}>
-                      {q.level}
-                    </span>
-                    <span className="text-xs text-gray-500">{q.category}</span>
-                  </div>
-                  <p className="text-sm font-semibold text-gray-900 mb-3">🗣️ Consigne donnée au candidat : {q.question}</p>
-                  <div className="grid grid-cols-2 gap-4 text-xs text-gray-700 mb-3">
-                    <div>
-                      <p className="font-semibold mb-1">Critères d'évaluation :</p>
-                      <ul className="list-disc ml-4 space-y-0.5">
-                        {q.criteria.map((c, i) => <li key={i}>{c}</li>)}
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="font-semibold mb-1">Grille d'observation :</p>
-                      <div className="space-y-1">
-                        {['Aisance & fluidité', 'Prononciation', 'Vocabulaire', 'Structures utilisées'].map(obs => (
-                          <div key={obs} className="flex items-center gap-2">
-                            <span className="w-28 shrink-0">{obs}</span>
-                            <div className="flex gap-1">
-                              {['1', '2', '3', '4', '5'].map(n => (
-                                <span key={n} className="w-5 h-5 border border-gray-400 rounded-sm text-center text-xs flex items-center justify-center">{n}</span>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="text-xs text-gray-600 font-semibold mb-1">Observations :</div>
-                  <div className="border border-gray-200 rounded" style={{ minHeight: '56px' }}>
-                    {[...Array(3)].map((_, i) => <div key={i} className="border-b border-gray-100 h-6" />)}
-                  </div>
-                  <div className="mt-2 flex items-center gap-4 text-xs">
-                    <span className="text-gray-600">Score : </span>
-                    <span className="border-b border-gray-400 w-10 inline-block" /> / 5
-                    <span className="text-gray-600 ml-4">Niveau estimé : </span>
-                    <span className="border-b border-gray-400 w-10 inline-block" />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
           {/* ---- CORRIGÉS AUTRES SECTIONS ---- */}
           {formateurSections.filter(s => s.key !== 'oral_prod').map((section) => (
             <div key={section.key} className="mb-8">
