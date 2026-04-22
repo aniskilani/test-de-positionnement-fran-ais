@@ -225,6 +225,37 @@ export default function PrintTest() {
                 </div>
               </div>
 
+              {/* Exercice vocabulaire documents — inséré dans la Partie 2 uniquement */}
+              {section.key === 'ecrite_comp' && (
+                <div className="mb-8 border border-[#17c3b2] rounded-lg overflow-hidden">
+                  <div className="bg-[#17c3b2]/10 border-b border-[#17c3b2] px-4 py-2">
+                    <p className="text-sm font-bold text-[#00504e]">Exercice — Placez les mots qui correspondent à la définition</p>
+                    <div className="mt-1 text-xs text-gray-700">
+                      <span className="font-semibold">Mots à utiliser : </span>
+                      carte d'identité &bull; justificatif de domicile &bull; attestation de sécurité sociale &bull; relevé d'identité bancaire (RIB) &bull; contrat de travail &bull; facture
+                    </div>
+                  </div>
+                  <div className="px-4 py-4 space-y-4">
+                    {[
+                      { num: 1, question: 'Quel est le document qui prouve votre lieu d\'habitation ?' },
+                      { num: 2, question: 'Quel est le document avec vos informations bancaires pour recevoir ou faire des paiements ?' },
+                      { num: 3, question: 'Quel est le document officiel qui prouve votre identité ?' },
+                      { num: 4, question: 'Quel est le document qui montre que vous êtes couvert(e) par l\'assurance maladie ?' },
+                      { num: 5, question: 'Quel est le nom du document que vous et votre employeur signez, qui définit le cadre et les modalités de travail ?' },
+                      { num: 6, question: 'Quel est le document qui montre que vous avez payé un service ou une consommation ?' },
+                    ].map(({ num, question }) => (
+                      <div key={num}>
+                        <div className="flex items-start gap-2 mb-1">
+                          <span className="font-bold text-gray-700 text-sm shrink-0 w-5">{num}.</span>
+                          <p className="text-sm text-gray-900">{question}</p>
+                        </div>
+                        <div className="ml-6 border-b-2 border-gray-400 w-full mt-2" style={{ height: '22px' }} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {section.questions.map((q) => {
                 const isOral = q.category === 'Compréhension Orale';
                 const isWritten = q.type === 'written';
