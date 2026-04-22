@@ -461,7 +461,8 @@ export default function PrintTest() {
               style={{ height: '48px', objectFit: 'contain' }}
             />
             <div className="text-right">
-              <div className="text-lg font-bold text-gray-900">FICHE FORMATEUR — CORRIGÉ & GUIDE D'ÉVALUATION</div>
+              <div className="text-sm font-bold text-gray-900 leading-snug text-right">FICHE FORMATEUR — TEST DE POSITIONNEMENT DE FRANÇAIS<br />ET DE COMPÉTENCES DE BASES PROFESSIONNELLES.</div>
+              <div className="text-xs text-gray-500 italic mt-0.5 text-right">Évaluation des compétences de bases — Corrigé & Guide d'évaluation</div>
               <div className="text-xs text-red-600 font-semibold mt-1">⚠️ DOCUMENT CONFIDENTIEL — NE PAS DISTRIBUER AUX CANDIDATS</div>
             </div>
           </div>
