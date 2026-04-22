@@ -495,7 +495,7 @@ export default function PrintTest() {
                 Ce test a pour objectif de mieux vous connaître et de comprendre votre niveau de français, afin de vous proposer une formation adaptée à vos besoins. Il n'y a pas de bonnes ou de mauvaises réponses : l'important, c'est que vous répondiez le plus sincèrement et le plus complètement possible.
               </p>
               <p>
-                Le test se déroule en plusieurs parties. D'abord, nous allons commencer par un court échange oral, ensemble — c'est une conversation simple, rien d'inquiétant. Ensuite, je vous remettrai un livret avec des exercices écrits que vous réaliserez de façon autonome, à votre rythme.
+                Le test se déroule en plusieurs parties. Je vous remets un livret avec des exercices écrits que vous réaliserez de façon autonome, à votre rythme. Pendant ce temps, je vous appellerai un par un pour un court échange oral individuel — c'est une conversation simple, rien d'inquiétant.
               </p>
               <p>
                 Il n'y a pas de limite de temps stricte. Prenez le temps qu'il vous faut. Si vous ne comprenez pas une question, levez la main et je vous expliquerai la consigne — mais je ne pourrai pas vous donner les réponses.
