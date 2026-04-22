@@ -171,8 +171,8 @@ export default function PrintTest() {
               style={{ height: '56px', objectFit: 'contain' }}
             />
             <div className="text-right">
-              <div className="text-xl font-bold text-gray-900">TEST DE POSITIONNEMENT EN FRANÇAIS</div>
-              <div className="text-sm text-gray-500 mt-1">Évaluation des compétences linguistiques</div>
+              <div className="text-base font-bold text-gray-900 leading-snug text-right">TEST DE POSITIONNEMENT DE FRANÇAIS ET DE COMPÉTENCES DE BASES PROFESSIONNELLES.</div>
+              <div className="text-sm text-gray-500 mt-1 italic">Évaluation des compétences de bases.</div>
             </div>
           </div>
 
