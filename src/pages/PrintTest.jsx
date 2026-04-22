@@ -20,7 +20,7 @@ const SECTIONS_CANDIDAT = [
   {
     key: 'ecrite_comp',
     title: 'PARTIE 2 — Compréhension Écrite',
-    subtitle: 'Lisez les textes et répondez aux questions.',
+    subtitle: 'Lisez attentivement chaque texte encadré, puis répondez aux questions.',
     icon: '📖',
     illustration: 'https://media.base44.com/images/public/6940a01cdb0d5c582a8e789a/c07796924_generated_image.png',
     filter: q => q.category === 'Compréhension Écrite',
@@ -28,7 +28,7 @@ const SECTIONS_CANDIDAT = [
   {
     key: 'grammaire',
     title: 'PARTIE 3 — Grammaire',
-    subtitle: 'Choisissez la bonne réponse.',
+    subtitle: 'Lisez la phrase ou le dialogue, puis choisissez ou écrivez la bonne réponse.',
     icon: '📝',
     illustration: 'https://media.base44.com/images/public/6940a01cdb0d5c582a8e789a/e3aa81291_generated_image.png',
     filter: q => q.category === 'Grammaire',
@@ -193,11 +193,12 @@ export default function PrintTest() {
           <div className="border border-gray-300 rounded p-4 mb-8 bg-white">
             <p className="text-sm font-bold text-gray-800 mb-2">📋 Comment répondre à ce test ?</p>
             <ul className="text-sm text-gray-700 space-y-1 list-disc ml-5">
-              <li>Lisez chaque question attentivement avant de répondre.</li>
+              <li>Ce test se fait <strong>en autonomie</strong>, sauf la Partie 1 (compréhension orale).</li>
               <li>Pour les <strong>QCM</strong> : cochez ou entourez la lettre de la réponse choisie.</li>
-              <li>Pour la <strong>partie orale</strong> : le formateur lira un texte, écoutez bien avant de répondre.</li>
+              <li><strong>Partie 1 — Compréhension Orale</strong> : le formateur lit le texte à voix haute, une seule fois.</li>
+              <li><strong>Parties 2, 3, 4, 5</strong> : lisez les textes et consignes vous-même, répondez seul(e).</li>
+              <li>Pour les <strong>phrases à compléter</strong> : choisissez parmi les options proposées.</li>
               <li>Pour la <strong>production écrite</strong> : écrivez dans l'espace prévu, le plus complètement possible.</li>
-              <li>Ne revenez pas sur une question une fois passée.</li>
               <li>Il n'y a pas de limite de temps stricte, prenez le temps nécessaire.</li>
             </ul>
           </div>
@@ -233,37 +234,73 @@ export default function PrintTest() {
                 const isScenario = q.type === 'scenario_tree';
                 const isDialogue = q.type === 'complete_dialogue';
 
+                const isFillBlank = q.type === 'fill_in_blank';
+                const isEcrite = q.category === 'Compréhension Écrite';
+
                 return (
-                  <div key={q.id} className="mb-6 pl-1">
-                    {/* Indicateur oral */}
+                  <div key={q.id} className="mb-7 pl-1">
+                    {/* Indicateur oral (formateur lit) */}
                     {isOral && (
                       <div className="text-xs bg-amber-50 border border-amber-200 text-amber-800 px-3 py-1 rounded mb-2 inline-block">
-                        🔊 Écoutez attentivement — le formateur va vous lire un texte
+                        🔊 Le formateur lit ce texte à voix haute : écoutez avant de répondre
+                      </div>
+                    )}
+
+                    {/* Texte à lire en autonomie — Compréhension Écrite */}
+                    {isEcrite && q.audioText && (
+                      <div className="mb-3 ml-0">
+                        <div className="bg-slate-50 border-l-4 border-[#17c3b2] rounded-r px-4 py-3">
+                          <p className="text-xs font-bold text-[#00504e] uppercase tracking-wide mb-1">📖 Lisez attentivement :</p>
+                          <p className="text-sm text-gray-900 italic leading-relaxed">« {q.audioText} »</p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Fill in blank — affiche la phrase avec le blanc */}
+                    {isFillBlank && q.template && (
+                      <div className="mb-3 ml-6">
+                        <div className="bg-yellow-50 border border-yellow-200 rounded px-4 py-2">
+                          <p className="text-xs font-bold text-yellow-700 mb-1">Complétez :</p>
+                          <p className="text-sm text-gray-900 font-medium">
+                            {q.template.split('___').map((part, i, arr) => (
+                              <React.Fragment key={i}>
+                                {part}
+                                {i < arr.length - 1 && (
+                                  <span className="inline-block border-b-2 border-gray-700 w-16 mx-1 align-bottom" />
+                                )}
+                              </React.Fragment>
+                            ))}
+                          </p>
+                        </div>
                       </div>
                     )}
 
                     {/* Safety icon */}
                     {isSafety && q.safetyLabel && (
                       <div className="flex items-start gap-2 bg-amber-50 border border-amber-300 rounded px-3 py-2 mb-2 text-sm font-semibold text-amber-900">
-                        <span>{q.safetyIcon}</span>
+                        <span className="text-2xl">{q.safetyIcon}</span>
                         <span>{q.safetyLabel}</span>
                       </div>
                     )}
 
                     {/* Scenario context */}
                     {isScenario && q.context && (
-                      <div className="text-xs bg-blue-50 border border-blue-200 text-blue-900 px-3 py-1 rounded mb-2 inline-block">
+                      <div className="text-xs bg-blue-50 border border-blue-200 text-blue-900 px-3 py-1.5 rounded mb-2 inline-block font-medium">
                         {q.context}
                       </div>
                     )}
 
-                    {/* Dialogue */}
+                    {/* Dialogue complet */}
                     {isDialogue && q.dialogue && (
-                      <div className="mb-2 space-y-1 ml-6">
+                      <div className="mb-3 ml-2 space-y-1.5 border-l-2 border-gray-300 pl-3">
                         {q.dialogue.map((line, i) => (
                           <div key={i} className="text-sm">
                             <span className="font-bold text-gray-600">{line.speaker} :</span>{' '}
-                            <span className="text-gray-800">{line.text}</span>
+                            <span className="text-gray-800">
+                              {line.text === '___'
+                                ? <span className="inline-block border-b-2 border-gray-700 w-48 ml-1 align-bottom" />
+                                : line.text}
+                            </span>
                           </div>
                         ))}
                       </div>
