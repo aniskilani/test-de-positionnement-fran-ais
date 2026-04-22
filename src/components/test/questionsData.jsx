@@ -1,444 +1,60 @@
+// ============================================================
+// TEST DE POSITIONNEMENT FLE — ParlerEmploi Formation
+// Durée estimée : 1h15-1h30 | ~35 questions variées A1→C1
+// Types de questions :
+//   listen_choose  — Écouter et choisir (audio TTS + QCM)
+//   listen_repeat  — Écouter et répéter (audio TTS + saisie)
+//   fill_in_blank  — Compléter les blancs (champ texte inline)
+//   complete_dialogue — Compléter un dialogue (QCM contextuel)
+//   safety_instruction — Consignes de sécurité (QCM + icône)
+//   drag_match     — Associer (paires) → rendu comme QCM
+//   reformulate    — Reformuler une phrase (écrit libre)
+//   scenario_tree  — Scénario décisionnel (QCM narratif)
+//   oral           — Production orale libre (enregistrement)
+//   written        — Production écrite libre
+// ============================================================
+
 export const questions = [
-  // ==================== A1 Level ====================
-  // Grammaire A1
+
+  // ─── BLOC 1 : COMPRÉHENSION ORALE (A1) ──────────────────
   {
     id: 1,
     level: "A1",
-    category: "Grammaire",
-    question: "Complétez : « Je ___ français. »",
-    options: ["suis", "ai", "est", "as"],
-    correct: "suis",
-    explanation: "On utilise 'suis' avec 'je' pour exprimer la nationalité : Je suis français."
-  },
-  {
-    id: 2,
-    level: "A1",
-    category: "Grammaire",
-    question: "Quel est le pluriel de « un livre » ?",
-    options: ["des livre", "des livres", "les livre", "un livres"],
-    correct: "des livres",
-    explanation: "Au pluriel, on ajoute un 's' au nom et on utilise 'des' : des livres."
-  },
-  {
-    id: 3,
-    level: "A1",
-    category: "Grammaire",
-    question: "Complétez : « Tu ___ quel âge ? »",
-    options: ["as", "es", "ai", "est"],
-    correct: "as",
-    explanation: "Pour demander l'âge, on utilise le verbe 'avoir' : Tu as quel âge ?"
-  },
-  {
-    id: 4,
-    level: "A1",
-    category: "Grammaire",
-    question: "Choisissez la forme correcte : « Elle ___ à Paris. »",
-    options: ["habite", "habiter", "habitez", "habitent"],
-    correct: "habite",
-    explanation: "Avec 'elle', on conjugue au présent : elle habite."
-  },
-
-  // Vocabulaire A1
-  {
-    id: 5,
-    level: "A1",
-    category: "Vocabulaire",
-    question: "Quel mot utilise-t-on pour saluer quelqu'un le matin ?",
-    options: ["Au revoir", "Bonjour", "Merci", "S'il vous plaît"],
-    correct: "Bonjour",
-    explanation: "'Bonjour' est utilisé pour saluer quelqu'un, particulièrement le matin et la journée."
-  },
-  {
-    id: 6,
-    level: "A1",
-    category: "Vocabulaire",
-    question: "Quel article utilise-t-on : « ___ pomme » ?",
-    options: ["Un", "Une", "Des", "Le"],
-    correct: "Une",
-    explanation: "'Pomme' est un nom féminin, donc on utilise l'article 'une'."
-  },
-  {
-    id: 7,
-    level: "A1",
-    category: "Vocabulaire",
-    question: "Quel mot utilise-t-on pour remercier quelqu'un ?",
-    options: ["S'il vous plaît", "Merci", "Pardon", "De rien"],
-    correct: "Merci",
-    explanation: "'Merci' est utilisé pour exprimer sa gratitude et remercier quelqu'un."
-  },
-  {
-    id: 8,
-    level: "A1",
-    category: "Vocabulaire",
-    question: "Combien font 2 + 3 ?",
-    options: ["Quatre", "Cinq", "Six", "Sept"],
-    correct: "Cinq",
-    explanation: "2 + 3 = 5, qui se dit 'cinq' en français."
-  },
-
-  // Vocabulaire Professionnel A1
-  {
-    id: 72,
-    level: "A1",
-    category: "Vocabulaire Professionnel",
-    question: "Que dit-on pour répondre au téléphone au travail ?",
-    options: ["Allô, c'est moi", "Bonjour, société X, j'écoute", "Quoi ?", "Oui, parlez"],
-    correct: "Bonjour, société X, j'écoute",
-    explanation: "La formule professionnelle standard est de dire bonjour, le nom de la société, et signaler qu'on écoute."
-  },
-  {
-    id: 74,
-    level: "A1",
-    category: "Vocabulaire Professionnel",
-    question: "Quel mot désigne l'endroit où on travaille ?",
-    options: ["La maison", "Le bureau", "La cuisine", "Le jardin"],
-    correct: "Le bureau",
-    explanation: "'Le bureau' est le lieu de travail dans un environnement professionnel."
-  },
-
-  // Situations Professionnelles A1
-  {
-    id: 73,
-    level: "A1",
-    category: "Situations Professionnelles",
-    question: "Votre collègue vous dit : « Peux-tu m'aider à porter ces cartons ? » Que répondez-vous ?",
-    options: ["Je suis occupé.", "Bien sûr, j'arrive.", "C'est ton problème.", "Je ne sais pas."],
-    correct: "Bien sûr, j'arrive.",
-    explanation: "Au travail, on répond poliment et positivement aux demandes d'aide des collègues."
-  },
-
-  // Compréhension Orale A1
-  {
-    id: 9,
-    level: "A1",
     category: "Compréhension Orale",
-    question: "Écoutez l'audio. Quelle est la question posée ?",
-    audioText: "Comment tu t'appelles ?",
-    options: ["Quel âge as-tu ?", "Comment tu t'appelles ?", "Où habites-tu ?", "Quelle heure est-il ?"],
-    correct: "Comment tu t'appelles ?",
-    explanation: "Dans l'audio, la personne demande 'Comment tu t'appelles ?' qui est une question pour connaître le nom de quelqu'un."
-  },
-  {
-    id: 10,
-    level: "A1",
-    category: "Compréhension Orale",
+    type: "listen_choose",
     question: "Écoutez. Quel jour est mentionné ?",
     audioText: "On se voit lundi prochain.",
     options: ["Mardi", "Mercredi", "Lundi", "Jeudi"],
     correct: "Lundi",
     explanation: "La phrase mentionne 'lundi prochain'."
   },
-
-  // Compréhension Écrite A1
   {
-    id: 11,
+    id: 2,
     level: "A1",
-    category: "Compréhension Écrite",
-    question: "Lisez : « Je m'appelle Marie. J'ai 25 ans. » Quel âge a Marie ?",
-    options: ["20 ans", "25 ans", "30 ans", "35 ans"],
-    correct: "25 ans",
-    explanation: "Dans le texte, Marie dit 'J'ai 25 ans'."
+    category: "Compréhension Orale",
+    type: "listen_choose",
+    question: "Écoutez la consigne du responsable. Que demande-t-il ?",
+    audioText: "Rangez votre poste de travail avant de partir, s'il vous plaît.",
+    options: ["Appeler un collègue", "Ranger son poste de travail avant de partir", "Fermer la porte", "Vérifier l'heure de départ"],
+    correct: "Ranger son poste de travail avant de partir",
+    explanation: "La consigne est clairement de ranger son poste de travail avant de partir."
   },
   {
-    id: 12,
-    level: "A1",
-    category: "Compréhension Écrite",
-    question: "Lisez : « Le chat est sur la table. » Où est le chat ?",
-    options: ["Sous la table", "Sur la table", "Derrière la table", "Devant la table"],
-    correct: "Sur la table",
-    explanation: "Le texte indique clairement 'sur la table'."
-  },
-
-  // Expression Écrite A1
-  {
-    id: 47,
-    level: "A1",
-    category: "Expression Écrite",
-    type: "written",
-    question: "Décrivez votre famille : qui habite avec vous ? Combien de personnes ? (2-3 phrases)",
-    placeholder: "Exemple : J'habite avec mes parents et mon frère. Nous sommes quatre personnes. Mon frère s'appelle Thomas.",
-    minWords: 20,
-    criteria: ["Vocabulaire de la famille", "Utilise des nombres", "Phrases simples et claires", "Au moins 2 membres de la famille mentionnés"]
-  },
-
-  // Production Orale A1
-  {
-    id: 46,
-    level: "A1",
-    category: "Production Orale",
-    type: "oral",
-    question: "Présentez-vous oralement : dites votre nom, votre âge et où vous habitez.",
-    minDuration: 5,
-    criteria: ["Prononciation claire", "Utilise 'je m'appelle' ou 'je suis'", "Structure simple et compréhensible", "Donne au moins 2 informations personnelles"]
-  },
-
-  // ==================== A2 Level ====================
-  // Grammaire A2
-  {
-    id: 13,
-    level: "A2",
-    category: "Grammaire",
-    question: "Complétez : « Hier, nous ___ au cinéma. »",
-    options: ["allons", "sommes allés", "irons", "allions"],
-    correct: "sommes allés",
-    explanation: "Le verbe 'aller' au passé composé avec 'nous' se conjugue : nous sommes allés."
-  },
-  {
-    id: 14,
-    level: "A2",
-    category: "Grammaire",
-    question: "Complétez : « Elle ___ au marché tous les samedis. »",
-    options: ["va", "aller", "allé", "allait"],
-    correct: "va",
-    explanation: "Pour exprimer une habitude au présent, on utilise le présent simple : elle va."
-  },
-  {
-    id: 15,
-    level: "A2",
-    category: "Grammaire",
-    question: "Choisissez la forme correcte : « Je ___ en France l'année dernière. »",
-    options: ["vais", "suis allé", "irai", "allais"],
-    correct: "suis allé",
-    explanation: "Pour une action passée ponctuelle, on utilise le passé composé : je suis allé."
-  },
-  {
-    id: 16,
-    level: "A2",
-    category: "Grammaire",
-    question: "Complétez : « Quand j'étais petit, je ___ beaucoup de bonbons. »",
-    options: ["mange", "mangeais", "ai mangé", "mangerai"],
-    correct: "mangeais",
-    explanation: "Pour une habitude dans le passé, on utilise l'imparfait : je mangeais."
-  },
-
-  // Vocabulaire A2
-  {
-    id: 17,
-    level: "A2",
-    category: "Vocabulaire",
-    question: "Quel mot signifie l'inverse de « grand » ?",
-    options: ["haut", "petit", "large", "long"],
-    correct: "petit",
-    explanation: "'Petit' est l'antonyme de 'grand' pour parler de la taille."
-  },
-  {
-    id: 18,
-    level: "A2",
-    category: "Vocabulaire",
-    question: "Que signifie « être en retard » ?",
-    options: ["Arriver tôt", "Arriver après l'heure prévue", "Arriver à l'heure", "Être absent"],
-    correct: "Arriver après l'heure prévue",
-    explanation: "'Être en retard' signifie arriver après l'heure prévue."
-  },
-  {
-    id: 19,
-    level: "A2",
-    category: "Vocabulaire",
-    question: "Quel mot complète : « Le ___ est mauvais aujourd'hui, il pleut. » ?",
-    options: ["temps", "heure", "jour", "moment"],
-    correct: "temps",
-    explanation: "On utilise 'le temps' pour parler de la météo."
-  },
-
-  // Vocabulaire Professionnel A2
-  {
-    id: 76,
-    level: "A2",
-    category: "Vocabulaire Professionnel",
-    question: "Comment s'appelle le document qui résume votre parcours professionnel ?",
-    options: ["Une lettre", "Un contrat", "Un CV", "Une facture"],
-    correct: "Un CV",
-    explanation: "Le CV (Curriculum Vitae) résume vos expériences, formations et compétences professionnelles."
-  },
-
-  // Situations Professionnelles A2
-  {
-    id: 75,
-    level: "A2",
-    category: "Situations Professionnelles",
-    question: "Vous arrivez en retard à une réunion. Que dites-vous ?",
-    options: ["Rien, vous vous asseyez.", "Excusez-moi pour le retard.", "C'est de votre faute.", "Je suis fatigué."],
-    correct: "Excusez-moi pour le retard.",
-    explanation: "Il est important de s'excuser lorsqu'on arrive en retard à une réunion professionnelle."
-  },
-  {
-    id: 78,
-    level: "A2",
-    category: "Situations Professionnelles",
-    question: "Un client vous demande de parler plus lentement. Que faites-vous ?",
-    options: ["Vous parlez encore plus vite", "Vous raccrochez", "Vous ralentissez et reformulez", "Vous ignorez sa demande"],
-    correct: "Vous ralentissez et reformulez",
-    explanation: "S'adapter au besoin du client est une compétence professionnelle fondamentale."
-  },
-
-  // Compréhension Orale A2
-  {
-    id: 20,
+    id: 3,
     level: "A2",
     category: "Compréhension Orale",
-    question: "Écoutez le dialogue. Où vont les deux personnes ?",
-    audioText: "On va au restaurant ce soir ? Oui, bonne idée !",
-    options: ["Au cinéma", "Au restaurant", "À la plage", "Au musée"],
-    correct: "Au restaurant",
-    explanation: "Dans le dialogue, la personne demande 'On va au restaurant ce soir ?' et l'autre répond positivement."
-  },
-  {
-    id: 21,
-    level: "A2",
-    category: "Compréhension Orale",
-    question: "Écoutez. Quel est le problème ?",
-    audioText: "Je ne trouve plus mes clés, je les ai perdues.",
-    options: ["Il a perdu son téléphone", "Il a perdu ses clés", "Il a perdu son portefeuille", "Il a perdu ses lunettes"],
-    correct: "Il a perdu ses clés",
-    explanation: "La personne dit clairement 'je ne trouve plus mes clés'."
-  },
-  {
-    id: 77,
-    level: "A2",
-    category: "Compréhension Orale",
+    type: "listen_choose",
     question: "Écoutez. Que demande le responsable ?",
     audioText: "Pouvez-vous envoyer ce document avant seize heures s'il vous plaît ?",
     options: ["D'imprimer un document", "D'envoyer un document avant 16h", "De rester après 16h", "D'appeler un client"],
     correct: "D'envoyer un document avant 16h",
     explanation: "Le responsable demande d'envoyer le document avant 16h."
   },
-
-  // Compréhension Écrite A2
   {
-    id: 22,
-    level: "A2",
-    category: "Compréhension Écrite",
-    question: "Lisez : « Il fait beau aujourd'hui. » Cette phrase parle de :",
-    options: ["la nourriture", "la météo", "le travail", "la santé"],
-    correct: "la météo",
-    explanation: "'Il fait beau' est une expression qui décrit le temps qu'il fait, donc la météo."
-  },
-  {
-    id: 23,
-    level: "A2",
-    category: "Compréhension Écrite",
-    question: "Lisez : « Le magasin ouvre à 9h et ferme à 19h. » Combien d'heures le magasin est-il ouvert ?",
-    options: ["8 heures", "9 heures", "10 heures", "11 heures"],
-    correct: "10 heures",
-    explanation: "De 9h à 19h, il y a 10 heures d'ouverture."
-  },
-
-  // Expression Écrite A2
-  {
-    id: 48,
-    level: "A2",
-    category: "Expression Écrite",
-    type: "written",
-    question: "Décrivez votre journée typique. Que faites-vous le matin, l'après-midi et le soir ?",
-    placeholder: "Exemple : Le matin, je me réveille à 7h. Je prends mon petit-déjeuner...",
-    minWords: 20,
-    criteria: ["Utilise le présent", "Structure chronologique claire", "Vocabulaire quotidien approprié", "Connecteurs temporels (le matin, puis, ensuite)"]
-  },
-
-  // ==================== B1 Level ====================
-  // Grammaire B1
-  {
-    id: 24,
-    level: "B1",
-    category: "Grammaire",
-    question: "Complétez : « Si j'avais le temps, je ___ ce livre. »",
-    options: ["lis", "lirais", "lirai", "lisais"],
-    correct: "lirais",
-    explanation: "Dans une phrase hypothétique avec 'si + imparfait', on utilise le conditionnel présent : je lirais."
-  },
-  {
-    id: 25,
-    level: "B1",
-    category: "Grammaire",
-    question: "Choisissez la forme correcte : « C'est le livre ___ je t'ai parlé. »",
-    options: ["que", "dont", "qui", "où"],
-    correct: "dont",
-    explanation: "On utilise 'dont' pour remplacer un complément introduit par 'de' : parler DE quelque chose."
-  },
-  {
-    id: 26,
-    level: "B1",
-    category: "Grammaire",
-    question: "Complétez : « Il faut que tu ___ plus attention. »",
-    options: ["fais", "fasses", "faire", "ferais"],
-    correct: "fasses",
-    explanation: "Après 'il faut que', on utilise le subjonctif : que tu fasses."
-  },
-  {
-    id: 27,
-    level: "B1",
-    category: "Grammaire",
-    question: "Complétez : « Je viens ___ finir mon travail. »",
-    options: ["à", "de", "pour", "par"],
-    correct: "de",
-    explanation: "'Venir de' + infinitif exprime une action qui vient de se terminer."
-  },
-
-  // Vocabulaire B1
-  {
-    id: 28,
-    level: "B1",
-    category: "Vocabulaire",
-    question: "Que signifie « être débordé » ?",
-    options: ["Être fatigué", "Avoir trop de travail", "Être malade", "Être en retard"],
-    correct: "Avoir trop de travail",
-    explanation: "'Être débordé' signifie avoir une quantité de travail excessive à gérer."
-  },
-  {
-    id: 29,
-    level: "B1",
-    category: "Vocabulaire",
-    question: "Quel est le synonyme de « efficace » ?",
-    options: ["Lent", "Rapide", "Performant", "Difficile"],
-    correct: "Performant",
-    explanation: "'Efficace' et 'performant' sont synonymes pour décrire quelque chose qui fonctionne bien."
-  },
-  {
-    id: 30,
-    level: "B1",
-    category: "Vocabulaire",
-    question: "Que signifie l'expression « avoir le cafard » ?",
-    options: ["Avoir faim", "Être déprimé", "Être en colère", "Avoir peur"],
-    correct: "Être déprimé",
-    explanation: "'Avoir le cafard' est une expression idiomatique qui signifie être triste ou déprimé."
-  },
-
-  // Vocabulaire Professionnel B1
-  {
-    id: 79,
-    level: "B1",
-    category: "Vocabulaire Professionnel",
-    question: "Que signifie « être en CDI » ?",
-    options: ["Travailler à temps partiel", "Avoir un contrat à durée indéterminée", "Être en stage", "Être intérimaire"],
-    correct: "Avoir un contrat à durée indéterminée",
-    explanation: "Un CDI (Contrat à Durée Indéterminée) est un contrat de travail sans date de fin fixée."
-  },
-  {
-    id: 81,
-    level: "B1",
-    category: "Vocabulaire Professionnel",
-    question: "Que signifie « prendre en charge » un dossier ?",
-    options: ["L'ignorer", "Le transmettre à quelqu'un d'autre", "S'en occuper soi-même", "Le classer sans le traiter"],
-    correct: "S'en occuper soi-même",
-    explanation: "'Prendre en charge' signifie assumer la responsabilité de quelque chose."
-  },
-
-  // Situations Professionnelles B1
-  {
-    id: 80,
-    level: "B1",
-    category: "Situations Professionnelles",
-    question: "Vous recevez un email professionnel. Comment commencez-vous votre réponse ?",
-    options: ["Salut !", "Coucou,", "Madame, Monsieur,", "Hé,"],
-    correct: "Madame, Monsieur,",
-    explanation: "Dans un email professionnel formel, on commence par 'Madame, Monsieur,' ou le nom si on le connaît."
-  },
-
-  // Compréhension Orale B1
-  {
-    id: 31,
+    id: 4,
     level: "B1",
     category: "Compréhension Orale",
+    type: "listen_choose",
     question: "Écoutez l'annonce. À quelle heure part le train ?",
     audioText: "Le train en provenance de Paris partira à quinze heures trente du quai numéro trois.",
     options: ["14h30", "15h30", "16h30", "17h30"],
@@ -446,661 +62,406 @@ export const questions = [
     explanation: "L'annonce indique clairement que le train partira à 15h30."
   },
   {
-    id: 32,
+    id: 5,
     level: "B1",
     category: "Compréhension Orale",
-    question: "Écoutez le message. Pourquoi la personne appelle-t-elle ?",
-    audioText: "Bonjour, je vous appelle pour confirmer notre rendez-vous de demain à quatorze heures. Pourriez-vous me rappeler ?",
-    options: ["Pour annuler un rendez-vous", "Pour confirmer un rendez-vous", "Pour prendre un rendez-vous", "Pour modifier l'heure"],
-    correct: "Pour confirmer un rendez-vous",
-    explanation: "La personne dit explicitement qu'elle appelle 'pour confirmer notre rendez-vous'."
-  },
-  {
-    id: 82,
-    level: "B1",
-    category: "Compréhension Orale",
-    question: "Écoutez. Quel est l'objet de la réunion ?",
-    audioText: "La réunion de ce matin portera sur l'organisation des congés d'été et la répartition des tâches pendant cette période.",
-    options: ["Les recrutements", "Les congés d'été et la répartition des tâches", "Le bilan financier", "Les formations"],
-    correct: "Les congés d'été et la répartition des tâches",
-    explanation: "L'annonce précise clairement que la réunion porte sur les congés d'été et la répartition des tâches."
+    type: "listen_choose",
+    question: "Écoutez. Que doit faire l'employé ?",
+    audioText: "Merci de remplir le formulaire de demande de congé au moins deux semaines à l'avance et de le remettre à votre responsable.",
+    options: ["Partir en congé sans prévenir", "Remplir un formulaire de congé deux semaines à l'avance", "Envoyer un email à la direction", "Appeler le service RH le jour même"],
+    correct: "Remplir un formulaire de congé deux semaines à l'avance",
+    explanation: "La consigne précise : formulaire à remplir et à remettre deux semaines avant le départ."
   },
 
-  // Compréhension Écrite B1
+  // ─── BLOC 2 : GRAMMAIRE — FILL IN BLANK ─────────────────
   {
-    id: 33,
-    level: "B1",
-    category: "Compréhension Écrite",
-    question: "Lisez : « Il a pris ses jambes à son cou. » Cette expression signifie :",
-    options: ["Il est tombé", "Il a couru très vite", "Il a mal aux jambes", "Il s'est assis"],
-    correct: "Il a couru très vite",
-    explanation: "Cette expression idiomatique signifie s'enfuir rapidement ou courir très vite."
+    id: 6,
+    level: "A1",
+    category: "Grammaire",
+    type: "fill_in_blank",
+    question: "Complétez la phrase avec le bon mot.",
+    template: "Je ___ français.",
+    blank_answer: "suis",
+    options: ["suis", "ai", "est", "as"],
+    correct: "suis",
+    explanation: "On utilise 'suis' avec 'je' : Je suis français."
   },
   {
-    id: 34,
-    level: "B1",
-    category: "Compréhension Écrite",
-    question: "Lisez : « Malgré la pluie, nous avons continué notre promenade. » Qu'est-ce qui est vrai ?",
-    options: ["Ils ont arrêté à cause de la pluie", "Ils ont continué malgré la pluie", "Il ne pleuvait pas", "Ils sont rentrés"],
-    correct: "Ils ont continué malgré la pluie",
-    explanation: "'Malgré' indique qu'ils ont continué en dépit de la pluie."
+    id: 7,
+    level: "A1",
+    category: "Grammaire",
+    type: "fill_in_blank",
+    question: "Choisissez la bonne forme pour compléter.",
+    template: "Elle ___ à Paris.",
+    blank_answer: "habite",
+    options: ["habite", "habiter", "habitez", "habitent"],
+    correct: "habite",
+    explanation: "Avec 'elle', on conjugue : elle habite."
   },
-
-  // Expression Écrite B1
   {
-    id: 49,
-    level: "B1",
-    category: "Expression Écrite",
-    type: "written",
-    question: "Racontez vos dernières vacances ou un voyage mémorable. Où êtes-vous allé(e) ? Qu'avez-vous fait ?",
-    placeholder: "Exemple : L'été dernier, je suis allé(e) en Espagne avec ma famille...",
-    minWords: 20,
-    criteria: ["Utilise le passé composé", "Décrit les activités et lieux", "Exprime des sentiments", "Texte cohérent et structuré"]
+    id: 8,
+    level: "A2",
+    category: "Grammaire",
+    type: "fill_in_blank",
+    question: "Complétez avec la forme correcte.",
+    template: "Hier, nous ___ au cinéma.",
+    blank_answer: "sommes allés",
+    options: ["allons", "sommes allés", "irons", "allions"],
+    correct: "sommes allés",
+    explanation: "Le passé composé de 'aller' avec 'nous' : nous sommes allés."
   },
-
-  // ==================== B2 Level ====================
-  // Grammaire B2
   {
-    id: 35,
+    id: 9,
+    level: "B1",
+    category: "Grammaire",
+    type: "fill_in_blank",
+    question: "Complétez avec la forme qui convient.",
+    template: "Si j'avais le temps, je ___ ce livre.",
+    blank_answer: "lirais",
+    options: ["lis", "lirais", "lirai", "lisais"],
+    correct: "lirais",
+    explanation: "Si + imparfait → conditionnel présent : je lirais."
+  },
+  {
+    id: 10,
     level: "B2",
     category: "Grammaire",
-    question: "Complétez : « Bien qu'il ___ fatigué, il a continué à travailler. »",
+    type: "fill_in_blank",
+    question: "Choisissez la forme correcte.",
+    template: "Bien qu'il ___ fatigué, il a continué à travailler.",
+    blank_answer: "soit",
     options: ["est", "soit", "était", "serait"],
     correct: "soit",
-    explanation: "Après 'bien que', on utilise le subjonctif : bien qu'il soit fatigué."
-  },
-  {
-    id: 36,
-    level: "B2",
-    category: "Grammaire",
-    question: "« Il m'a demandé si je ___ venir. »",
-    options: ["peux", "pouvais", "pourrai", "pourrais"],
-    correct: "pouvais",
-    explanation: "Dans le discours indirect au passé, on utilise l'imparfait : si je pouvais venir."
-  },
-  {
-    id: 37,
-    level: "B2",
-    category: "Grammaire",
-    question: "Complétez : « Ayant ___ son travail, il est parti. »",
-    options: ["fini", "finir", "finit", "finis"],
-    correct: "fini",
-    explanation: "Le participe passé composé 'ayant fini' exprime l'antériorité."
-  },
-  {
-    id: 38,
-    level: "B2",
-    category: "Grammaire",
-    question: "Choisissez : « Quoi que tu ___, je te soutiendrai. »",
-    options: ["fais", "fasses", "feras", "ferais"],
-    correct: "fasses",
-    explanation: "Après 'quoi que', on utilise le subjonctif : quoi que tu fasses."
+    explanation: "Après 'bien que', on utilise le subjonctif : bien qu'il soit."
   },
 
-  // Vocabulaire B2
+  // ─── BLOC 3 : SITUATIONS PROFESSIONNELLES — SCÉNARIOS ───
   {
-    id: 39,
-    level: "B2",
-    category: "Vocabulaire",
-    question: "Quel est le synonyme de « néanmoins » ?",
-    options: ["Également", "Cependant", "Ensuite", "Par conséquent"],
-    correct: "Cependant",
-    explanation: "'Néanmoins' et 'cependant' sont tous deux des connecteurs d'opposition synonymes."
-  },
-  {
-    id: 40,
-    level: "B2",
-    category: "Vocabulaire",
-    question: "Que signifie « être au courant » ?",
-    options: ["Être pressé", "Être informé", "Être en mouvement", "Être électrisé"],
-    correct: "Être informé",
-    explanation: "'Être au courant' signifie avoir connaissance de quelque chose, être informé."
-  },
-  {
-    id: 41,
-    level: "B2",
-    category: "Vocabulaire",
-    question: "Quel mot décrit le mieux « une démarche » dans un contexte professionnel ?",
-    options: ["Une marche", "Une procédure", "Un bureau", "Un document"],
-    correct: "Une procédure",
-    explanation: "Dans un contexte professionnel, 'une démarche' désigne une procédure ou des actions à entreprendre."
-  },
-
-  // Vocabulaire Professionnel B2
-  {
-    id: 83,
-    level: "B2",
-    category: "Vocabulaire Professionnel",
-    question: "Que signifie « mettre en œuvre une procédure » ?",
-    options: ["Critiquer une procédure", "Appliquer et exécuter une procédure", "Rédiger une procédure", "Supprimer une procédure"],
-    correct: "Appliquer et exécuter une procédure",
-    explanation: "'Mettre en œuvre' signifie concrètement appliquer et faire fonctionner quelque chose."
-  },
-  {
-    id: 85,
-    level: "B2",
-    category: "Vocabulaire Professionnel",
-    question: "Que désigne le terme « fiche de poste » ?",
-    options: ["Un bulletin de salaire", "Un document décrivant les missions et responsabilités d'un emploi", "Un formulaire de congé", "Un contrat de travail"],
-    correct: "Un document décrivant les missions et responsabilités d'un emploi",
-    explanation: "La fiche de poste décrit précisément les missions, responsabilités et compétences requises pour un poste."
-  },
-
-  // Situations Professionnelles B2
-  {
-    id: 84,
-    level: "B2",
-    category: "Situations Professionnelles",
-    question: "Lors d'une réunion, un collègue exprime un désaccord. Quelle est la meilleure réponse ?",
-    options: ["Couper la parole et insister", "Écouter, puis exposer calmement votre point de vue", "Ignorer son intervention", "Quitter la salle"],
-    correct: "Écouter, puis exposer calmement votre point de vue",
-    explanation: "La communication professionnelle efficace repose sur l'écoute active et le dialogue constructif."
-  },
-  {
-    id: 86,
-    level: "B2",
-    category: "Situations Professionnelles",
-    question: "Vous devez refuser poliment une demande de votre responsable car vous êtes surchargé. Que dites-vous ?",
-    options: ["Non, c'est impossible.", "Je suis actuellement sur plusieurs dossiers urgents, pouvons-nous en discuter ?", "Débrouillez-vous.", "Je ferai ça quand j'aurai le temps."],
-    correct: "Je suis actuellement sur plusieurs dossiers urgents, pouvons-nous en discuter ?",
-    explanation: "Refuser avec diplomatie en expliquant la situation et en proposant une discussion est la bonne pratique professionnelle."
-  },
-
-  // Compréhension Orale B2
-  {
-    id: 42,
-    level: "B2",
-    category: "Compréhension Orale",
-    question: "Écoutez l'interview. Quel est le principal défi mentionné ?",
-    audioText: "Notre principal défi reste la gestion du changement climatique et ses impacts sur notre économie.",
-    options: ["Le développement technologique", "Le changement climatique", "Les relations internationales", "La croissance démographique"],
-    correct: "Le changement climatique",
-    explanation: "L'interviewé mentionne explicitement que le principal défi est la gestion du changement climatique."
-  },
-  {
-    id: 43,
-    level: "B2",
-    category: "Compréhension Orale",
-    question: "Écoutez. Quelle est l'opinion de la personne ?",
-    audioText: "À mon avis, cette réforme est nécessaire mais elle devrait être mise en place progressivement pour éviter les perturbations.",
-    options: ["Elle est contre la réforme", "Elle est pour la réforme sans conditions", "Elle est pour la réforme mais avec prudence", "Elle n'a pas d'opinion"],
-    correct: "Elle est pour la réforme mais avec prudence",
-    explanation: "La personne pense que la réforme est nécessaire mais suggère une mise en place progressive."
-  },
-
-  // Compréhension Écrite B2
-  {
-    id: 44,
-    level: "B2",
-    category: "Compréhension Écrite",
-    question: "Lisez : « En dépit des obstacles, le projet a été mené à bien. » Qu'est-ce que cela signifie ?",
-    options: ["Le projet a échoué", "Le projet a réussi malgré les difficultés", "Le projet n'a pas commencé", "Le projet est en cours"],
-    correct: "Le projet a réussi malgré les difficultés",
-    explanation: "'En dépit des obstacles' et 'mené à bien' indiquent un succès malgré les difficultés."
-  },
-  {
-    id: 45,
-    level: "B2",
-    category: "Compréhension Écrite",
-    question: "Lisez : « Les enjeux environnementaux nécessitent une action concertée. » Que signifie « concertée » ?",
-    options: ["Rapide", "Musicale", "Coordonnée", "Isolée"],
-    correct: "Coordonnée",
-    explanation: "Une action 'concertée' est une action coordonnée, menée ensemble de façon organisée."
-  },
-
-  // Expression Écrite B2
-  {
-    id: 50,
-    level: "B2",
-    category: "Expression Écrite",
-    type: "written",
-    question: "Donnez votre opinion sur le télétravail. Quels sont selon vous les avantages et les inconvénients ?",
-    placeholder: "Exemple : À mon avis, le télétravail présente plusieurs avantages. Tout d'abord...",
-    minWords: 20,
-    criteria: ["Argumentation structurée", "Utilise des connecteurs logiques", "Vocabulaire varié et précis", "Exprime clairement son opinion", "Présente avantages ET inconvénients"]
-  },
-
-  // ==================== C1 Level ====================
-  // Grammaire C1
-  {
-    id: 51,
-    level: "C1",
-    category: "Grammaire",
-    question: "Complétez : « Bien qu'il ___ déjà lu ce livre, il l'a relu avec plaisir. »",
-    options: ["a", "ait", "avait", "aurait"],
-    correct: "ait",
-    explanation: "Après 'bien que', on utilise le subjonctif : bien qu'il ait lu."
-  },
-  {
-    id: 52,
-    level: "C1",
-    category: "Grammaire",
-    question: "Choisissez la forme correcte : « Voici le projet ___ nous avons besoin. »",
-    options: ["que", "dont", "qui", "où"],
-    correct: "dont",
-    explanation: "On utilise 'dont' car on dit 'avoir besoin DE quelque chose'."
-  },
-  {
-    id: 53,
-    level: "C1",
-    category: "Grammaire",
-    question: "Complétez : « ___ ses efforts, il n'a pas réussi l'examen. »",
-    options: ["Malgré", "Bien que", "Quoique", "Pendant"],
-    correct: "Malgré",
-    explanation: "'Malgré' est suivi d'un nom et exprime une opposition."
-  },
-  {
-    id: 54,
-    level: "C1",
-    category: "Grammaire",
-    question: "« Il faut que vous ___ cette décision rapidement. »",
-    options: ["prenez", "preniez", "prendrez", "prendriez"],
-    correct: "preniez",
-    explanation: "Après 'il faut que', on utilise le subjonctif : que vous preniez."
-  },
-
-  // Vocabulaire C1
-  {
-    id: 55,
-    level: "C1",
-    category: "Vocabulaire",
-    question: "Quel mot signifie « qui peut avoir plusieurs interprétations » ?",
-    options: ["Équivoque", "Explicite", "Évident", "Clair"],
-    correct: "Équivoque",
-    explanation: "'Équivoque' désigne ce qui peut être compris de différentes manières."
-  },
-  {
-    id: 56,
-    level: "C1",
-    category: "Vocabulaire",
-    question: "Que signifie « être réticent » ?",
-    options: ["Être enthousiaste", "Hésiter, montrer de la résistance", "Être rapide", "Être d'accord"],
-    correct: "Hésiter, montrer de la résistance",
-    explanation: "'Être réticent' signifie montrer de l'hésitation ou de la résistance face à quelque chose."
-  },
-  {
-    id: 57,
-    level: "C1",
-    category: "Vocabulaire",
-    question: "Quel est le synonyme de « préconiser » ?",
-    options: ["Déconseiller", "Recommander", "Interdire", "Ignorer"],
-    correct: "Recommander",
-    explanation: "'Préconiser' signifie recommander vivement quelque chose."
-  },
-
-  // Vocabulaire Professionnel C1
-  {
-    id: 87,
-    level: "C1",
-    category: "Vocabulaire Professionnel",
-    question: "Que signifie « déléguer » dans un contexte managérial ?",
-    options: ["Faire le travail soi-même", "Confier une tâche à un collaborateur en lui donnant les moyens de la réaliser", "Refuser une responsabilité", "Critiquer un collaborateur"],
-    correct: "Confier une tâche à un collaborateur en lui donnant les moyens de la réaliser",
-    explanation: "Déléguer, c'est confier une mission à quelqu'un tout en lui donnant l'autorité et les ressources nécessaires."
-  },
-
-  // Situations Professionnelles C1
-  {
-    id: 88,
-    level: "C1",
-    category: "Situations Professionnelles",
-    question: "Lors d'un entretien annuel, comment valorisez-vous une erreur passée ?",
-    options: ["Vous la cachez", "Vous blâmez vos collègues", "Vous l'évoquez comme une expérience d'apprentissage avec les actions correctives prises", "Vous changez de sujet"],
-    correct: "Vous l'évoquez comme une expérience d'apprentissage avec les actions correctives prises",
-    explanation: "Reconnaître une erreur en montrant ce qu'elle vous a appris est très valorisé dans un contexte professionnel."
-  },
-
-  // Compréhension Orale C1
-  {
-    id: 58,
-    level: "C1",
-    category: "Compréhension Orale",
-    question: "Écoutez l'extrait. Que propose l'orateur ?",
-    audioText: "Il est nécessaire de repenser notre système éducatif pour qu'il corresponde mieux aux besoins de la société moderne et aux compétences recherchées sur le marché du travail.",
-    options: ["Garder le système actuel", "Réformer l'éducation", "Supprimer les écoles", "Augmenter les vacances"],
-    correct: "Réformer l'éducation",
-    explanation: "L'orateur propose de moderniser le système éducatif."
-  },
-
-  // Compréhension Écrite C1
-  {
-    id: 59,
-    level: "C1",
-    category: "Compréhension Écrite",
-    question: "Lisez : « Cette mesure, bien qu'utile, reste insuffisante pour résoudre le problème. » Quel est le ton ?",
-    options: ["Enthousiaste", "Critique mais nuancé", "Très négatif", "Indifférent"],
-    correct: "Critique mais nuancé",
-    explanation: "Le ton reconnaît un aspect positif ('utile') tout en pointant les limites ('insuffisante')."
-  },
-  {
-    id: 60,
-    level: "C1",
-    category: "Compréhension Écrite",
-    question: "Dans : « Son attitude était pour le moins étrange », que signifie « pour le moins » ?",
-    options: ["Au minimum", "Exactement", "Jamais", "Toujours"],
-    correct: "Au minimum",
-    explanation: "'Pour le moins' signifie 'au minimum', c'est une litote."
-  },
-
-  // Expression Écrite C1
-  {
-    id: 70,
-    level: "C1",
-    category: "Expression Écrite",
-    type: "written",
-    question: "Rédigez une analyse critique sur l'impact des réseaux sociaux sur le débat démocratique contemporain. Développez au moins deux arguments nuancés.",
-    placeholder: "Exemple : L'avènement des réseaux sociaux a profondément reconfiguré l'espace public démocratique. D'une part...",
-    minWords: 30,
-    criteria: ["Vocabulaire sophistiqué", "Argumentation nuancée et structurée", "Connecteurs logiques variés", "Registre soutenu", "Analyse critique approfondie"]
-  },
-
-  // ==================== C2 Level ====================
-  // Grammaire C2
-  {
-    id: 61,
-    level: "C2",
-    category: "Grammaire",
-    question: "Complétez : « Quoi qu'il ___, nous le soutiendrons. »",
-    options: ["fait", "fasse", "fera", "ferait"],
-    correct: "fasse",
-    explanation: "Après 'quoi que', on utilise le subjonctif : quoi qu'il fasse."
-  },
-  {
-    id: 62,
-    level: "C2",
-    category: "Grammaire",
-    question: "Quelle phrase est correcte ?",
-    options: [
-      "Il aurait fallu qu'il ait terminé plus tôt",
-      "Il aurait fallu qu'il avait terminé plus tôt",
-      "Il aurait fallu qu'il termine plus tôt",
-      "Il aurait fallu qu'il a terminé plus tôt"
-    ],
-    correct: "Il aurait fallu qu'il ait terminé plus tôt",
-    explanation: "Après 'il aurait fallu que', on utilise le subjonctif passé pour exprimer l'antériorité."
-  },
-  {
-    id: 63,
-    level: "C2",
-    category: "Grammaire",
-    question: "Complétez : « Pour compétent qu'il ___, il ne peut pas tout faire seul. »",
-    options: ["est", "soit", "serait", "sera"],
-    correct: "soit",
-    explanation: "Après 'pour... que' exprimant la concession, on utilise le subjonctif."
-  },
-
-  // Vocabulaire C2
-  {
-    id: 64,
-    level: "C2",
-    category: "Vocabulaire",
-    question: "Quel mot désigne un discours confus et prétentieux ?",
-    options: ["Bref", "Amphigourique", "Simple", "Direct"],
-    correct: "Amphigourique",
-    explanation: "'Amphigourique' désigne un discours obscur et emphatique."
-  },
-  {
-    id: 65,
-    level: "C2",
-    category: "Vocabulaire",
-    question: "Que signifie « vitupérer » ?",
-    options: ["Féliciter", "Critiquer vivement", "Hésiter", "Encourager"],
-    correct: "Critiquer vivement",
-    explanation: "'Vitupérer' signifie critiquer avec véhémence."
-  },
-  {
-    id: 66,
-    level: "C2",
-    category: "Vocabulaire",
-    question: "Quel mot désigne l'art culinaire raffiné ?",
-    options: ["Œnologie", "Gastronomie", "Diététique", "Nutrition"],
-    correct: "Gastronomie",
-    explanation: "'Gastronomie' désigne l'art de la bonne cuisine et de la bonne chère."
-  },
-
-  // Compréhension Orale C2
-  {
-    id: 67,
-    level: "C2",
-    category: "Compréhension Orale",
-    question: "Écoutez. Quelle est l'idée principale ?",
-    audioText: "L'évolution de la pensée philosophique moderne montre une rupture progressive avec les traditions anciennes, tout en conservant certains éléments fondamentaux qui constituent le socle de notre réflexion contemporaine.",
-    options: ["La philosophie n'a pas changé", "La philosophie moderne rompt avec le passé tout en gardant des bases", "La philosophie ancienne est meilleure", "Il n'y a plus de philosophie"],
-    correct: "La philosophie moderne rompt avec le passé tout en gardant des bases",
-    explanation: "Le texte explique qu'il y a une rupture mais aussi une continuité avec certains fondements."
-  },
-
-  // Compréhension Écrite C2
-  {
-    id: 68,
-    level: "C2",
-    category: "Compréhension Écrite",
-    question: "Lisez : « Ce paradoxe logique remet en question toute l'argumentation. » Que signifie 'paradoxe' ?",
-    options: ["Une évidence", "Une contradiction apparente", "Un accord", "Une preuve"],
-    correct: "Une contradiction apparente",
-    explanation: "Un paradoxe est une affirmation qui semble contradictoire mais peut être vraie."
-  },
-  {
-    id: 69,
-    level: "C2",
-    category: "Compréhension Écrite",
-    question: "Que signifie « interpréter un texte de manière approfondie » ?",
-    options: ["Le traduire", "L'analyser en profondeur", "Le critiquer", "Le réécrire"],
-    correct: "L'analyser en profondeur",
-    explanation: "Interpréter de manière approfondie signifie analyser et comprendre tous les niveaux de sens."
-  },
-
-  // ==================== Compétences de Base Professionnelles ====================
-  // A1 — Compétences de base
-  {
-    id: 101,
+    id: 11,
     level: "A1",
     category: "Situations Professionnelles",
-    question: "Votre responsable vous donne une consigne que vous n'avez pas comprise. Que faites-vous ?",
+    type: "scenario_tree",
+    question: "Vous arrivez au travail. Votre responsable vous donne une consigne que vous n'avez pas comprise. Que faites-vous ?",
+    context: "🏢 Votre premier jour dans l'entreprise.",
     options: ["Vous faites semblant de comprendre", "Vous demandez poliment de répéter", "Vous ignorez la consigne", "Vous rentrez chez vous"],
     correct: "Vous demandez poliment de répéter",
     explanation: "Il est toujours préférable de demander des clarifications plutôt que de mal exécuter une tâche."
   },
   {
-    id: 102,
-    level: "A1",
-    category: "Vocabulaire Professionnel",
-    question: "Que signifie « pointer » à l'entrée du travail ?",
-    options: ["Montrer quelque chose du doigt", "Enregistrer son heure d'arrivée", "Partir plus tôt", "Appeler un collègue"],
-    correct: "Enregistrer son heure d'arrivée",
-    explanation: "Pointer signifie enregistrer son heure d'arrivée (et de départ) au travail."
-  },
-  {
-    id: 103,
+    id: 12,
     level: "A1",
     category: "Situations Professionnelles",
-    question: "Vous ne pouvez pas venir travailler car vous êtes malade. Que devez-vous faire ?",
+    type: "scenario_tree",
+    question: "Vous êtes malade et ne pouvez pas venir travailler. Que devez-vous faire ?",
+    context: "📱 Il est 7h du matin.",
     options: ["Ne rien dire", "Envoyer un message à votre responsable le plus tôt possible", "Venir quand même", "Demander à un collègue de travailler à votre place"],
     correct: "Envoyer un message à votre responsable le plus tôt possible",
-    explanation: "Il faut toujours prévenir son employeur en cas d'absence, de préférence avant le début du travail."
+    explanation: "Il faut toujours prévenir son employeur en cas d'absence."
   },
   {
-    id: 104,
+    id: 13,
+    level: "A2",
+    category: "Situations Professionnelles",
+    type: "scenario_tree",
+    question: "Vous arrivez en retard à une réunion. Que dites-vous ?",
+    context: "⏰ Vous avez 10 minutes de retard.",
+    options: ["Rien, vous vous asseyez.", "Excusez-moi pour le retard.", "C'est de votre faute.", "Je suis fatigué."],
+    correct: "Excusez-moi pour le retard.",
+    explanation: "Il est important de s'excuser lorsqu'on arrive en retard."
+  },
+  {
+    id: 14,
+    level: "B1",
+    category: "Situations Professionnelles",
+    type: "scenario_tree",
+    question: "Votre responsable vous demande de réaliser une tâche que vous ne savez pas faire. Que dites-vous ?",
+    context: "💼 Nouvelle mission en réunion.",
+    options: ["Vous dites que vous la ferez sans demander d'aide", "Vous expliquez honnêtement et demandez un accompagnement", "Vous refusez catégoriquement", "Vous demandez à un collègue de le faire en secret"],
+    correct: "Vous expliquez honnêtement et demandez un accompagnement",
+    explanation: "L'honnêteté et la demande de soutien sont des signes de professionnalisme."
+  },
+  {
+    id: 15,
+    level: "B2",
+    category: "Situations Professionnelles",
+    type: "scenario_tree",
+    question: "Un client se plaint d'un service rendu par votre entreprise. Comment gérez-vous la situation ?",
+    context: "📞 Appel entrant d'un client mécontent.",
+    options: ["Vous niez les faits", "Vous écoutez, reformulez, vous excusez et proposez une solution", "Vous renvoyez le client vers un autre service sans explication", "Vous raccrochez"],
+    correct: "Vous écoutez, reformulez, vous excusez et proposez une solution",
+    explanation: "La gestion d'une réclamation repose sur l'écoute, la reformulation et la solution."
+  },
+
+  // ─── BLOC 4 : CONSIGNES DE SÉCURITÉ ─────────────────────
+  {
+    id: 16,
+    level: "A1",
+    category: "Situations Professionnelles",
+    type: "safety_instruction",
+    question: "Vous voyez ce panneau dans l'atelier. Que signifie-t-il ?",
+    safetyIcon: "🚫🔥",
+    safetyLabel: "INTERDICTION DE FUMER",
+    options: ["Fumer est autorisé ici", "Il est interdit de fumer dans cette zone", "Fumer est obligatoire", "Allumer un feu est conseillé"],
+    correct: "Il est interdit de fumer dans cette zone",
+    explanation: "Le panneau d'interdiction de fumer signifie que toute cigarette est prohibée dans la zone."
+  },
+  {
+    id: 17,
+    level: "A2",
+    category: "Situations Professionnelles",
+    type: "safety_instruction",
+    question: "Vous lisez cette instruction de sécurité. Que devez-vous faire ?",
+    safetyIcon: "⚠️",
+    safetyLabel: "En cas d'incendie, ne prenez pas l'ascenseur. Utilisez les escaliers de secours.",
+    options: ["Prendre l'ascenseur pour aller plus vite", "Utiliser les escaliers de secours", "Rester dans son bureau", "Appeler ses collègues"],
+    correct: "Utiliser les escaliers de secours",
+    explanation: "En cas d'incendie, l'ascenseur est dangereux. Il faut toujours utiliser les escaliers de secours."
+  },
+  {
+    id: 18,
+    level: "B1",
+    category: "Situations Professionnelles",
+    type: "safety_instruction",
+    question: "Lisez cette règle de sécurité. Que signifie-t-elle ?",
+    safetyIcon: "🦺",
+    safetyLabel: "Le port d'équipements de protection individuelle (EPI) est obligatoire dans cette zone.",
+    options: ["Les équipements de protection sont facultatifs", "Il faut obligatoirement porter des équipements de protection", "Les équipements sont fournis à la sortie", "Cette règle ne s'applique qu'aux chefs d'équipe"],
+    correct: "Il faut obligatoirement porter des équipements de protection",
+    explanation: "EPI = Équipements de Protection Individuelle (casque, gants, lunettes...). Leur port est obligatoire dans les zones indiquées."
+  },
+
+  // ─── BLOC 5 : COMPLÉTER UN DIALOGUE ─────────────────────
+  {
+    id: 19,
+    level: "A1",
+    category: "Grammaire",
+    type: "complete_dialogue",
+    question: "Complétez ce dialogue entre un employé et un client.",
+    dialogue: [
+      { speaker: "Client", text: "Bonjour, je voudrais parler à M. Dupont." },
+      { speaker: "Employé", text: "___" },
+    ],
+    options: [
+      "Oui c'est moi, quoi ?",
+      "Bonjour ! Un instant s'il vous plaît, je vous le passe.",
+      "Il n'est pas là, au revoir.",
+      "Appelez plus tard."
+    ],
+    correct: "Bonjour ! Un instant s'il vous plaît, je vous le passe.",
+    explanation: "Une réponse professionnelle au téléphone est toujours polie et propose une aide concrète."
+  },
+  {
+    id: 20,
+    level: "A2",
+    category: "Grammaire",
+    type: "complete_dialogue",
+    question: "Complétez ce dialogue en entreprise.",
+    dialogue: [
+      { speaker: "Responsable", text: "Pouvez-vous finir ce rapport pour demain matin ?" },
+      { speaker: "Employé", text: "___" },
+    ],
+    options: [
+      "Non, c'est trop de travail.",
+      "Oui, je ferai de mon mieux. Y a-t-il des points prioritaires ?",
+      "Pourquoi moi ?",
+      "Je ne sais pas faire les rapports."
+    ],
+    correct: "Oui, je ferai de mon mieux. Y a-t-il des points prioritaires ?",
+    explanation: "Accepter une mission en demandant des précisions montre du professionnalisme."
+  },
+  {
+    id: 21,
+    level: "B1",
+    category: "Grammaire",
+    type: "complete_dialogue",
+    question: "Complétez cet échange lors d'un entretien d'embauche.",
+    dialogue: [
+      { speaker: "Recruteur", text: "Quels sont vos points forts ?" },
+      { speaker: "Candidat", text: "___" },
+    ],
+    options: [
+      "Je suis toujours en retard mais je travaille bien.",
+      "Je suis rigoureux, je m'adapte facilement et j'aime travailler en équipe.",
+      "Je ne sais pas vraiment.",
+      "Je suis le meilleur dans mon domaine."
+    ],
+    correct: "Je suis rigoureux, je m'adapte facilement et j'aime travailler en équipe.",
+    explanation: "Il faut présenter ses qualités de façon concrète et positive lors d'un entretien."
+  },
+
+  // ─── BLOC 6 : VOCABULAIRE PROFESSIONNEL ─────────────────
+  {
+    id: 22,
     level: "A1",
     category: "Vocabulaire Professionnel",
+    type: "listen_choose",
     question: "Qu'est-ce qu'une « tenue de travail » ?",
+    audioText: "Qu'est-ce qu'une tenue de travail ?",
     options: ["Des vêtements portés pour faire du sport", "Des vêtements appropriés et propres pour travailler", "La décoration du bureau", "L'heure d'arrivée"],
     correct: "Des vêtements appropriés et propres pour travailler",
-    explanation: "La tenue de travail désigne les vêtements adaptés au poste : uniforme, vêtements propres et soignés."
+    explanation: "La tenue de travail désigne les vêtements adaptés au poste."
   },
   {
-    id: 105,
-    level: "A1",
-    category: "Compréhension Orale",
-    question: "Écoutez. Quelle est la consigne ?",
-    audioText: "Rangez votre poste de travail avant de partir, s'il vous plaît.",
-    options: ["Vérifier l'heure de départ", "Ranger son poste de travail avant de partir", "Appeler quelqu'un", "Fermer la porte"],
-    correct: "Ranger son poste de travail avant de partir",
-    explanation: "La consigne est clairement de ranger son poste de travail avant de partir."
-  },
-
-  // A2 — Compétences de base
-  {
-    id: 106,
-    level: "A2",
-    category: "Situations Professionnelles",
-    question: "Votre collègue vous parle de manière irrespectueuse. Que faites-vous ?",
-    options: ["Vous répondez avec les mêmes mots", "Vous lui dites calmement que ce n'est pas acceptable et en parlez à votre responsable si nécessaire", "Vous pleurez", "Vous partez sans rien dire"],
-    correct: "Vous lui dites calmement que ce n'est pas acceptable et en parlez à votre responsable si nécessaire",
-    explanation: "Face à un manque de respect, il faut réagir avec calme et signaler la situation si elle persiste."
-  },
-  {
-    id: 107,
+    id: 23,
     level: "A2",
     category: "Vocabulaire Professionnel",
-    question: "Qu'est-ce qu'une « pause » au travail ?",
-    options: ["Un moment de repos prévu pendant la journée de travail", "Une journée de congé", "Une réunion", "Un bonus de salaire"],
-    correct: "Un moment de repos prévu pendant la journée de travail",
-    explanation: "La pause est un temps de repos légalement prévu, généralement 20 minutes pour 6h de travail."
+    type: "listen_choose",
+    question: "Qu'est-ce qu'un CV ?",
+    audioText: "Comment s'appelle le document qui résume votre parcours professionnel ?",
+    options: ["Une lettre", "Un contrat", "Un CV", "Une facture"],
+    correct: "Un CV",
+    explanation: "Le CV (Curriculum Vitae) résume vos expériences, formations et compétences."
   },
   {
-    id: 108,
-    level: "A2",
-    category: "Situations Professionnelles",
-    question: "Vous avez terminé votre tâche en avance. Que faites-vous ?",
-    options: ["Vous regardez votre téléphone", "Vous informez votre responsable et demandez s'il y a autre chose à faire", "Vous rentrez chez vous", "Vous aidez les autres sans demander"],
-    correct: "Vous informez votre responsable et demandez s'il y a autre chose à faire",
-    explanation: "Il est professionnel de signaler la fin d'une tâche et de proposer son aide plutôt que d'attendre."
-  },
-  {
-    id: 109,
-    level: "A2",
-    category: "Compréhension Écrite",
-    question: "Lisez : « Interdiction de fumer dans les locaux. » Que signifie cette pancarte ?",
-    options: ["Fumer est autorisé partout", "Il est interdit de fumer à l'intérieur", "Fumer est obligatoire", "Fumer est possible dans certaines pièces"],
-    correct: "Il est interdit de fumer à l'intérieur",
-    explanation: "'Interdiction de' signifie que quelque chose n'est pas permis. Il est interdit de fumer dans les locaux."
-  },
-  {
-    id: 110,
+    id: 24,
     level: "A2",
     category: "Vocabulaire Professionnel",
-    question: "Qu'est-ce que le « bulletin de salaire » (fiche de paie) ?",
-    options: ["Un formulaire de congé", "Un document qui détaille votre salaire et les cotisations", "Un contrat de travail", "Une facture client"],
-    correct: "Un document qui détaille votre salaire et les cotisations",
-    explanation: "Le bulletin de salaire est le document mensuel qui détaille la rémunération brute, les cotisations et le salaire net."
-  },
-
-  // B1 — Compétences de base
-  {
-    id: 111,
-    level: "B1",
-    category: "Situations Professionnelles",
-    question: "Vous constatez une erreur dans votre fiche de paie. Que faites-vous ?",
-    options: ["Vous ne dites rien pour ne pas créer de problèmes", "Vous contactez le service des ressources humaines pour signaler l'erreur", "Vous refusez de travailler", "Vous publiez sur les réseaux sociaux"],
-    correct: "Vous contactez le service des ressources humaines pour signaler l'erreur",
-    explanation: "En cas d'erreur sur la fiche de paie, il faut contacter le service RH ou la comptabilité."
+    type: "fill_in_blank",
+    question: "Complétez la phrase.",
+    template: "Votre ___ de salaire détaille vos revenus et vos cotisations sociales.",
+    blank_answer: "bulletin",
+    options: ["bulletin", "planning", "contrat", "dossier"],
+    correct: "bulletin",
+    explanation: "Le bulletin (ou fiche) de salaire détaille la rémunération et les cotisations."
   },
   {
-    id: 112,
+    id: 25,
     level: "B1",
     category: "Vocabulaire Professionnel",
+    type: "listen_choose",
     question: "Que signifie « être polyvalent » au travail ?",
+    audioText: "Que signifie être polyvalent au travail ?",
     options: ["Être spécialisé dans un seul domaine", "Savoir effectuer plusieurs types de tâches différentes", "Travailler à temps partiel", "Refuser certaines missions"],
     correct: "Savoir effectuer plusieurs types de tâches différentes",
-    explanation: "La polyvalence est une qualité très appréciée : elle permet d'intervenir sur des postes variés."
+    explanation: "La polyvalence permet d'intervenir sur des postes variés."
   },
   {
-    id: 113,
-    level: "B1",
-    category: "Situations Professionnelles",
-    question: "Votre responsable vous demande de réaliser une tâche que vous ne savez pas faire. Que dites-vous ?",
-    options: ["Vous dites que vous la ferez sans demander d'aide", "Vous expliquez honnêtement que vous ne maîtrisez pas encore cette compétence et demandez une formation ou un accompagnement", "Vous refusez catégoriquement", "Vous demandez à un collègue de le faire à votre place en secret"],
-    correct: "Vous expliquez honnêtement que vous ne maîtrisez pas encore cette compétence et demandez une formation ou un accompagnement",
-    explanation: "L'honnêteté et la demande de soutien sont des signes de professionnalisme et de volonté d'apprendre."
-  },
-  {
-    id: 114,
-    level: "B1",
-    category: "Compréhension Orale",
-    question: "Écoutez. Que doit faire l'employé ?",
-    audioText: "Merci de remplir le formulaire de demande de congé au moins deux semaines à l'avance et de le remettre à votre responsable.",
-    options: ["Partir en congé sans prévenir", "Remplir un formulaire de congé deux semaines à l'avance", "Envoyer un email à la direction", "Appeler le service RH le jour même"],
-    correct: "Remplir un formulaire de congé deux semaines à l'avance",
-    explanation: "La consigne précise clairement : formulaire à remplir et à remettre deux semaines avant le départ."
-  },
-  {
-    id: 115,
+    id: 26,
     level: "B1",
     category: "Vocabulaire Professionnel",
-    question: "Qu'est-ce qu'un « planning » de travail ?",
-    options: ["Un plan de la salle de réunion", "Un document qui organise les horaires et les tâches sur une période", "Un bulletin de salaire", "Un contrat à durée déterminée"],
-    correct: "Un document qui organise les horaires et les tâches sur une période",
-    explanation: "Le planning organise le travail dans le temps : qui fait quoi, quand et comment."
+    type: "fill_in_blank",
+    question: "Complétez avec le bon terme.",
+    template: "Un ___ à durée indéterminée (CDI) n'a pas de date de fin.",
+    blank_answer: "contrat",
+    options: ["contrat", "planning", "bulletin", "formulaire"],
+    correct: "contrat",
+    explanation: "Un CDI = Contrat à Durée Indéterminée, sans date de fin."
+  },
+  {
+    id: 27,
+    level: "B2",
+    category: "Vocabulaire Professionnel",
+    type: "listen_choose",
+    question: "Que désigne la « confidentialité professionnelle » ?",
+    audioText: "Que désigne la notion de confidentialité professionnelle ?",
+    options: [
+      "Le droit de partager toutes les informations de l'entreprise",
+      "L'obligation de ne pas divulguer des informations sensibles liées au travail",
+      "Un type de contrat de travail",
+      "Une réunion à huis clos"
+    ],
+    correct: "L'obligation de ne pas divulguer des informations sensibles liées au travail",
+    explanation: "La confidentialité professionnelle protège les données de l'entreprise et des clients."
   },
 
-  // B2 — Compétences de base
+  // ─── BLOC 7 : COMPRÉHENSION ÉCRITE ──────────────────────
   {
-    id: 116,
-    level: "B2",
-    category: "Situations Professionnelles",
-    question: "Un client se plaint d'un service rendu par votre entreprise. Comment gérez-vous la situation ?",
-    options: ["Vous niez les faits", "Vous écoutez activement, reformulez sa plainte, vous excusez et proposez une solution concrète", "Vous renvoyez le client vers un autre service sans explication", "Vous raccrochez"],
-    correct: "Vous écoutez activement, reformulez sa plainte, vous excusez et proposez une solution concrète",
-    explanation: "La gestion d'une réclamation client repose sur l'écoute, la reformulation, les excuses et la proposition de solution."
+    id: 28,
+    level: "A2",
+    category: "Compréhension Écrite",
+    type: "listen_choose",
+    question: "Lisez ce panneau. Que signifie-t-il ?",
+    audioText: "Interdiction de fumer dans les locaux.",
+    options: ["Fumer est autorisé partout", "Il est interdit de fumer à l'intérieur", "Fumer est obligatoire", "Fumer est possible dans certaines pièces"],
+    correct: "Il est interdit de fumer à l'intérieur",
+    explanation: "'Interdiction de' signifie que quelque chose n'est pas permis."
   },
   {
-    id: 117,
-    level: "B2",
-    category: "Vocabulaire Professionnel",
-    question: "Que désigne la notion de « confidentialité professionnelle » ?",
-    options: ["Le droit de partager toutes les informations de l'entreprise", "L'obligation de ne pas divulguer des informations sensibles liées à l'activité professionnelle", "Un type de contrat de travail", "Une réunion à huis clos"],
-    correct: "L'obligation de ne pas divulguer des informations sensibles liées à l'activité professionnelle",
-    explanation: "La confidentialité professionnelle protège les données de l'entreprise, des clients et des salariés."
+    id: 29,
+    level: "B1",
+    category: "Compréhension Écrite",
+    type: "listen_choose",
+    question: "Lisez : « Malgré la pluie, nous avons continué notre promenade. » Qu'est-ce qui est vrai ?",
+    audioText: "Malgré la pluie, nous avons continué notre promenade.",
+    options: ["Ils ont arrêté à cause de la pluie", "Ils ont continué malgré la pluie", "Il ne pleuvait pas", "Ils sont rentrés"],
+    correct: "Ils ont continué malgré la pluie",
+    explanation: "'Malgré' indique qu'ils ont continué en dépit de la pluie."
   },
   {
-    id: 118,
+    id: 30,
     level: "B2",
     category: "Compréhension Écrite",
-    question: "Lisez : « Tout accident du travail doit être déclaré dans les 24 heures suivant sa survenance. » Que signifie cette règle ?",
-    options: ["On peut attendre plusieurs jours pour déclarer un accident", "L'accident doit être signalé au plus tard le lendemain", "L'accident n'a pas besoin d'être déclaré", "La déclaration est facultative"],
+    type: "listen_choose",
+    question: "Lisez : « Tout accident du travail doit être déclaré dans les 24 heures. » Que signifie cette règle ?",
+    audioText: "Tout accident du travail doit être déclaré dans les vingt-quatre heures suivant sa survenance.",
+    options: ["On peut attendre plusieurs jours", "L'accident doit être signalé au plus tard le lendemain", "L'accident n'a pas besoin d'être déclaré", "La déclaration est facultative"],
     correct: "L'accident doit être signalé au plus tard le lendemain",
-    explanation: "'Dans les 24 heures suivant sa survenance' signifie au plus tard le lendemain de l'accident."
-  },
-  {
-    id: 119,
-    level: "B2",
-    category: "Situations Professionnelles",
-    question: "Vous repérez une pratique non conforme à la réglementation dans votre entreprise. Quelle est la démarche appropriée ?",
-    options: ["Ignorer car ce n'est pas votre problème", "En parler à votre responsable, ou utiliser les voies de signalement internes (représentants du personnel, alerte éthique)", "En parler directement aux médias", "Quitter immédiatement l'entreprise"],
-    correct: "En parler à votre responsable, ou utiliser les voies de signalement internes (représentants du personnel, alerte éthique)",
-    explanation: "Face à une irrégularité, les voies internes de signalement sont la démarche appropriée et protégée par la loi."
+    explanation: "'Dans les 24 heures' signifie au plus tard le lendemain de l'accident."
   },
 
-  // C1 — Compétences de base
+  // ─── BLOC 8 : REFORMULER ────────────────────────────────
   {
-    id: 120,
-    level: "C1",
-    category: "Situations Professionnelles",
-    question: "Vous êtes en désaccord avec une décision stratégique de votre direction. Comment exprimez-vous votre point de vue ?",
-    options: ["Vous obéissez sans rien dire", "Vous demandez un entretien, exposez vos arguments de façon structurée et proposez des alternatives", "Vous organisez une pétition immédiatement", "Vous démissionnez sans prévenir"],
-    correct: "Vous demandez un entretien, exposez vos arguments de façon structurée et proposez des alternatives",
-    explanation: "Exprimer un désaccord de façon constructive, avec des arguments et des propositions, est une marque de maturité professionnelle."
+    id: 31,
+    level: "A2",
+    category: "Grammaire",
+    type: "reformulate",
+    question: "Reformulez cette phrase de manière plus polie pour un contexte professionnel.",
+    originalText: "Donnez-moi le dossier.",
+    placeholder: "Pourriez-vous me donner le dossier, s'il vous plaît ?",
+    minWords: 5,
+    criteria: ["Utilise une formule de politesse", "Garde le même sens", "Ton professionnel"]
   },
   {
-    id: 121,
-    level: "C1",
-    category: "Vocabulaire Professionnel",
-    question: "Que signifie « management participatif » ?",
-    options: ["Un style de gestion où le manager décide seul de tout", "Un mode de management qui associe les collaborateurs aux décisions et valorise leur contribution", "Une réunion hebdomadaire obligatoire", "Un système de primes"],
-    correct: "Un mode de management qui associe les collaborateurs aux décisions et valorise leur contribution",
-    explanation: "Le management participatif repose sur l'implication des équipes dans la prise de décision pour favoriser motivation et performance."
+    id: 32,
+    level: "B1",
+    category: "Grammaire",
+    type: "reformulate",
+    question: "Réécrivez cette phrase en utilisant le conditionnel pour la rendre plus courtoise.",
+    originalText: "Je veux prendre rendez-vous.",
+    placeholder: "Je voudrais prendre rendez-vous, s'il vous plaît.",
+    minWords: 5,
+    criteria: ["Utilise le conditionnel", "Ton poli et professionnel", "Sens conservé"]
   },
 
-  // Expression Écrite C2
+  // ─── BLOC 9 : PRODUCTION ORALE ──────────────────────────
   {
-    id: 71,
-    level: "C2",
+    id: 33,
+    level: "A1",
+    category: "Production Orale",
+    type: "oral",
+    question: "Présentez-vous : dites votre prénom, votre pays d'origine et votre métier (ou métier souhaité).",
+    minDuration: 10,
+    criteria: ["Prononciation compréhensible", "Donne au moins 2 informations personnelles", "Phrases simples et claires"]
+  },
+  {
+    id: 34,
+    level: "B1",
+    category: "Production Orale",
+    type: "oral",
+    question: "Décrivez votre dernière expérience professionnelle ou de bénévolat. Quelles tâches faisiez-vous ? Qu'avez-vous appris ?",
+    minDuration: 20,
+    criteria: ["Utilise le passé", "Décrit des tâches concrètes", "S'exprime avec aisance", "Vocabulaire professionnel"]
+  },
+
+  // ─── BLOC 10 : PRODUCTION ÉCRITE ────────────────────────
+  {
+    id: 35,
+    level: "A2",
     category: "Expression Écrite",
     type: "written",
-    question: "Élaborez une réflexion philosophique sur la notion d'authenticité à l'ère du numérique. Intégrez des références implicites à des courants de pensée.",
-    placeholder: "Exemple : La question de l'authenticité, loin d'être un simple avatar des préoccupations existentialistes...",
-    minWords: 40,
-    criteria: ["Maîtrise parfaite de la langue", "Profondeur conceptuelle", "Style élégant et recherché", "Références culturelles implicites", "Cohérence argumentative exemplaire"]
+    question: "Écrivez un message court à votre responsable pour lui expliquer que vous serez absent(e) demain et pourquoi. (3-4 phrases)",
+    placeholder: "Exemple : Bonjour M. Martin, Je vous informe que je serai absent(e) demain car je suis malade. Je vous transmettrai un certificat médical dès que possible. Cordialement,",
+    minWords: 25,
+    criteria: ["Formule de politesse en début et fin", "Explique la raison de l'absence", "Ton professionnel", "Phrases simples et correctes"]
+  },
+  {
+    id: 36,
+    level: "B1",
+    category: "Expression Écrite",
+    type: "written",
+    question: "Rédigez un email à un client pour confirmer un rendez-vous. Précisez le jour, l'heure et le lieu. (4-5 phrases)",
+    placeholder: "Exemple : Madame, Monsieur, Je me permets de vous confirmer notre rendez-vous du...",
+    minWords: 35,
+    criteria: ["Formule d'appel professionnelle", "Confirme clairement les détails (jour, heure, lieu)", "Formule de politesse finale", "Texte cohérent et bien structuré"]
   },
 ];

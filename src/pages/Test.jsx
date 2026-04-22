@@ -10,184 +10,8 @@ import QuestionCard from '@/components/test/QuestionCard';
 
 import { questions } from '@/components/test/questionsData';
 
-const originalQuestions = [
-  // A1 Level - Compréhension Orale
-  {
-    id: 1,
-    level: "A1",
-    category: "Compréhension Orale",
-    question: "Écoutez l'audio. Quelle est la question posée ?",
-    audioUrl: "https://example.com/audio/question-a1-1.mp3",
-    audioText: "Audio : 'Comment tu t'appelles ?'",
-    options: ["Quel âge as-tu ?", "Comment tu t'appelles ?", "Où habites-tu ?", "Quelle heure est-il ?"],
-    correct: "Comment tu t'appelles ?"
-  },
-  // A1 Level - Grammaire
-  {
-    id: 2,
-    level: "A1",
-    category: "Grammaire",
-    question: "Complétez : « Je ___ français. »",
-    options: ["suis", "ai", "est", "as"],
-    correct: "suis"
-  },
-  {
-    id: 3,
-    level: "A1",
-    category: "Vocabulaire",
-    question: "Comment dit-on « Hello » en français ?",
-    options: ["Au revoir", "Bonjour", "Merci", "S'il vous plaît"],
-    correct: "Bonjour"
-  },
-  {
-    id: 4,
-    level: "A1",
-    category: "Grammaire",
-    question: "Quel est le pluriel de « un livre » ?",
-    options: ["des livre", "des livres", "les livre", "un livres"],
-    correct: "des livres"
-  },
-  // A2 Level - Compréhension Orale
-  {
-    id: 5,
-    level: "A2",
-    category: "Compréhension Orale",
-    question: "Écoutez le dialogue. Où vont les deux personnes ?",
-    audioUrl: "https://example.com/audio/question-a2-1.mp3",
-    audioText: "Audio : 'On va au restaurant ce soir ?' - 'Oui, bonne idée !'",
-    options: ["Au cinéma", "Au restaurant", "À la plage", "Au musée"],
-    correct: "Au restaurant"
-  },
-  {
-    id: 6,
-    level: "A2",
-    category: "Grammaire",
-    question: "Complétez : « Hier, nous ___ au cinéma. »",
-    options: ["allons", "sommes allés", "irons", "allions"],
-    correct: "sommes allés"
-  },
-  {
-    id: 7,
-    level: "A2",
-    category: "Vocabulaire",
-    question: "Quel mot signifie l'inverse de « grand » ?",
-    options: ["haut", "petit", "large", "long"],
-    correct: "petit"
-  },
-  {
-    id: 8,
-    level: "A2",
-    category: "Compréhension",
-    question: "« Il fait beau aujourd'hui. » Cette phrase parle de :",
-    options: ["la nourriture", "la météo", "le travail", "la santé"],
-    correct: "la météo"
-  },
-  // B1 Level - Compréhension Orale
-  {
-    id: 9,
-    level: "B1",
-    category: "Compréhension Orale",
-    question: "Écoutez l'annonce. À quelle heure part le train ?",
-    audioUrl: "https://example.com/audio/question-b1-1.mp3",
-    audioText: "Audio : 'Le train en provenance de Paris partira à 15h30 du quai numéro 3.'",
-    options: ["14h30", "15h30", "16h30", "17h30"],
-    correct: "15h30"
-  },
-  {
-    id: 10,
-    level: "B1",
-    category: "Grammaire",
-    question: "Complétez : « Si j'avais le temps, je ___ ce livre. »",
-    options: ["lis", "lirais", "lirai", "lisais"],
-    correct: "lirais"
-  },
-  {
-    id: 11,
-    level: "B1",
-    category: "Vocabulaire",
-    question: "Que signifie « être débordé » ?",
-    options: ["Être fatigué", "Avoir trop de travail", "Être malade", "Être en retard"],
-    correct: "Avoir trop de travail"
-  },
-  {
-    id: 12,
-    level: "B1",
-    category: "Grammaire",
-    question: "Choisissez la forme correcte : « C'est le livre ___ je t'ai parlé. »",
-    options: ["que", "dont", "qui", "où"],
-    correct: "dont"
-  },
-  // B2 Level - Compréhension Orale
-  {
-    id: 13,
-    level: "B2",
-    category: "Compréhension Orale",
-    question: "Écoutez l'interview. Quel est le principal défi mentionné ?",
-    audioUrl: "https://example.com/audio/question-b2-1.mp3",
-    audioText: "Audio : 'Notre principal défi reste la gestion du changement climatique et ses impacts sur notre économie.'",
-    options: ["Le développement technologique", "Le changement climatique", "Les relations internationales", "La croissance démographique"],
-    correct: "Le changement climatique"
-  },
-  {
-    id: 14,
-    level: "B2",
-    category: "Grammaire",
-    question: "Complétez : « Bien qu'il ___ fatigué, il a continué à travailler. »",
-    options: ["est", "soit", "était", "serait"],
-    correct: "soit"
-  },
-  {
-    id: 15,
-    level: "B2",
-    category: "Vocabulaire",
-    question: "Quel est le synonyme de « néanmoins » ?",
-    options: ["Également", "Cependant", "Ensuite", "Par conséquent"],
-    correct: "Cependant"
-  },
-  {
-    id: 16,
-    level: "B2",
-    category: "Grammaire",
-    question: "« Il m'a demandé si je ___ venir. »",
-    options: ["peux", "pouvais", "pourrai", "pourrais"],
-    correct: "pouvais"
-  },
-  // B1 Level - Compréhension Orale
-  {
-    id: 17,
-    level: "B1",
-    category: "Compréhension Orale",
-    question: "Écoutez le message. Pourquoi la personne appelle-t-elle ?",
-    audioUrl: "https://example.com/audio/question-b1-2.mp3",
-    audioText: "Audio : 'Bonjour, je vous appelle pour confirmer notre rendez-vous de demain à 14h. Pourriez-vous me rappeler ?'",
-    options: ["Pour annuler un rendez-vous", "Pour confirmer un rendez-vous", "Pour prendre un rendez-vous", "Pour modifier l'heure"],
-    correct: "Pour confirmer un rendez-vous"
-  },
-  {
-    id: 18,
-    level: "B1",
-    category: "Compréhension",
-    question: "« Il a pris ses jambes à son cou. » signifie :",
-    options: ["Il est tombé", "Il a couru très vite", "Il a mal aux jambes", "Il s'est assis"],
-    correct: "Il a couru très vite"
-  },
-  {
-    id: 19,
-    level: "A2",
-    category: "Grammaire",
-    question: "Complétez : « Elle ___ au marché tous les samedis. »",
-    options: ["va", "aller", "allé", "allait"],
-    correct: "va"
-  },
-  {
-    id: 20,
-    level: "A1",
-    category: "Vocabulaire",
-    question: "Quel article utilise-t-on : « ___ pomme » ?",
-    options: ["Un", "Une", "Des", "Le"],
-    correct: "Une"
-  }
-];
+// Types qui nécessitent une réponse libre (texte ou oral)
+const FREE_RESPONSE_TYPES = ['written', 'oral', 'reformulate'];
 
 export default function Test() {
   const navigate = useNavigate();
@@ -292,20 +116,21 @@ export default function Test() {
       const userAnswer = answers[index];
       let isCorrect;
 
-      if (q.type === 'written' || q.type === 'oral') {
-        // Évaluation par IA pour les questions d'expression écrite et orale
+      if (FREE_RESPONSE_TYPES.includes(q.type)) {
+        // Évaluation par IA pour les questions d'expression écrite, orale et reformulation
         if (userAnswer && userAnswer.trim()) {
           try {
             const evaluation = await base44.integrations.Core.InvokeLLM({
               prompt: `Tu es un évaluateur de français langue étrangère niveau ${q.level}. 
-Évalue cette réponse ${q.type === 'oral' ? 'orale (transcrite)' : 'écrite'} selon les critères suivants :
-${q.criteria.map(c => `- ${c}`).join('\n')}
+Évalue cette réponse selon les critères suivants :
+${(q.criteria || ['Réponse cohérente', 'Français correct']).map(c => `- ${c}`).join('\n')}
 
 Question: ${q.question}
+${q.originalText ? `Phrase originale à reformuler : "${q.originalText}"` : ''}
 Réponse de l'étudiant: "${userAnswer}"
 
 Évalue si la réponse respecte MAJORITAIREMENT les critères pour le niveau ${q.level}.
-${q.type === 'oral' ? 'Note: Il peut y avoir des erreurs de transcription, sois indulgent sur l\'orthographe.' : ''}
+${q.type === 'oral' ? "Note: Il peut y avoir des erreurs de transcription, sois indulgent sur l'orthographe." : ''}
 Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication (1 phrase).`,
               response_json_schema: {
                 type: "object",
@@ -317,13 +142,8 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
             });
             isCorrect = evaluation.evaluation === "correct";
           } catch (err) {
-            // En cas d'erreur, on compte comme correct si minimum atteint
-            if (q.type === 'written') {
-              const wordCount = userAnswer.split(/\s+/).filter(w => w.length > 0).length;
-              isCorrect = wordCount >= q.minWords;
-            } else {
-              isCorrect = userAnswer.length > 10;
-            }
+            const wordCount = userAnswer.split(/\s+/).filter(w => w.length > 0).length;
+            isCorrect = wordCount >= (q.minWords || 3);
           }
         } else {
           isCorrect = false;
@@ -408,18 +228,21 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
 
   const currentQ = questions[currentQuestion];
   const isLastQuestion = currentQuestion === questions.length - 1;
-  const hasAnswered = answers[currentQuestion] !== undefined && 
-    (currentQ.type === 'written' ? (answers[currentQuestion] || '').split(/\s+/).filter(w => w.length > 0).length >= (currentQ.minWords || 0) :
-     currentQ.type === 'oral' ? (answers[currentQuestion] || '').length > 10 :
-     true);
+  const hasAnswered = answers[currentQuestion] !== undefined && (
+    currentQ.type === 'written' || currentQ.type === 'reformulate'
+      ? (answers[currentQuestion] || '').split(/\s+/).filter(w => w.length > 0).length >= (currentQ.minWords || 3)
+      : currentQ.type === 'oral'
+        ? (answers[currentQuestion] || '').length > 10
+        : true
+  );
 
   useEffect(() => {
     const currentQ = questions[currentQuestion];
-    const initialTime = currentQ.level === 'C1' || currentQ.level === 'C2' ? 30 : 12;
+    const initialTime = currentQ.level === 'B2' || currentQ.level === 'C1' || currentQ.level === 'C2' ? 45 : 20;
     setTimeLeft(initialTime);
     
-    // Mettre le timer en pause pour les questions orales
-    if (currentQ.type === 'oral') {
+    // Mettre le timer en pause pour les questions orales, écrites et reformulation
+    if (FREE_RESPONSE_TYPES.includes(currentQ.type)) {
       setTimerPaused(true);
     } else {
       setTimerPaused(false);
@@ -427,7 +250,7 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
   }, [currentQuestion]);
 
   useEffect(() => {
-    if (currentQ.type === 'written') return;
+    if (FREE_RESPONSE_TYPES.includes(currentQ.type)) return;
     if (timerPaused) return;
 
     if (timeLeft > 0) {

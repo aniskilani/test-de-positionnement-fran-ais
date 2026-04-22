@@ -39,15 +39,15 @@ const SECTIONS_CANDIDAT = [
     subtitle: 'Choisissez la bonne réponse.',
     icon: '🗣️',
     illustration: 'https://media.base44.com/images/public/6940a01cdb0d5c582a8e789a/92c82a9c8_generated_image.png',
-    filter: q => (q.category === 'Vocabulaire' || q.category === 'Vocabulaire Professionnel' || q.category === 'Situations Professionnelles') && !q.type,
+    filter: q => (q.category === 'Vocabulaire' || q.category === 'Vocabulaire Professionnel' || q.category === 'Situations Professionnelles') && !q.type && q.options,
   },
   {
     key: 'expression_ecrite',
-    title: 'PARTIE 5 — Production Écrite',
+    title: 'PARTIE 5 — Production Écrite & Reformulation',
     subtitle: 'Rédigez votre réponse dans l\'espace prévu. Écrivez le plus complètement possible.',
     icon: '✍️',
     illustration: 'https://media.base44.com/images/public/6940a01cdb0d5c582a8e789a/52205a40b_generated_image.png',
-    filter: q => q.type === 'written',
+    filter: q => q.type === 'written' || q.type === 'reformulate',
   },
 ];
 
@@ -228,12 +228,52 @@ export default function PrintTest() {
                 const isOral = q.category === 'Compréhension Orale';
                 const isWritten = q.type === 'written';
 
+                const isReformulate = q.type === 'reformulate';
+                const isSafety = q.type === 'safety_instruction';
+                const isScenario = q.type === 'scenario_tree';
+                const isDialogue = q.type === 'complete_dialogue';
+
                 return (
                   <div key={q.id} className="mb-6 pl-1">
                     {/* Indicateur oral */}
                     {isOral && (
                       <div className="text-xs bg-amber-50 border border-amber-200 text-amber-800 px-3 py-1 rounded mb-2 inline-block">
                         🔊 Écoutez attentivement — le formateur va vous lire un texte
+                      </div>
+                    )}
+
+                    {/* Safety icon */}
+                    {isSafety && q.safetyLabel && (
+                      <div className="flex items-start gap-2 bg-amber-50 border border-amber-300 rounded px-3 py-2 mb-2 text-sm font-semibold text-amber-900">
+                        <span>{q.safetyIcon}</span>
+                        <span>{q.safetyLabel}</span>
+                      </div>
+                    )}
+
+                    {/* Scenario context */}
+                    {isScenario && q.context && (
+                      <div className="text-xs bg-blue-50 border border-blue-200 text-blue-900 px-3 py-1 rounded mb-2 inline-block">
+                        {q.context}
+                      </div>
+                    )}
+
+                    {/* Dialogue */}
+                    {isDialogue && q.dialogue && (
+                      <div className="mb-2 space-y-1 ml-6">
+                        {q.dialogue.map((line, i) => (
+                          <div key={i} className="text-sm">
+                            <span className="font-bold text-gray-600">{line.speaker} :</span>{' '}
+                            <span className="text-gray-800">{line.text}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Reformulate original */}
+                    {isReformulate && q.originalText && (
+                      <div className="text-sm bg-orange-50 border border-orange-200 px-3 py-2 rounded mb-2 text-gray-800">
+                        <span className="font-semibold text-orange-700">Phrase à reformuler : </span>
+                        « {q.originalText} »
                       </div>
                     )}
 
@@ -244,7 +284,7 @@ export default function PrintTest() {
                     </div>
 
                     {/* Options QCM */}
-                    {q.options && !isWritten && (
+                    {q.options && !isWritten && !isReformulate && (
                       <div className="ml-7 grid grid-cols-2 gap-x-6 gap-y-2">
                         {q.options.map((opt, i) => (
                           <div key={i} className="flex items-start gap-2 text-sm text-gray-800">
@@ -255,11 +295,11 @@ export default function PrintTest() {
                       </div>
                     )}
 
-                    {/* Production écrite */}
-                    {isWritten && (
+                    {/* Production écrite ou reformulation */}
+                    {(isWritten || isReformulate) && (
                       <div className="ml-7">
-                        <div className="border border-gray-300 rounded mt-1" style={{ minHeight: '120px' }}>
-                          {[...Array(6)].map((_, li) => (
+                        <div className="border border-gray-300 rounded mt-1" style={{ minHeight: isReformulate ? '60px' : '120px' }}>
+                          {[...Array(isReformulate ? 3 : 6)].map((_, li) => (
                             <div key={li} className="border-b border-gray-200 h-7" />
                           ))}
                         </div>

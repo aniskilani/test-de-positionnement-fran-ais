@@ -215,6 +215,65 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
           </motion.div>
         )}
 
+        {/* Safety instruction context */}
+        {question.type === 'safety_instruction' && (
+          <div className="mb-4 rounded-xl border-2 border-amber-300 bg-amber-50 p-4 flex items-start gap-3">
+            <span className="text-3xl">{question.safetyIcon}</span>
+            <p className="text-sm font-semibold text-amber-900 leading-snug">{question.safetyLabel}</p>
+          </div>
+        )}
+
+        {/* Scenario context */}
+        {question.type === 'scenario_tree' && question.context && (
+          <div className="mb-4 rounded-xl bg-blue-50 border border-blue-200 px-4 py-3 text-sm text-blue-900 font-medium">
+            {question.context}
+          </div>
+        )}
+
+        {/* Fill in blank display */}
+        {question.type === 'fill_in_blank' && question.template && (
+          <div className="mb-4 rounded-xl bg-gray-100 px-5 py-4 text-lg font-medium text-gray-800">
+            {question.template.split('___').map((part, i, arr) => (
+              <span key={i}>
+                {part}
+                {i < arr.length - 1 && (
+                  <span className="inline-block border-b-2 border-[#17c3b2] min-w-[80px] mx-1 text-[#17c3b2] font-bold">
+                    {selectedAnswer ? selectedAnswer : '___'}
+                  </span>
+                )}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Dialogue display */}
+        {question.type === 'complete_dialogue' && question.dialogue && (
+          <div className="mb-4 space-y-2">
+            {question.dialogue.map((line, i) => (
+              <div key={i} className={`flex gap-3 items-start ${line.speaker === 'Employé' || line.speaker === 'Candidat' ? 'flex-row-reverse' : ''}`}>
+                <span className="shrink-0 text-xs font-bold bg-gray-200 rounded px-2 py-1 mt-0.5">{line.speaker}</span>
+                <div className={`rounded-xl px-4 py-2 text-sm max-w-xs ${
+                  line.speaker === 'Employé' || line.speaker === 'Candidat'
+                    ? 'bg-[#17c3b2]/10 text-[#00504e]'
+                    : 'bg-gray-100 text-gray-800'
+                }`}>
+                  {line.text === '___' ? (
+                    <span className="text-gray-400 italic">[Votre réponse]</span>
+                  ) : line.text}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Reformulate original text */}
+        {question.type === 'reformulate' && question.originalText && (
+          <div className="mb-4 rounded-xl bg-orange-50 border border-orange-200 px-4 py-3">
+            <p className="text-xs text-orange-600 font-semibold mb-1">Phrase à reformuler :</p>
+            <p className="text-base font-medium text-gray-800">« {question.originalText} »</p>
+          </div>
+        )}
+
         {/* Question Text */}
         <h2 className="text-xl md:text-2xl font-semibold text-gray-900 mb-8 leading-relaxed">
           {question.question}
@@ -290,6 +349,25 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
                 {selectedAnswer.length} caractères
               </div>
             )}
+          </div>
+        ) : question.type === 'reformulate' ? (
+          <div className="space-y-4">
+            <Alert className="bg-orange-50 border-orange-200">
+              <AlertCircle className="h-4 w-4 text-orange-600" />
+              <AlertDescription className="text-orange-900 text-sm">
+                Réécrivez la phrase de manière plus <strong>polie et professionnelle</strong>. 
+                Minimum <strong>{question.minWords} mots</strong>.
+              </AlertDescription>
+            </Alert>
+            <Textarea
+              value={selectedAnswer || ''}
+              onChange={(e) => onSelect(e.target.value)}
+              placeholder={question.placeholder}
+              className="min-h-[120px] text-base leading-relaxed resize-none"
+            />
+            <div className="text-right text-sm text-gray-600">
+              {(selectedAnswer || '').split(/\s+/).filter(w => w.length > 0).length} mots
+            </div>
           </div>
         ) : question.type === 'written' ? (
           <div className="space-y-4">
