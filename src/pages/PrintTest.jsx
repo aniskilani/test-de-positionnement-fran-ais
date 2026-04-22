@@ -80,8 +80,8 @@ const SECTIONS_FORMATEUR = [
   },
   {
     key: 'expression_ecrite',
-    title: 'Production Écrite',
-    filter: q => q.type === 'written',
+    title: 'Production Écrite & Reformulation',
+    filter: q => q.type === 'written' || q.type === 'reformulate',
   },
 ];
 
@@ -128,7 +128,7 @@ export default function PrintTest() {
             </Button>
           </Link>
           <div>
-            <h1 className="text-lg font-bold text-gray-900">Version Papier — Test de Positionnement FLE</h1>
+            <h1 className="text-lg font-bold text-gray-900">Test de positionnement de français et de compétences de bases professionnelles</h1>
             <p className="text-sm text-gray-500">Choisissez le document à imprimer</p>
           </div>
         </div>
@@ -443,7 +443,7 @@ export default function PrintTest() {
 
           {/* Pied de page */}
           <div className="mt-8 pt-4 border-t border-gray-200 text-center text-xs text-gray-400">
-            ParlerEmploi Formation — Test de positionnement FLE — © {new Date().getFullYear()} —
+            ParlerEmploi Formation — Test de positionnement de français et de compétences de bases professionnelles — © {new Date().getFullYear()} —
             Médiathèque Persepolis, 4 av. Gabriel-Péri, 93400 Saint-Ouen-sur-Seine
           </div>
         </div>
@@ -505,6 +505,46 @@ export default function PrintTest() {
                   <li>Laisser le candidat aller au bout de ses réponses</li>
                 </ul>
               </div>
+            </div>
+          </div>
+
+          {/* Corrigé exercices Partie 2 — Vocabulaire documents */}
+          <div className="border border-[#17c3b2] rounded p-4 mb-4">
+            <p className="text-sm font-bold text-gray-800 mb-2">✅ Corrigé — Partie 2 : Vocabulaire documents professionnels</p>
+            <div className="grid grid-cols-2 gap-x-8 gap-y-1 text-xs text-gray-700">
+              {[
+                ['1.', 'justificatif de domicile'],
+                ['2.', 'relevé d\'identité bancaire (RIB)'],
+                ['3.', 'carte d\'identité'],
+                ['4.', 'attestation de sécurité sociale'],
+                ['5.', 'contrat de travail'],
+                ['6.', 'facture'],
+              ].map(([num, rep]) => (
+                <div key={num} className="flex gap-2">
+                  <span className="font-semibold text-gray-600 shrink-0">{num}</span>
+                  <span className="text-green-700 font-semibold">{rep}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Corrigé exercice email professionnel */}
+          <div className="border border-gray-300 rounded p-4 mb-6">
+            <p className="text-sm font-bold text-gray-800 mb-2">✅ Corrigé — Partie 2 : Compréhension d'un email professionnel</p>
+            <div className="space-y-1 text-xs text-gray-700">
+              {[
+                ['1.', 'Marie Dupont (Responsable d\'équipe — Département RH)'],
+                ['2.', 'Informer d\'une réunion d\'équipe (ou : convocation à une réunion)'],
+                ['3.', 'Vendredi 25 avril 2026 à 10h00'],
+                ['4.', 'Salle de réunion B — 2ème étage'],
+                ['5.', 'Confirmer sa présence en répondant à l\'email'],
+                ['6.', 'Au choix : Bilan des projets en cours / Planning du mois de mai / Questions diverses'],
+              ].map(([num, rep]) => (
+                <div key={num} className="flex gap-2">
+                  <span className="font-semibold text-gray-600 shrink-0">{num}</span>
+                  <span className="text-green-700 font-semibold">{rep}</span>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -604,6 +644,7 @@ export default function PrintTest() {
               {section.questions.map((q, idx) => {
                 const style = levelBadgeStyle[q.level] || levelBadgeStyle['A1'];
                 const isWritten = q.type === 'written';
+                const isReformulate = q.type === 'reformulate';
                 const isOral = q.category === 'Compréhension Orale';
 
                 return (
@@ -627,6 +668,21 @@ export default function PrintTest() {
                         {q.explanation && (
                           <span className="text-gray-500 italic">— {q.explanation}</span>
                         )}
+                      </div>
+                    )}
+
+                    {/* Reformulation : phrase originale + critères */}
+                    {isReformulate && (
+                      <div className="mt-1">
+                        <div className="text-xs bg-orange-50 border border-orange-200 px-3 py-1.5 rounded mb-2">
+                          <span className="font-semibold text-orange-700">Phrase originale : </span>« {q.originalText} »
+                        </div>
+                        <div className="text-xs text-gray-600">
+                          <span className="font-semibold">Critères :</span> {q.criteria?.join(' • ')}
+                        </div>
+                        <div className="text-xs text-gray-600 mt-1">
+                          <span className="font-semibold">Exemple attendu : </span><span className="italic text-green-700">{q.placeholder}</span>
+                        </div>
                       </div>
                     )}
 
