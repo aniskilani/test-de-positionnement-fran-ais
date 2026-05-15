@@ -223,6 +223,24 @@ export default function Home() {
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
 
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      const demoName = 'Utilisateur Démo';
+                      const demoEmail = 'demo@parleremploi.fr';
+                      const demoPhone = '06 00 00 00 00';
+                      localStorage.setItem('test_candidate_name', demoName);
+                      localStorage.setItem('test_candidate_email', demoEmail);
+                      localStorage.setItem('test_candidate_phone', demoPhone);
+                      localStorage.setItem('test_gdpr_consent', 'true');
+                      navigate(createPageUrl('Test') + `?name=${encodeURIComponent(demoName)}&email=${encodeURIComponent(demoEmail)}&phone=${encodeURIComponent(demoPhone)}`);
+                    }}
+                    className="w-full h-11 rounded-xl border-gray-300 text-gray-600 hover:bg-gray-50 text-sm"
+                  >
+                    🎯 Accès démo (sans inscription)
+                  </Button>
+
                   <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
                     <Shield className="w-3 h-3" />
                     <span>Vos données sont protégées (RGPD)</span>
