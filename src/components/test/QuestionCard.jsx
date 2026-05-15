@@ -450,25 +450,43 @@ function ReadComprehension({ question, selectedAnswer, onSelect }) {
 
 // ── FILL KEYBOARD ────────────────────────────────────────────
 function FillKeyboard({ question, selectedAnswer, onSelect }) {
+  const parts = question.template.split('___');
+  const hasMultipleBlanks = parts.length > 2;
+
   return (
     <div className="space-y-4">
-      <div className="bg-yellow-50 border border-yellow-200 rounded-xl px-4 py-3 text-base font-medium text-gray-800">
-        {question.template.split('___').map((part, i, arr) => (
+      <div className="bg-yellow-50 border border-yellow-200 rounded-xl px-4 py-4 text-base font-medium text-gray-800 leading-loose">
+        {parts.map((part, i, arr) => (
           <span key={i}>
-            {part}
+            <span className="whitespace-pre-wrap">{part}</span>
             {i < arr.length - 1 && (
-              <span className="inline-block border-b-2 border-[#17c3b2] w-20 mx-1 align-bottom" />
+              <input
+                type="text"
+                value={hasMultipleBlanks
+                  ? (selectedAnswer || '').split(',')[i]?.trim() || ''
+                  : selectedAnswer || ''}
+                onChange={(e) => {
+                  if (hasMultipleBlanks) {
+                    const current = (selectedAnswer || '').split(',');
+                    current[i] = e.target.value;
+                    onSelect(current.join(','));
+                  } else {
+                    onSelect(e.target.value);
+                  }
+                }}
+                placeholder="…"
+                className="inline-block mx-2 px-2 py-0.5 border-b-2 border-[#17c3b2] bg-transparent text-[#00504e] font-semibold focus:outline-none text-center"
+                style={{ width: `${Math.max(80, (hasMultipleBlanks ? 120 : 160))}px` }}
+                autoFocus={i === 0}
+              />
             )}
           </span>
         ))}
       </div>
-      <Input
-        value={selectedAnswer || ''}
-        onChange={(e) => onSelect(e.target.value)}
-        placeholder="Tapez votre réponse ici…"
-        className="text-base"
-        autoFocus
-      />
+      <p className="text-xs text-gray-500 italic">
+        💡 Saisissez votre réponse directement dans le trou ci-dessus.
+        {hasMultipleBlanks && ' Complétez chaque trou séparément.'}
+      </p>
     </div>
   );
 }

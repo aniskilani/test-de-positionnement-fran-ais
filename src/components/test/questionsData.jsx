@@ -474,7 +474,7 @@ export const questions = [
     type: "sentence_builder",
     timeLimit: 75,
     question: "Remettez ces mots dans le bon ordre.",
-    words: ["l'entreprise", "depuis", "travaille", "Il", "ans", "trois"],
+    words: ["dans", "l'entreprise", "depuis", "travaille", "Il", "ans", "trois"],
     correctSentence: "Il travaille dans l'entreprise depuis trois ans.",
     explanation: "Le verbe 'travailler depuis' exprime une action qui a commencé dans le passé et continue."
   },
