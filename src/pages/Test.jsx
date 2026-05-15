@@ -21,6 +21,7 @@ export default function Test() {
   const [answers, setAnswers] = useState({});
   const [startTime] = useState(Date.now());
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submittingStep, setSubmittingStep] = useState('');
   const [timeLeft, setTimeLeft] = useState(12);
   const [timerPaused, setTimerPaused] = useState(false);
   const [canTakeTest, setCanTakeTest] = useState(true);
@@ -230,8 +231,11 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
+    setSubmittingStep('Analyse de vos réponses…');
     const duration = Math.round((Date.now() - startTime) / 1000);
+    setSubmittingStep('Évaluation par intelligence artificielle…');
     const results = await calculateResults();
+    setSubmittingStep('Calcul de votre niveau CECRL…');
 
     const resultData = {
       ...results,
@@ -422,6 +426,44 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
     );
   }
 
+  // Écran de chargement pendant la soumission
+  if (isSubmitting) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#00504e] via-[#17c3b2] to-[#32cf8a] flex items-center justify-center px-6">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-white rounded-3xl shadow-2xl p-10 max-w-md w-full text-center"
+        >
+          <div className="w-20 h-20 bg-gradient-to-br from-[#17c3b2] to-[#32cf8a] rounded-full flex items-center justify-center mx-auto mb-6">
+            <Loader2 className="w-10 h-10 text-white animate-spin" />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">Analyse en cours…</h2>
+          <p className="text-[#17c3b2] font-semibold mb-6 text-lg">{submittingStep}</p>
+          <div className="space-y-3 text-left">
+            {[
+              { label: 'Vérification des réponses', done: true },
+              { label: 'Évaluation par IA (expression écrite & orale)', done: submittingStep.includes('Calcul') },
+              { label: 'Calcul de votre niveau CECRL', done: false },
+            ].map((step, i) => (
+              <div key={i} className={`flex items-center gap-3 px-4 py-2 rounded-lg ${step.done ? 'bg-green-50' : 'bg-gray-50'}`}>
+                <span className={`text-lg ${step.done ? 'text-green-500' : 'text-gray-300'}`}>
+                  {step.done ? '✓' : '○'}
+                </span>
+                <span className={`text-sm font-medium ${step.done ? 'text-green-700' : 'text-gray-500'}`}>
+                  {step.label}
+                </span>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-gray-400 mt-6">
+            L'évaluation IA peut prendre 15 à 30 secondes…
+          </p>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-[#17c3b2]/5">
 
@@ -464,25 +506,48 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
       </main>
 
       {/* Navigation Footer */}
-      <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 py-4">
-        <div className="max-w-2xl mx-auto px-6 flex items-center justify-between">
-          <div className="w-24" />
-
+      <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 py-4 pb-safe">
+        <div className="max-w-2xl mx-auto px-6 flex items-center justify-between gap-3">
+          {/* Précédent */}
           <Button
-            variant="ghost"
-            onClick={handleSkip}
-            disabled={isLastQuestion}
-            className="h-12 px-6 rounded-xl text-gray-600 hover:text-gray-900"
+            variant="outline"
+            onClick={handlePrev}
+            disabled={currentQuestion === 0}
+            className="h-12 px-4 rounded-xl border-gray-200 text-gray-600 hover:text-gray-900 shrink-0"
           >
-            Passer
-            <ArrowRight className="w-4 h-4 ml-2" />
+            <ArrowLeft className="w-4 h-4 mr-1" />
+            Retour
           </Button>
 
+          {/* Passer (masqué sur la dernière question) */}
+          {!isLastQuestion ? (
+            <Button
+              variant="ghost"
+              onClick={handleSkip}
+              className="h-12 px-4 rounded-xl text-gray-500 hover:text-gray-900 text-sm shrink-0"
+            >
+              Passer
+              <ArrowRight className="w-4 h-4 ml-1" />
+            </Button>
+          ) : (
+            <div className="flex-1" />
+          )}
+
+          {/* Suivant / Soumettre */}
           {isLastQuestion ? (
             <Button
-              onClick={handleSubmit}
+              onClick={() => {
+                const unanswered = questions.filter((_, i) => {
+                  const ans = answers[i];
+                  return ans === undefined || ans === null || ans === '';
+                }).length;
+                if (unanswered > 0) {
+                  if (!window.confirm(`Vous avez ${unanswered} question(s) sans réponse. Voulez-vous quand même soumettre le test ?`)) return;
+                }
+                handleSubmit();
+              }}
               disabled={isSubmitting}
-              className="h-12 px-8 rounded-xl bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 shadow-lg"
+              className="h-12 px-6 rounded-xl bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 shadow-lg ml-auto"
             >
               {isSubmitting ? (
                 <>
@@ -500,7 +565,7 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
             <Button
               onClick={handleNext}
               disabled={!hasAnswered}
-              className="h-12 px-8 rounded-xl bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 shadow-lg"
+              className="h-12 px-6 rounded-xl bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 shadow-lg ml-auto"
             >
               Suivant
               <ArrowRight className="w-4 h-4 ml-2" />

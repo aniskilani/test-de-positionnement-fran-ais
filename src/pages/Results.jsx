@@ -20,19 +20,29 @@ export default function Results() {
 
   const urlParams = new URLSearchParams(window.location.search);
   const resultId = urlParams.get('resultId');
+  const isTrainer = urlParams.get('trainer') === 'true';
 
   useEffect(() => {
     const fetchResult = async () => {
       if (resultId) {
-        const result = await base44.entities.TestResult.filter({ id: resultId });
-        if (result.length > 0) {
-          setTestResult(result[0]);
+        if (isTrainer) {
+          // Chercher dans TrainerSession
+          const result = await base44.entities.TrainerSession.filter({ id: resultId });
+          if (result.length > 0) {
+            // Adapter le format pour correspondre à ce qu'attend la page
+            setTestResult({ ...result[0], answers: [] });
+          }
+        } else {
+          const result = await base44.entities.TestResult.filter({ id: resultId });
+          if (result.length > 0) {
+            setTestResult(result[0]);
+          }
         }
       }
       setLoading(false);
     };
     fetchResult();
-  }, [resultId]);
+  }, [resultId, isTrainer]);
 
   if (loading) {
     return (
