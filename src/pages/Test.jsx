@@ -197,11 +197,14 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
         isCorrect = userAnswer === q.correct;
       }
 
+      // S'assurer que isCorrect est toujours un boolean strict
+      isCorrect = isCorrect === true;
+
       if (isCorrect) correctCount++;
       
       answerDetails.push({
         questionId: q.id,
-        answer: userAnswer || "",
+        answer: typeof userAnswer === 'string' ? userAnswer : JSON.stringify(userAnswer ?? ""),
         correct: isCorrect
       });
 
