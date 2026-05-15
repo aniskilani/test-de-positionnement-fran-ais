@@ -10,8 +10,10 @@ import QuestionCard from '@/components/test/QuestionCard';
 
 import { questions } from '@/components/test/questionsData';
 
-// Types qui nécessitent une réponse libre (texte ou oral)
+// Types qui nécessitent une réponse libre (texte ou oral) — pas de timer automatique
 const FREE_RESPONSE_TYPES = ['written', 'oral', 'reformulate'];
+// Types sans timer (réponse interactive complexe)
+const UNTIMED_TYPES = ['written', 'oral', 'reformulate', 'match_pairs', 'sentence_builder', 'categorize', 'order_sentences', 'word_choice_text', 'complete_form', 'true_false_justify'];
 
 export default function Test() {
   const navigate = useNavigate();
@@ -79,29 +81,26 @@ export default function Test() {
     setAnswers({ ...answers, [currentQuestion]: answer });
   };
 
+  const getTimeForQuestion = (q) => q.timeLimit ?? null;
+
   const handleNext = async () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
-      const nextQ = questions[currentQuestion + 1];
-      setTimeLeft(nextQ.level === 'C1' || nextQ.level === 'C2' ? 30 : 12);
+      setTimeLeft(getTimeForQuestion(questions[currentQuestion + 1]));
     }
   };
 
   const handleSkip = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
-      const nextQ = questions[currentQuestion + 1];
-      setTimeLeft(nextQ.level === 'C1' || nextQ.level === 'C2' ? 30 : 12);
+      setTimeLeft(getTimeForQuestion(questions[currentQuestion + 1]));
     }
   };
-
-
 
   const handlePrev = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion(currentQuestion - 1);
-      const prevQ = questions[currentQuestion - 1];
-      setTimeLeft(prevQ.level === 'C1' || prevQ.level === 'C2' ? 30 : 12);
+      setTimeLeft(getTimeForQuestion(questions[currentQuestion - 1]));
     }
   };
 
@@ -148,8 +147,53 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
         } else {
           isCorrect = false;
         }
+      } else if (q.type === 'match_pairs') {
+        // Toutes les paires correctement associées
+        if (userAnswer) {
+          const matched = JSON.parse(userAnswer);
+          isCorrect = q.pairs.every(p => matched[p.left] === p.right);
+        } else isCorrect = false;
+      } else if (q.type === 'categorize') {
+        if (userAnswer) {
+          const assigned = JSON.parse(userAnswer);
+          isCorrect = q.items.every(item => assigned[item.text] === item.category);
+        } else isCorrect = false;
+      } else if (q.type === 'order_sentences') {
+        if (userAnswer) {
+          const ordered = JSON.parse(userAnswer);
+          isCorrect = ordered.length === q.sentences.length &&
+            ordered.every((item, i) => item.origIdx === q.correctOrder[i]);
+        } else isCorrect = false;
+      } else if (q.type === 'sentence_builder') {
+        if (userAnswer) {
+          const built = userAnswer.split('|').join(' ').trim().toLowerCase().replace(/\.$/, '');
+          const correct = q.correctSentence.toLowerCase().replace(/\.$/, '');
+          isCorrect = built === correct;
+        } else isCorrect = false;
+      } else if (q.type === 'fill_keyboard') {
+        if (userAnswer) {
+          const ans = userAnswer.trim().toLowerCase();
+          isCorrect = q.acceptedAnswers.some(a => a.toLowerCase() === ans);
+        } else isCorrect = false;
+      } else if (q.type === 'word_choice_text') {
+        if (userAnswer) {
+          const choices = JSON.parse(userAnswer);
+          isCorrect = q.correctBlanks.every((ans, i) => choices[i] === ans);
+        } else isCorrect = false;
+      } else if (q.type === 'complete_form') {
+        if (userAnswer) {
+          const fields = JSON.parse(userAnswer);
+          const filled = Object.keys(fields).length;
+          isCorrect = filled >= Math.ceil(q.formFields.length * 0.6);
+        } else isCorrect = false;
+      } else if (q.type === 'true_false_justify') {
+        if (userAnswer) {
+          const { tf, justif } = JSON.parse(userAnswer);
+          isCorrect = tf === q.correct && justif && justif.trim().length > 3;
+        } else isCorrect = false;
       } else {
-        // Questions QCM classiques
+        // QCM standard (listen_choose, fill_in_blank, scenario_tree, safety_instruction,
+        //               complete_dialogue, odd_one_out, email_response, read_comprehension)
         isCorrect = userAnswer === q.correct;
       }
 
@@ -228,21 +272,28 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
 
   const currentQ = questions[currentQuestion];
   const isLastQuestion = currentQuestion === questions.length - 1;
-  const hasAnswered = answers[currentQuestion] !== undefined && (
-    currentQ.type === 'written' || currentQ.type === 'reformulate'
-      ? (answers[currentQuestion] || '').split(/\s+/).filter(w => w.length > 0).length >= (currentQ.minWords || 3)
-      : currentQ.type === 'oral'
-        ? (answers[currentQuestion] || '').length > 10
-        : true
-  );
+  const hasAnswered = (() => {
+    const ans = answers[currentQuestion];
+    if (ans === undefined || ans === null || ans === '') return false;
+    if (currentQ.type === 'written' || currentQ.type === 'reformulate')
+      return ans.split(/\s+/).filter(w => w.length > 0).length >= (currentQ.minWords || 3);
+    if (currentQ.type === 'oral') return ans.length > 10;
+    if (currentQ.type === 'match_pairs') { try { return Object.keys(JSON.parse(ans)).length > 0; } catch { return false; } }
+    if (currentQ.type === 'categorize') { try { return Object.keys(JSON.parse(ans)).length > 0; } catch { return false; } }
+    if (currentQ.type === 'order_sentences') { try { return JSON.parse(ans).length > 0; } catch { return false; } }
+    if (currentQ.type === 'sentence_builder') return ans.includes('|') || ans.length > 0;
+    if (currentQ.type === 'fill_keyboard') return ans.trim().length > 0;
+    if (currentQ.type === 'word_choice_text') { try { return Object.keys(JSON.parse(ans)).length > 0; } catch { return false; } }
+    if (currentQ.type === 'complete_form') { try { return Object.keys(JSON.parse(ans)).length > 0; } catch { return false; } }
+    if (currentQ.type === 'true_false_justify') { try { const { tf } = JSON.parse(ans); return !!tf; } catch { return false; } }
+    return true; // QCM — toute valeur non vide
+  })();
 
   useEffect(() => {
     const currentQ = questions[currentQuestion];
-    const initialTime = currentQ.level === 'B2' || currentQ.level === 'C1' || currentQ.level === 'C2' ? 45 : 20;
-    setTimeLeft(initialTime);
-    
-    // Mettre le timer en pause pour les questions orales, écrites et reformulation
-    if (FREE_RESPONSE_TYPES.includes(currentQ.type)) {
+    setTimeLeft(getTimeForQuestion(currentQ));
+    // Mettre le timer en pause pour les types sans limite
+    if (UNTIMED_TYPES.includes(currentQ.type) || currentQ.timeLimit === null) {
       setTimerPaused(true);
     } else {
       setTimerPaused(false);
@@ -250,9 +301,8 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
   }, [currentQuestion]);
 
   useEffect(() => {
-    if (FREE_RESPONSE_TYPES.includes(currentQ.type)) return;
-    if (timerPaused) return;
-
+    if (timeLeft === null || timerPaused) return;
+    if (UNTIMED_TYPES.includes(currentQ.type)) return;
     if (timeLeft > 0) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
