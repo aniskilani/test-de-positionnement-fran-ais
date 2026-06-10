@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ArrowLeft, X, Loader2, Clock } from 'lucide-react';
+import { ArrowRight, ArrowLeft, X, Loader2, Clock, AlertTriangle } from 'lucide-react';
+import { toast } from 'sonner';
 import ProgressBar from '@/components/test/ProgressBar';
 import QuestionCard from '@/components/test/QuestionCard';
 
@@ -27,6 +28,13 @@ export default function Test() {
   const [canTakeTest, setCanTakeTest] = useState(true);
   const [lastTestDate, setLastTestDate] = useState(null);
   const [checkingEligibility, setCheckingEligibility] = useState(true);
+  const [tabSwitchCount, setTabSwitchCount] = useState(0);
+  const answersRef = useRef(answers);
+
+  // Sync answersRef with state
+  useEffect(() => {
+    answersRef.current = answers;
+  }, [answers]);
 
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -333,6 +341,28 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [hasAnswered, isLastQuestion, isSubmitting]);
 
+  // Anti-fraude : détection changement d'onglet
+  useEffect(() => {
+    if (isTrainer) return; // pas de vérification pour les formateurs
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setTabSwitchCount(prev => {
+          const newCount = prev + 1;
+          if (newCount >= 3) {
+            toast.error('⚠️ Test soumis automatiquement suite aux changements d\'onglet répétés.', { duration: 5000 });
+            // Soumettre avec les réponses actuelles
+            setTimeout(() => handleSubmit(), 1000);
+          } else {
+            toast.warning(`⚠️ Avertissement ${newCount}/3 : Ne quittez pas la page de test ! (${3 - newCount} avertissement(s) restant(s))`, { duration: 4000 });
+          }
+          return newCount;
+        });
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [isTrainer]);
+
 
 
   if (checkingEligibility) {
@@ -506,17 +536,26 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
       </main>
 
       {/* Navigation Footer */}
-      <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 py-4 pb-safe">
-        <div className="max-w-2xl mx-auto px-6 flex items-center justify-between gap-3">
+      <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 py-3 pb-safe">
+        {/* Anti-fraude badge si avertissements */}
+        {tabSwitchCount > 0 && (
+          <div className="bg-amber-50 border-b border-amber-200 px-4 py-1 text-center">
+            <span className="text-xs text-amber-700 flex items-center justify-center gap-1">
+              <AlertTriangle className="w-3 h-3" />
+              Avertissement {tabSwitchCount}/3 — Ne quittez pas la page
+            </span>
+          </div>
+        )}
+        <div className="max-w-2xl mx-auto px-4 flex flex-wrap items-center justify-between gap-2">
           {/* Précédent */}
           <Button
             variant="outline"
             onClick={handlePrev}
             disabled={currentQuestion === 0}
-            className="h-12 px-4 rounded-xl border-gray-200 text-gray-600 hover:text-gray-900 shrink-0"
+            className="h-11 px-3 md:px-4 rounded-xl border-gray-200 text-gray-600 hover:text-gray-900 shrink-0 min-w-[80px]"
           >
             <ArrowLeft className="w-4 h-4 mr-1" />
-            Retour
+            <span className="hidden sm:inline">Retour</span>
           </Button>
 
           {/* Passer (masqué sur la dernière question) */}
@@ -524,7 +563,7 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
             <Button
               variant="ghost"
               onClick={handleSkip}
-              className="h-12 px-4 rounded-xl text-gray-500 hover:text-gray-900 text-sm shrink-0"
+              className="h-11 px-3 md:px-4 rounded-xl text-gray-500 hover:text-gray-900 text-sm shrink-0"
             >
               Passer
               <ArrowRight className="w-4 h-4 ml-1" />
@@ -547,17 +586,18 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
                 handleSubmit();
               }}
               disabled={isSubmitting}
-              className="h-12 px-6 rounded-xl bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 shadow-lg ml-auto"
+              className="h-11 px-4 md:px-6 rounded-xl bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 shadow-lg ml-auto text-sm md:text-base"
             >
               {isSubmitting ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Calcul...
+                  <span className="hidden sm:inline">Calcul...</span>
                 </>
               ) : (
                 <>
-                  Voir mes résultats
-                  <ArrowRight className="w-4 h-4 ml-2" />
+                  <span className="hidden sm:inline">Voir mes résultats</span>
+                  <span className="sm:hidden">Résultats</span>
+                  <ArrowRight className="w-4 h-4 ml-1 md:ml-2" />
                 </>
               )}
             </Button>
@@ -565,10 +605,10 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
             <Button
               onClick={handleNext}
               disabled={!hasAnswered}
-              className="h-12 px-6 rounded-xl bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 shadow-lg ml-auto"
+              className="h-11 px-4 md:px-6 rounded-xl bg-gradient-to-r from-[#00504e] to-[#17c3b2] hover:opacity-90 shadow-lg ml-auto text-sm md:text-base"
             >
               Suivant
-              <ArrowRight className="w-4 h-4 ml-2" />
+              <ArrowRight className="w-4 h-4 ml-1 md:ml-2" />
             </Button>
           )}
         </div>

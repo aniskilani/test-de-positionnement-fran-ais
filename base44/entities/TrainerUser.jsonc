@@ -1,0 +1,28 @@
+{
+  "name": "TrainerUser",
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string",
+      "description": "Nom d'utilisateur du formateur"
+    },
+    "password": {
+      "type": "string",
+      "description": "Mot de passe du formateur"
+    },
+    "full_name": {
+      "type": "string",
+      "description": "Nom complet du formateur"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Compte actif ou non"
+    }
+  },
+  "required": [
+    "username",
+    "password",
+    "full_name"
+  ]
+}

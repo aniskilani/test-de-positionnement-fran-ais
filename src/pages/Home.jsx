@@ -71,9 +71,9 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <main className="pt-32 pb-20">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <main className="pt-24 md:pt-32 pb-20">
+        <div className="max-w-6xl mx-auto px-4 md:px-6">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             {/* Left Content */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -125,7 +125,7 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="bg-gradient-to-br from-gray-50 to-white rounded-3xl p-8 md:p-10 shadow-xl border border-gray-100">
+              <div className="bg-gradient-to-br from-gray-50 to-white rounded-3xl p-6 md:p-10 shadow-xl border border-gray-100">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
                   Commencer le test
                 </h2>

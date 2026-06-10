@@ -1,0 +1,38 @@
+{
+  "name": "TrainerSession",
+  "type": "object",
+  "properties": {
+    "trainer_name": {
+      "type": "string",
+      "description": "Nom du formateur"
+    },
+    "candidate_name": {
+      "type": "string",
+      "description": "Nom du candidat test\u00e9"
+    },
+    "candidate_email": {
+      "type": "string",
+      "description": "Email du candidat"
+    },
+    "candidate_phone": {
+      "type": "string",
+      "description": "T\u00e9l\u00e9phone du candidat"
+    },
+    "score": {
+      "type": "number",
+      "description": "Score obtenu"
+    },
+    "level": {
+      "type": "string",
+      "description": "Niveau CECRL d\u00e9termin\u00e9"
+    },
+    "duration_seconds": {
+      "type": "number",
+      "description": "Dur\u00e9e du test"
+    }
+  },
+  "required": [
+    "trainer_name",
+    "candidate_name"
+  ]
+}

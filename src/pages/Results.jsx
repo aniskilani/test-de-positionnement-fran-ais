@@ -136,11 +136,13 @@ export default function Results() {
 
           {/* Tabs for different views */}
           <Tabs defaultValue="overview" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3 bg-gray-100">
-              <TabsTrigger value="overview">Vue d'ensemble</TabsTrigger>
-              <TabsTrigger value="categories">Par catégorie</TabsTrigger>
-              <TabsTrigger value="questions">Questions</TabsTrigger>
-            </TabsList>
+            <div className="overflow-x-auto -mx-2 px-2">
+              <TabsList className="grid w-full min-w-[300px] grid-cols-3 bg-gray-100">
+                <TabsTrigger value="overview" className="text-xs md:text-sm">Vue d'ensemble</TabsTrigger>
+                <TabsTrigger value="categories" className="text-xs md:text-sm">Par catégorie</TabsTrigger>
+                <TabsTrigger value="questions" className="text-xs md:text-sm">Questions</TabsTrigger>
+              </TabsList>
+            </div>
 
             {/* Overview Tab */}
             <TabsContent value="overview" className="space-y-6">

@@ -1,0 +1,43 @@
+{
+  "name": "FreeTestSession",
+  "type": "object",
+  "properties": {
+    "candidate_name": {
+      "type": "string",
+      "description": "Nom du candidat"
+    },
+    "candidate_email": {
+      "type": "string",
+      "description": "Email du candidat"
+    },
+    "candidate_phone": {
+      "type": "string",
+      "description": "T\u00e9l\u00e9phone du candidat"
+    },
+    "partial_score": {
+      "type": "number",
+      "description": "Score sur les 5 premi\u00e8res questions"
+    },
+    "estimated_level": {
+      "type": "string",
+      "description": "Niveau estim\u00e9 bas\u00e9 sur le test partiel"
+    },
+    "has_paid": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indique si le candidat a pay\u00e9 pour continuer"
+    },
+    "answers": {
+      "type": "array",
+      "description": "R\u00e9ponses aux 5 premi\u00e8res questions",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "required": [
+    "candidate_name",
+    "candidate_email",
+    "partial_score"
+  ]
+}
