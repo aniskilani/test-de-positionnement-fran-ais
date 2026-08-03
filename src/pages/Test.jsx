@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 import ProgressBar from '@/components/test/ProgressBar';
 import QuestionCard from '@/components/test/QuestionCard';
 
-import { questions } from '@/components/test/questionsData';
+import { questions as questionsData } from '@/components/test/questionsData';
 
 // Types qui nécessitent une réponse libre (texte ou oral) — pas de timer automatique
 const FREE_RESPONSE_TYPES = ['written', 'oral', 'reformulate'];
@@ -35,6 +35,34 @@ export default function Test() {
   useEffect(() => {
     answersRef.current = answers;
   }, [answers]);
+
+  // Anti-triche : ordre des questions et options aléatoires par session
+  const [questions] = useState(() => {
+    const shuffle = (arr) => {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    };
+    return shuffle(questionsData).map(q => {
+      // QCM avec correct = index numérique → remapper
+      if (q.options && typeof q.correct === 'number') {
+        const indices = shuffle(q.options.map((_, i) => i));
+        return {
+          ...q,
+          options: indices.map(i => q.options[i]),
+          correct: indices.indexOf(q.correct),
+        };
+      }
+      // QCM avec correct = texte d'option → juste mélanger les options
+      if (q.options && typeof q.correct === 'string' && q.options.includes(q.correct)) {
+        return { ...q, options: shuffle(q.options) };
+      }
+      return q;
+    });
+  });
 
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -121,7 +149,7 @@ export default function Test() {
     // Évaluer les questions avec IA pour l'expression écrite et orale
     for (let index = 0; index < questions.length; index++) {
       const q = questions[index];
-      const userAnswer = answers[index];
+      const userAnswer = answersRef.current[index];
       let isCorrect;
 
       if (FREE_RESPONSE_TYPES.includes(q.type)) {
@@ -341,26 +369,107 @@ Réponds uniquement par "correct" ou "incorrect" suivi d'une brève explication 
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [hasAnswered, isLastQuestion, isSubmitting]);
 
-  // Anti-fraude : détection changement d'onglet
+  // Anti-fraude : mesures anti-triche complètes
   useEffect(() => {
     if (isTrainer) return; // pas de vérification pour les formateurs
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        setTabSwitchCount(prev => {
-          const newCount = prev + 1;
-          if (newCount >= 3) {
-            toast.error('⚠️ Test soumis automatiquement suite aux changements d\'onglet répétés.', { duration: 5000 });
-            // Soumettre avec les réponses actuelles
-            setTimeout(() => handleSubmit(), 1000);
-          } else {
-            toast.warning(`⚠️ Avertissement ${newCount}/3 : Ne quittez pas la page de test ! (${3 - newCount} avertissement(s) restant(s))`, { duration: 4000 });
-          }
-          return newCount;
-        });
+
+    let fullscreenRequested = false;
+
+    const triggerFraudWarning = () => {
+      setTabSwitchCount(prev => {
+        const newCount = prev + 1;
+        if (newCount >= 3) {
+          toast.error('🚫 Test soumis automatiquement — tentative de triche détectée.', { duration: 5000 });
+          setTimeout(() => handleSubmit(), 1000);
+        } else {
+          toast.warning(`⚠️ Avertissement ${newCount}/3 : Ne quittez pas la page ! (${3 - newCount} restant(s))`, { duration: 4000 });
+        }
+        return newCount;
+      });
+    };
+
+    // 1. Changement d'onglet + perte de focus fenêtre
+    const handleVisibilityChange = () => { if (document.hidden) triggerFraudWarning(); };
+    const handleWindowBlur = () => triggerFraudWarning();
+
+    // 2. Clic droit désactivé
+    const handleContextMenu = (e) => {
+      e.preventDefault();
+      toast.error('Clic droit désactivé pendant le test.', { duration: 2000 });
+    };
+
+    // 3. Copier / couper / coller désactivés
+    const handleCopyCutPaste = (e) => {
+      e.preventDefault();
+      toast.error('Copier-coller désactivé pendant le test.', { duration: 2000 });
+    };
+
+    // 4. Bloquer raccourcis clavier (DevTools, impression, recherche, copier, etc.)
+    const handleKeyDown = (e) => {
+      // Plein écran au premier interaction
+      if (!fullscreenRequested) {
+        fullscreenRequested = true;
+        document.documentElement.requestFullscreen?.().catch(() => {});
+      }
+      const key = e.key.toLowerCase();
+      const ctrl = e.ctrlKey || e.metaKey;
+      if (e.key === 'F12') { e.preventDefault(); return; }
+      if (ctrl && e.shiftKey && ['i', 'j', 'c'].includes(key)) { e.preventDefault(); return; }
+      if (ctrl && key === 'u') { e.preventDefault(); return; }
+      if (ctrl && key === 'p') { e.preventDefault(); toast.error('Impression désactivée.', { duration: 2000 }); return; }
+      if (ctrl && key === 'f') { e.preventDefault(); return; }
+      if (ctrl && ['c', 'v', 'a', 's', 'x'].includes(key)) { e.preventDefault(); return; }
+    };
+
+    // 5. Empêcher la sélection de texte (sauf champs de saisie)
+    const handleSelectStart = (e) => {
+      const tag = e.target.tagName;
+      if (tag !== 'INPUT' && tag !== 'TEXTAREA' && !e.target.isContentEditable) {
+        e.preventDefault();
       }
     };
+
+    // 6. Bloquer navigation arrière
+    const handlePopState = () => {
+      window.history.pushState(null, '', window.location.href);
+      toast.error('Navigation arrière désactivée pendant le test.', { duration: 2000 });
+    };
+
+    // 7. Avertir avant fermeture d'onglet
+    const handleBeforeUnload = (e) => {
+      if (!isSubmitting) {
+        e.preventDefault();
+        e.returnValue = 'Quitter maintenant annulera votre test. Êtes-vous sûr ?';
+        return e.returnValue;
+      }
+    };
+
+    window.history.pushState(null, '', window.location.href);
+
     document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('blur', handleWindowBlur);
+    document.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('copy', handleCopyCutPaste);
+    document.addEventListener('cut', handleCopyCutPaste);
+    document.addEventListener('paste', handleCopyCutPaste);
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('selectstart', handleSelectStart);
+    window.addEventListener('popstate', handlePopState);
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('blur', handleWindowBlur);
+      document.removeEventListener('contextmenu', handleContextMenu);
+      document.removeEventListener('copy', handleCopyCutPaste);
+      document.removeEventListener('cut', handleCopyCutPaste);
+      document.removeEventListener('paste', handleCopyCutPaste);
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('selectstart', handleSelectStart);
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
+    };
   }, [isTrainer]);
 
 
