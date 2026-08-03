@@ -114,13 +114,13 @@ export default function Results() {
           <img 
             src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_69409edef41e4f2a833c897b/ac7782ec6_logopefpetit.png" 
             alt="ParlerEmploi Formation" 
-            className="h-16 object-contain"
+            className="h-12 md:h-16 object-contain"
           />
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="py-12 px-6">
+      <main className="py-8 px-4 md:py-12 md:px-6">
         <div className="max-w-4xl mx-auto">
           {/* Greeting */}
           <motion.div
@@ -146,37 +146,37 @@ export default function Results() {
 
             {/* Overview Tab */}
             <TabsContent value="overview" className="space-y-6">
-              <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8 md:p-10">
+              <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-5 md:p-8 lg:p-10">
                 <LevelResult level={testResult.level} score={testResult.score} />
               </div>
 
               {/* Quick Stats */}
-              <div className="grid md:grid-cols-3 gap-4">
-                <div className="bg-white rounded-2xl p-6 border border-gray-100 text-center">
-                  <p className="text-sm text-gray-600 mb-1">Questions réussies</p>
-                  <p className="text-3xl font-bold text-green-600">
+              <div className="grid grid-cols-3 gap-2 md:gap-4">
+                <div className="bg-white rounded-2xl p-3 md:p-6 border border-gray-100 text-center">
+                  <p className="text-xs md:text-sm text-gray-600 mb-1">Réussies</p>
+                  <p className="text-2xl md:text-3xl font-bold text-green-600">
                     {testResult.answers?.filter(a => a.correct).length || 0}
                   </p>
-                  <p className="text-sm text-gray-500">
-                    sur {testResult.answers?.length || 0}
+                  <p className="text-xs md:text-sm text-gray-500">
+                    /{testResult.answers?.length || 0}
                   </p>
                 </div>
-                <div className="bg-white rounded-2xl p-6 border border-gray-100 text-center">
-                  <p className="text-sm text-gray-600 mb-1">Questions manquées</p>
-                  <p className="text-3xl font-bold text-red-600">
+                <div className="bg-white rounded-2xl p-3 md:p-6 border border-gray-100 text-center">
+                  <p className="text-xs md:text-sm text-gray-600 mb-1">Manquées</p>
+                  <p className="text-2xl md:text-3xl font-bold text-red-600">
                     {testResult.answers?.filter(a => !a.correct).length || 0}
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-xs md:text-sm text-gray-500">
                     à revoir
                   </p>
                 </div>
-                <div className="bg-white rounded-2xl p-6 border border-gray-100 text-center">
-                  <p className="text-sm text-gray-600 mb-1">Durée du test</p>
-                  <p className="text-3xl font-bold text-[#00504e]">
+                <div className="bg-white rounded-2xl p-3 md:p-6 border border-gray-100 text-center">
+                  <p className="text-xs md:text-sm text-gray-600 mb-1">Durée</p>
+                  <p className="text-2xl md:text-3xl font-bold text-[#00504e]">
                     {Math.floor((testResult.duration_seconds || 0) / 60)}
                   </p>
-                  <p className="text-sm text-gray-500">
-                    minutes
+                  <p className="text-xs md:text-sm text-gray-500">
+                    min
                   </p>
                 </div>
               </div>
@@ -191,28 +191,28 @@ export default function Results() {
                 {/* Effet de halo animé */}
                 <div className="absolute inset-0 bg-gradient-to-r from-[#00504e] to-[#17c3b2] rounded-2xl blur-xl opacity-30 animate-pulse" />
                 
-                <div className="relative bg-gradient-to-br from-[#00504e] via-[#17c3b2] to-[#32cf8a] rounded-2xl p-8 shadow-2xl">
+                <div className="relative bg-gradient-to-br from-[#00504e] via-[#17c3b2] to-[#32cf8a] rounded-2xl p-6 md:p-8 shadow-2xl">
                   <div className="text-center text-white space-y-4">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full mb-2">
-                      <Award className="w-8 h-8" />
+                    <div className="inline-flex items-center justify-center w-14 h-14 md:w-16 md:h-16 bg-white/20 backdrop-blur-sm rounded-full mb-2">
+                      <Award className="w-7 h-7 md:w-8 md:h-8" />
                     </div>
-                    <h3 className="text-2xl md:text-3xl font-bold">
+                    <h3 className="text-xl md:text-3xl font-bold">
                       Passez à l'action !
                     </h3>
-                    <p className="text-lg opacity-90 max-w-2xl mx-auto">
+                    <p className="text-base md:text-lg opacity-90 max-w-2xl mx-auto">
                       Découvrez nos formations personnalisées pour atteindre le niveau supérieur et réussir vos objectifs professionnels
                     </p>
                     <Link to={createPageUrl('Formations') + `?level=${testResult.level}&score=${testResult.score}&name=${encodeURIComponent(testResult.candidate_name)}`}>
                       <Button
                         size="lg"
-                        className="h-16 px-10 text-lg font-bold bg-white text-[#00504e] hover:bg-gray-50 rounded-xl shadow-lg hover:scale-105 transition-all duration-300 mt-4"
+                        className="h-14 md:h-16 px-6 md:px-10 text-base md:text-lg font-bold bg-white text-[#00504e] hover:bg-gray-50 rounded-xl shadow-lg hover:scale-105 transition-all duration-300 mt-4"
                       >
-                        🎯 Découvrir mes formations adaptées
+                        🎯 Découvrir mes formations
                       </Button>
                     </Link>
-                    <div className="flex items-center justify-center gap-3 pt-4">
-                      <p className="text-sm opacity-75">
-                        ✨ Offre spéciale candidat • Conseiller disponible immédiatement
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 pt-4">
+                      <p className="text-xs md:text-sm opacity-75">
+                        ✨ Offre spéciale candidat
                       </p>
                       <a 
                         href="https://wa.me/33652675393?text=Bonjour%2C%20je%20viens%20de%20terminer%20mon%20test%20de%20positionnement" 

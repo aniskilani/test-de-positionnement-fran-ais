@@ -608,10 +608,10 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
         className="w-full"
       >
         {/* Badges niveau + timer */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <span className="px-3 py-1 text-xs font-semibold rounded-full bg-[#17c3b2]/10 text-[#00504e]">Niveau {question.level}</span>
-            <span className="px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-600">{question.category}</span>
+        <div className="flex items-center justify-between mb-4 gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-[#17c3b2]/10 text-[#00504e]">Niveau {question.level}</span>
+            <span className="px-2.5 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-600">{question.category}</span>
           </div>
           {timeLeft !== null && timeLeft !== undefined && (
             <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full ${timerColor}`}>
@@ -681,7 +681,7 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
         )}
 
         {/* Question */}
-        <h2 className="text-xl md:text-2xl font-semibold text-gray-900 mb-6 leading-relaxed">{question.question}</h2>
+        <h2 className="text-lg md:text-2xl font-semibold text-gray-900 mb-5 md:mb-6 leading-relaxed">{question.question}</h2>
 
         {/* Rendu selon le type */}
         {question.type === 'oral' ? (
@@ -757,11 +757,11 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, quest
                   onClick={() => onSelect(option)}
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
-                  className={`w-full p-4 rounded-xl border-2 transition-all flex items-center gap-4 text-left group ${
+                  className={`w-full p-3 md:p-4 rounded-xl border-2 transition-all flex items-center gap-3 md:gap-4 text-left group ${
                     isSelected ? 'border-[#17c3b2] bg-[#17c3b2]/5 shadow-md' : 'border-gray-200 hover:border-[#32cf8a] hover:bg-gray-50'
                   }`}
                 >
-                  <span className={`w-10 h-10 rounded-lg flex items-center justify-center font-semibold text-sm transition-all shrink-0 ${
+                  <span className={`w-9 h-9 md:w-10 md:h-10 rounded-lg flex items-center justify-center font-semibold text-sm transition-all shrink-0 ${
                     isSelected ? 'bg-[#17c3b2] text-white' : 'bg-gray-100 text-gray-600 group-hover:bg-[#32cf8a]/20 group-hover:text-[#00504e]'
                   }`}>
                     {isSelected ? <CheckCircle2 className="w-5 h-5" /> : letters[index]}

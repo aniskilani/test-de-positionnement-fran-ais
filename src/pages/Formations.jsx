@@ -91,7 +91,7 @@ export default function Formations() {
           <img 
             src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_69409edef41e4f2a833c897b/ac7782ec6_logopefpetit.png" 
             alt="ParlerEmploi" 
-            className="h-16 object-contain"
+            className="h-12 md:h-16 object-contain"
           />
           <Link to={createPageUrl('Home')}>
             <Button variant="ghost">
@@ -103,8 +103,8 @@ export default function Formations() {
       </header>
 
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-[#00504e] to-[#17c3b2] text-white py-16">
-        <div className="max-w-6xl mx-auto px-6">
+      <div className="bg-gradient-to-br from-[#00504e] to-[#17c3b2] text-white py-10 md:py-16">
+        <div className="max-w-6xl mx-auto px-4 md:px-6">
           {name && (
             <motion.div
               initial={{ opacity: 0, y: -20 }}
@@ -117,10 +117,10 @@ export default function Formations() {
               </p>
             </motion.div>
           )}
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          <h1 className="text-3xl md:text-5xl font-bold mb-4">
             Nos Formations FLE
           </h1>
-          <p className="text-xl text-white/90 max-w-2xl">
+          <p className="text-lg md:text-xl text-white/90 max-w-2xl">
             Des programmes certifiés Qualiopi adaptés à votre niveau pour progresser efficacement.
           </p>
         </div>
@@ -128,17 +128,17 @@ export default function Formations() {
 
       {/* Offre spéciale */}
       {name && (
-        <div className="max-w-6xl mx-auto px-6 -mt-8">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 -mt-8">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl p-6 text-white shadow-2xl"
+            className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl p-5 md:p-6 text-white shadow-2xl"
           >
             <div className="flex items-center justify-between flex-wrap gap-4">
               <div>
-                <p className="text-2xl font-bold mb-2">🎁 Offre spéciale test de positionnement</p>
-                <p className="text-white/90">
-                  Réservez votre place dans les 7 jours et bénéficiez de <strong>10% de réduction</strong> !
+                <p className="text-xl md:text-2xl font-bold mb-2">🎁 Offre spéciale test</p>
+                <p className="text-sm md:text-base text-white/90">
+                  Réservez dans les 7 jours et bénéficiez de <strong>10% de réduction</strong> !
                 </p>
               </div>
               <a href="https://wa.me/33652675393?text=Bonjour%2C%20je%20souhaite%20profiter%20de%20l'offre%20formation%20suite%20à%20mon%20test" target="_blank" rel="noopener noreferrer">
@@ -153,13 +153,13 @@ export default function Formations() {
       )}
 
       {/* Formation recommandée */}
-      <div className="max-w-6xl mx-auto px-6 py-16">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-10 md:py-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
               {level ? "Formation recommandée pour vous" : "Choisissez votre formation"}
             </h2>
             <p className="text-gray-600">
@@ -169,21 +169,21 @@ export default function Formations() {
 
           <Card className="mb-12 border-2 border-[#17c3b2] shadow-xl">
             <CardHeader className={`bg-gradient-to-r ${formation.color} text-white rounded-t-lg`}>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-3">
                 <div>
-                  <CardTitle className="text-3xl mb-2">{formation.title}</CardTitle>
-                  <CardDescription className="text-white/90 text-lg">{formation.subtitle}</CardDescription>
+                  <CardTitle className="text-xl md:text-3xl mb-1 md:mb-2">{formation.title}</CardTitle>
+                  <CardDescription className="text-white/90 text-sm md:text-lg">{formation.subtitle}</CardDescription>
                 </div>
-                <div className="text-right">
-                  <div className="text-4xl font-bold">{formation.price}</div>
-                  <div className="text-sm text-white/80">TTC</div>
+                <div className="text-right shrink-0">
+                  <div className="text-2xl md:text-4xl font-bold">{formation.price}</div>
+                  <div className="text-xs md:text-sm text-white/80">TTC</div>
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="p-8">
+            <CardContent className="p-5 md:p-8">
               <p className="text-lg text-gray-700 mb-6">{formation.description}</p>
               
-              <div className="grid md:grid-cols-2 gap-8 mb-8">
+              <div className="grid md:grid-cols-2 gap-6 md:gap-8 mb-6 md:mb-8">
                 <div>
                   <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
                     <Award className="w-5 h-5 text-[#17c3b2]" />
@@ -225,15 +225,15 @@ export default function Formations() {
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-4 justify-center">
+              <div className="flex flex-wrap gap-3 md:gap-4 justify-center">
                 <a href="https://wa.me/33652675393?text=Bonjour%2C%20je%20suis%20intéressé(e)%20par%20la%20formation%20niveau%20" target="_blank" rel="noopener noreferrer">
-                  <Button size="lg" className="bg-gradient-to-r from-[#00504e] to-[#17c3b2] h-14 px-8 text-lg">
+                  <Button size="lg" className="bg-gradient-to-r from-[#00504e] to-[#17c3b2] h-12 md:h-14 px-6 md:px-8 text-base md:text-lg w-full sm:w-auto">
                     <MessageCircle className="w-5 h-5 mr-2" />
                     Demander un devis
                   </Button>
                 </a>
-                <a href="tel:0652675393">
-                  <Button size="lg" variant="outline" className="h-14 px-8 text-lg">
+                <a href="tel:0652675393" className="w-full sm:w-auto">
+                  <Button size="lg" variant="outline" className="h-12 md:h-14 px-6 md:px-8 text-base md:text-lg w-full sm:w-auto">
                     <Calendar className="w-5 h-5 mr-2" />
                     Prendre RDV
                   </Button>
@@ -248,7 +248,7 @@ export default function Formations() {
           <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
             Autres formations disponibles
           </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {allLevels.filter(l => l !== targetLevel).map((lvl) => {
               const form = formations[lvl];
               return (
@@ -290,20 +290,20 @@ export default function Formations() {
         </div>
 
         {/* CTA Final */}
-        <div className="mt-12 bg-gradient-to-r from-[#00504e] to-[#17c3b2] rounded-2xl p-8 text-white text-center">
-          <h3 className="text-3xl font-bold mb-4">Prêt à vous lancer ?</h3>
-          <p className="text-xl text-white/90 mb-6">
+        <div className="mt-8 md:mt-12 bg-gradient-to-r from-[#00504e] to-[#17c3b2] rounded-2xl p-6 md:p-8 text-white text-center">
+          <h3 className="text-2xl md:text-3xl font-bold mb-4">Prêt à vous lancer ?</h3>
+          <p className="text-lg md:text-xl text-white/90 mb-6">
             Contactez-nous dès maintenant pour un accompagnement personnalisé
           </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <a href="https://wa.me/33652675393?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20les%20formations" target="_blank" rel="noopener noreferrer">
-              <Button size="lg" className="bg-white text-[#00504e] hover:bg-gray-100 h-14 px-8">
+          <div className="flex flex-wrap gap-3 md:gap-4 justify-center">
+            <a href="https://wa.me/33652675393?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20les%20formations" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
+              <Button size="lg" className="bg-white text-[#00504e] hover:bg-gray-100 h-12 md:h-14 px-6 md:px-8 w-full sm:w-auto">
                 <MessageCircle className="w-5 h-5 mr-2" />
                 Discuter sur WhatsApp
               </Button>
             </a>
-            <a href="mailto:contact@parleremploi.com">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 h-14 px-8">
+            <a href="mailto:contact@parleremploi.com" className="w-full sm:w-auto">
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 h-12 md:h-14 px-6 md:px-8 w-full sm:w-auto">
                 Envoyer un email
               </Button>
             </a>

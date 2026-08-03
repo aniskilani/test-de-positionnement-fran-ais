@@ -61,7 +61,7 @@ export default function Home() {
           <img 
             src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_69409edef41e4f2a833c897b/ac7782ec6_logopefpetit.png" 
             alt="ParlerEmploi Formation" 
-            className="h-16 object-contain"
+            className="h-12 md:h-16 object-contain"
           />
           <div className="hidden md:flex items-center gap-2 text-sm text-gray-600">
             <CheckCircle className="w-4 h-4 text-[#32cf8a]" />
@@ -85,20 +85,20 @@ export default function Home() {
                 Évaluez votre niveau de français
               </div>
 
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
                 Test de
                 <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#00504e] to-[#17c3b2]">
                   Positionnement
                 </span>
               </h1>
 
-              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+              <p className="text-base md:text-lg text-gray-600 mb-8 leading-relaxed">
                 Découvrez votre niveau de français selon le Cadre Européen Commun de Référence pour les Langues (CECRL). 
                 Un test adaptatif pour une évaluation précise.
               </p>
 
               {/* Features */}
-              <div className="flex flex-wrap gap-6 mb-10">
+              <div className="flex flex-wrap gap-4 md:gap-6 mb-8 md:mb-10">
                 {features.map((feature, index) => (
                   <motion.div
                     key={index}
