@@ -1,0 +1,37 @@
+{
+  "name": "Relance J+3 Formation",
+  "description": "Envoie un email de relance 3 jours apr\u00e8s qu'un candidat a pass\u00e9 le test pour le convertir en client",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create"
+      ],
+      "entity_name": "TestResult"
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "relance_j_3_formation",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "sendFollowUpEmail",
+            "args": {}
+          },
+          "then": "end"
+        }
+      }
+    ]
+  },
+  "x-base44-migrated-from-automation": {
+    "legacy_payload_function": "sendFollowUpEmail"
+  }
+}
